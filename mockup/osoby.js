@@ -38,7 +38,7 @@ const OSOBY={
   sugg:[['Zgubiłem portfel','zastrzeżenie dokumentów'],['Co chce ode mnie Urząd Skarbowy?','pismo w sprawie VAT'],['Chcę na chwilę odblokować PESEL','kredyt na nowe auto'],['Jedziemy z dziećmi do Egiptu','paszport Igora i ostrzeżenia MSZ'],['Miałem stłuczkę','oświadczenie bez druku']],
   ask:{dowod:'Kiedy mój dowód traci ważność?',pj:'Ile mam punktów karnych?',auto:'Kiedy kończy się OC moich aut?',kdr:'Gdzie mogę użyć Karty Dużej Rodziny?'}
  },
- ewa:{id:'ewa',plec:'K',imie:'Ewa',nazwisko:'Nowak',wolacz:'Ewo',opis:'Lublin, 57 lat, nauczycielka, opiekuje się mamą',
+ ewa:{id:'ewa',plec:'K',imie:'Ewa',nazwisko:'Nowak',wolacz:'Ewo',opis:'Gmina Lipowiec, 57 lat, nauczycielka, opiekuje się mamą',
   docs:[
    {id:'dowod',name:'mDowód',img:'assets/card-mdowod-bez.png',strip:'assets/strip-mdowod.png',sub:'Dowód ważny do 05.12.2026',alert:'Ważny jeszcze 48 dni',photo:1,holder:'EWA NOWAK',line:'PESEL 69020312845',f:[['PESEL','69020312845'],['Data urodzenia','03.02.1969'],['Dowód osobisty','AXK 552190'],['Dowód ważny do','05.12.2026']],rows:[['Imię','Ewa'],['Nazwisko','Nowak'],['PESEL','69020312845'],['Data urodzenia','03.02.1969'],['Dowód osobisty','AXK 552190, ważny do 05.12.2026']]},
    {id:'kdr',name:'Karta Dużej Rodziny',img:'assets/card-kdr-bez.png',strip:'assets/strip-kdr.png',sub:'Ważna bezterminowo',photo:1,holder:'EWA NOWAK',line:'Nr KDR 2019/302 881',f:[['Nr karty','2019/302 881'],['Ważna','bezterminowo'],['PESEL','69020312845']],rows:[['Posiadaczka','Ewa Nowak'],['PESEL','69020312845'],['Numer karty','KDR 2019/302 881'],['Ważna','bezterminowo (rodzic)']]},
@@ -46,14 +46,15 @@ const OSOBY={
    {id:'auto',name:'Moje pojazdy',img:'assets/card-pojazdy-bez.png',strip:'assets/strip-pojazdy.png',sub:'Fiat Panda, LU 5521P',alert:'Badanie za 21 dni',plate:'LU 5521P',model:'Fiat Panda',kolor:'czerwony',holder:'FIAT PANDA 1.2',who:'Fiat Panda 1.2',line:'Badanie do 08.11.2026, OC do 14.06.2027',f:[['OC do','14.06.2027'],['Badanie do','08.11.2026']],rows:[['Pojazd','Fiat Panda 1.2, 2016'],['Nr rejestracyjny','LU 5521P'],['Kolor','czerwony'],['OC','Link4, do 14.06.2027'],['Badanie techniczne','do 08.11.2026'],['Ostatni odczyt licznika','88 140 km']]}
   ],
   tiles:[
+   {i:'alert',h:'Zmiana planu przy Twoim domu',d:'Uwagi do 18.12',k:'plan',u:1,s:'Magazyny 380 m od domu, dojazd ul. Szkolną obok szkoły',q:'Co się zmienia przy moim domu?'},
    {i:'id',h:'Dowód traci ważność',d:'05.12.2026, za 48 dni',k:'renew',u:1,s:'Wniosek złożysz tutaj, potem odciski palców w urzędzie do 30 dni',q:'Mój dowód traci ważność, co mam zrobić?'},
    {i:'car',h:'Badanie techniczne Pandy',d:'Do 08.11, za 21 dni',k:'oc',u:1,s:'LU 5521P, stacja kontroli pojazdów',q:'Kiedy mam badanie techniczne auta?'},
-   {i:'coin',h:'Podatek od nieruchomości',d:'164 zł do 16.11',k:'pay',s:'IV rata 2026, Urząd Miasta Lublin, BLIK',q:'Chcę zapłacić podatek od nieruchomości'},
+   {i:'coin',h:'Podatek od nieruchomości',d:'164 zł do 16.11',k:'pay',s:'IV rata 2026, Urząd Gminy Lipowiec, BLIK',q:'Chcę zapłacić podatek od nieruchomości'},
    {i:'mail',h:'Informacja z ZUS o emeryturze',d:'Nowa wiadomość',k:'letter',s:'Wiek emerytalny 03.02.2029, wniosek złożysz od 04.01.2029',q:'Ile będę miała emerytury?'}
   ],
   moje:{imie_nazwisko:'Ewa Nowak',data_urodzenia:'03.02.1969',pesel:'69020312845',dowod:'AXK 552190, ważny do 05.12.2026',nr_dowodu:'AXK 552190',
-   pelnoletnosc:'tak, ukończone 18 lat',prawo_jazdy:'kat. B, bezterminowe',pojazd:'Fiat Panda, LU 5521P',pojazd_model:'Fiat Panda',pojazd_kolor:'czerwony',oc:'Link4, polisa L4 0071 226 908',adres:'ul. Narutowicza 18 m. 3, Lublin'},
-  sugg:[['Mój dowód traci ważność','wniosek tutaj, odciski w urzędzie'],['Ile będę miała emerytury?','prognoza z ZUS'],['Jakie recepty ma moja mama?','upoważnienie od mamy w IKP'],['Dostałam dziwnego SMS-a','sprawdzę i zgłoszę'],['Zgubiłam portfel','zastrzeżenie dokumentów']],
+   pelnoletnosc:'tak, ukończone 18 lat',prawo_jazdy:'kat. B, bezterminowe',pojazd:'Fiat Panda, LU 5521P',pojazd_model:'Fiat Panda',pojazd_kolor:'czerwony',oc:'Link4, polisa L4 0071 226 908',adres:'ul. Szkolna 7, Lipowiec Kolonia'},
+  sugg:[['Co się zmienia w mojej gminie?','plan miejscowy, rada, budżet'],['Mój dowód traci ważność','wniosek tutaj, odciski w urzędzie'],['Ile będę miała emerytury?','prognoza z ZUS'],['Jakie recepty ma moja mama?','upoważnienie od mamy w IKP'],['Dostałam dziwnego SMS-a','sprawdzę i zgłoszę'],['Zgubiłam portfel','zastrzeżenie dokumentów']],
   ask:{dowod:'Mój dowód traci ważność, co mam zrobić?',pj:'Kiedy muszę wymienić prawo jazdy?',auto:'Kiedy mam badanie techniczne?',kdr:'Gdzie mogę użyć Karty Dużej Rodziny?'}
  },
  kacper:{id:'kacper',plec:'M',imie:'Kacper',nazwisko:'Zieliński',wolacz:'Kacprze',opis:'Gdańsk, 20 lat, student, prawo jazdy od stycznia',
