@@ -10,6 +10,28 @@ const GMINY={
    radny:{kto:'Stanisław Wójcik',okreg:'okręg nr 4',komitet:'KWW Razem dla Lipowca',dyzur:'pierwszy poniedziałek miesiąca, 16:00–17:00, urząd gminy, pok. 12'},
    glosy:[['Przystąpienie do zmiany planu „Pola Południowe” (03.2025)','za'],['Podwyżka opłaty za odpady do 39 zł (12.2025)','za'],['Nagrania posiedzeń komisji (09.2026, wniosek radnej spoza klubu wójta)','przeciw']]},
   sesja:{kiedy:'26.11.2026, godz. 10:00',gdzie:'sala GOK, transmisja na BIP',porzadek:['Projekt budżetu na 2027 r. (pierwsze czytanie)','Stawki podatku od nieruchomości na 2027 r.','Sprzedaż działki 214/3 w trybie bezprzetargowym']},
+  uchwaly:[
+   {tytul:'Projekt budżetu na 2027 r.',nr:'projekt uchwały budżetowej, pierwsze czytanie',
+    co:'Gmina chce wydać 57,3 mln zł przy dochodach 54,1 mln zł. Brakujące 3,2 mln zł pokryje kredyt.',
+    kogo:'wszystkich mieszkańców; w Twoim sołectwie fundusz sołecki 38 tys. zł',
+    rows:[['Dochody','54,1 mln zł'],['Wydatki','57,3 mln zł'],['Deficyt','3,2 mln zł, kredyt'],['Największa inwestycja','droga Lipowiec Kolonia – Wola, 2,4 mln zł'],['Szkoła w Lipowcu','termomodernizacja, 1,1 mln zł'],['Promocja i biuletyn','420 tys. zł (w 2026 r. 410 tys. zł)']],
+    za:['droga przy Twoim sołectwie, o którą mieszkańcy prosili od 2019 r.','termomodernizacja szkoły obniży rachunki o ok. 90 tys. zł rocznie'],
+    przeciw:['dług wzrośnie do ok. 34% dochodów, podobne gminy mają 18%','wydatki na promocję rosną, a na pomoc społeczną bez zmian'],
+    komisja:'Komisja budżetowa: opinia pozytywna, 4 za, 1 przeciw',zrodla:'Projekt uchwały budżetowej, opinia RIO, protokół komisji budżetowej'},
+   {tytul:'Stawki podatku od nieruchomości na 2027 r.',nr:'projekt uchwały nr XXVII/2026',
+    co:'Stawki rosną średnio o 9%. Domy mieszkalne: z 1,05 do 1,15 zł za m², grunty pod domami: z 0,58 do 0,63 zł za m².',
+    kogo:'właścicieli domów, mieszkań, działek i firm',
+    rows:[['Twój dom','128 m², +12,80 zł rocznie'],['Twoja działka','1 150 m², +57,50 zł rocznie'],['Razem dla Ciebie','<b>+70,30 zł rocznie</b> (z 656 zł do 726 zł)'],['Do budżetu gminy','ok. +410 tys. zł rocznie']],
+    za:['inflacja i wyższe koszty utrzymania dróg i szkół','stawki nadal niższe niż maksymalne ustawowe'],
+    przeciw:['drugi wzrost z rzędu (w 2026 r. +7%)','dla firm ponad dwa razy więcej niż dla domów, co może odstraszać inwestorów'],
+    komisja:'Komisja budżetowa: opinia pozytywna, 3 za, 2 przeciw',zrodla:'Projekt uchwały, uzasadnienie, obwieszczenie MF o maksymalnych stawkach, Twoja decyzja podatkowa'},
+   {tytul:'Sprzedaż działki 214/3 bez przetargu',nr:'projekt uchwały nr XXVIII/2026',
+    co:'Gmina chce sprzedać działkę 0,21 ha przy ul. Polnej właścicielowi przyległej działki, bez przetargu, za 86 tys. zł według wyceny rzeczoznawcy.',
+    kogo:'nikogo bezpośrednio; dotyczy majątku gminy',
+    rows:[['Działka','214/3, 0,21 ha, ul. Polna'],['Cena','86 tys. zł (wycena rzeczoznawcy z 08.2026)'],['Nabywca','właściciel przyległej działki (firma usługowa)'],['Tryb','bezprzetargowy, poprawa zagospodarowania sąsiedniej nieruchomości']],
+    za:['działka jest wąska i sama trudno ją zagospodarować','tryb przewiduje ustawa o gospodarce nieruchomościami'],
+    przeciw:['bez przetargu nikt inny nie może zaoferować więcej','wycena sprzed planowanej zmiany planu w okolicy'],
+    komisja:'Komisja rewizyjna: brak opinii, sprawa nie trafiła na posiedzenie',zrodla:'Projekt uchwały, operat szacunkowy (do wglądu w urzędzie)'}],
   plan:{nazwa:'Zmiana planu miejscowego „Pola Południowe”',odl:'380 m od Twojego domu',pow:'42 ha',
    teraz:'tereny rolnicze (R), grunty III klasy',projekt:'produkcja, składy i magazyny (P/U), budynki do 18 m',
    dojazd:'ul. Szkolną, obok Szkoły Podstawowej w Lipowcu',wniosek:'na wniosek właściciela gruntów (spółka prawa handlowego)',
@@ -63,7 +85,7 @@ function openGmina(){
    <div class="actions"><button class="btn primary" data-k="plan">Zobacz i zgłoś uwagę</button></div>${srcH(GM.bip+', rejestr urbanistyczny (dane fikcyjne)')}</div>
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id','Rada i wójt',GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · Twój radny: '+GM.rada.radny.kto)}
-   ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.sesja.porzadek.length+' sprawy')}
+   ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
    ${it('gLiczby','coin','Gmina w liczbach','budżet i dług na tle podobnych gmin')}
    ${it('gUmowy','db','Kto dostaje pieniądze gminy','umowy z Centralnego Rejestru Umów')}
    ${it('gNabory','bell','Praca w gminie',GM.nabory.length+' otwarte nabory')}
@@ -130,11 +152,33 @@ function gminaInit(){
     note:GM.wojt.limit});
    await info({icon:'doc',title:'Twój radny: '+R.radny.kto,source:'Imienne wyniki głosowań, '+GM.bip,
     rows:[['Okręg',R.radny.okreg],['Komitet',R.radny.komitet],['Dyżur',R.radny.dyzur],...R.glosy.map(([n,v])=>['<i class="gw">'+n+'</i>',v])]});
-   chips([{label:'Napisz do radnego',go:()=>say('W następnej wersji. Napiszesz tu pismo, a odpowiedź radnego trafi do Twojej skrzynki.')},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+   chips([{label:'Napisz do radnego',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
   },
   async gSesja(){
-   await info({icon:'clock',title:'Sesja Rady Gminy',source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]],body:'Porządek obrad:'+lista(GM.sesja.porzadek)});
-   chips([{label:'Przypomnij i pokaż transmisję',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','26.11.2026, 9:45'],['Transmisja','link w powiadomieniu']]})},{label:'Kto rządzi w mojej gminie?',go:S.gRada}]);
+   await info({icon:'clock',title:'Sesja Rady Gminy',source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]]});
+   await say('Rada zajmie się trzema projektami. Wybierz, a wyjaśnię prostym językiem, co zmieniają.');
+   const c=await card(`<div class="ui list glist">${hd('doc','Porządek obrad')}${GM.uchwaly.map((u,i)=>`<button class="it" data-i="${i}"><span class="gi">${svg('doc')}</span><span class="x"><b>${u.tytul}</b><small>${u.nr}</small></span>${svg('chev')}</button>`).join('')}${srcH(GM.bip+', projekty uchwał')}</div>`);
+   c.querySelectorAll('.it').forEach(b=>b.onclick=()=>act(()=>{addUser(GM.uchwaly[+b.dataset.i].tytul);S.uchwala(+b.dataset.i)}));
+   chips([{label:'Przypomnij i pokaż transmisję',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','26.11.2026, 9:45'],['Transmisja','link w powiadomieniu']]})}]);
+  },
+  async uchwala(i){
+   const u=GM.uchwaly[i];
+   await say(u.co);
+   await info({icon:'doc',title:u.tytul,source:u.zrodla,rows:[['Kogo dotyczy',u.kogo],...u.rows,['Opinia komisji',u.komisja]]});
+   await info({icon:'doc',title:'Za i przeciw',body:`<div class="gzp"><div><h4>Za</h4>${lista(u.za)}</div><div><h4>Przeciw</h4>${lista(u.przeciw)}</div></div>`,note:'Streszczam dokumenty, nie oceniam. Pełny tekst projektu jest na BIP.'});
+   const inne=GM.uchwaly.map((x,j)=>j===i?null:{label:x.tytul,go:()=>S.uchwala(j)}).filter(Boolean);
+   chips([{label:'Napisz do radnego przed sesją',go:()=>S.doRadnego(i)},...inne]);
+  },
+  async doRadnego(i){
+   const R=GM.rada.radny,u=GM.uchwaly[i!=null?i:1];
+   await say(`Co chcesz przekazać radnemu ${R.kto.split(' ')[0]}owi przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.`);
+   const wyslij=async t=>{pending=null;msgs.querySelectorAll('.chips').forEach(x=>x.remove());
+    await confirmCard({icon:'mail',title:'Wiadomość do radnego',source:'Do: '+R.kto+', '+R.okreg+', przez skrzynkę rady',body:'„'+esc(t)+'”',
+     rows:[['Sprawa',u.tytul],['Od',OS.imie+' '+OS.nazwisko+', '+rodz('mieszkanka','mieszkaniec')+' okręgu'],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
+     then:async()=>{await result({title:'Wiadomość wysłana',rows:[['Do',R.kto],['Przed sesją',GM.sesja.kiedy],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
+      await say('Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}})};
+   chips([{label:'Proszę głosować przeciw',go:()=>wyslij('Proszę o głosowanie przeciw projektowi „'+u.tytul+'” w obecnym kształcie.')},{label:'Proszę o wyjaśnienie na sesji',go:()=>wyslij('Proszę o zadanie na sesji pytania o uzasadnienie projektu „'+u.tytul+'” i przekazanie mi odpowiedzi.')},{label:'Popieram projekt',go:()=>wyslij('Popieram projekt „'+u.tytul+'” i proszę o głosowanie za.')}]);
+   pending=t=>wyslij(t);
   },
   async gLiczby(){
    const bar=([n,v,p,w,zle])=>`<div class="gbar"><div class="gl"><span>${n}</span><b>${v}</b></div><div class="gt"><i class="${zle&&w>130?'hi':''}" style="width:${Math.min(100,w/2.5)}%"></i><u style="left:40%"></u></div><small>podobne gminy: ${p}</small></div>`;
@@ -196,7 +240,7 @@ function gminaInit(){
    pending=t=>S.pytanie2(t);
   },
   async pytanie2(q){
-   pending=null;
+   pending=null;msgs.querySelectorAll('.chips').forEach(x=>x.remove());
    await confirmCard({icon:'mail',title:'Pytanie do Rady Gminy',source:'Rada Gminy Lipowiec, publiczna lista pytań mieszkańców',body:'„'+esc(q)+'”',
     rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' sołectwa '+GM.solectwo+', '+rodz('zweryfikowana','zweryfikowany')+' mObywatelem'],['Twoje dane','nie trafiają do urzędu ani rady'],['Odpowiedź','publicznie, termin 14 dni']],
     note:'Tak mogłoby działać. Wymaga zmiany regulaminu rady albo przepisów; dziś pytania zadaje się z imienia i nazwiska.',label:'Wyślij pod pseudonimem',
@@ -221,6 +265,10 @@ function gminaInit(){
  route=function(t){
   if(pending)return _route(t);
   const n=norm(t);
+  if(/podatek od nieruchomosci.*(2027|stawk|wzro|rosnie)|stawk\w* podatk/.test(n))return S.uchwala(1);
+  if(/budzet\w* na 2027|projekt budzetu/.test(n))return S.uchwala(0);
+  if(/dzialk\w* 214|bez przetargu|sprzedaz dzialki/.test(n))return S.uchwala(2);
+  if(/napisz do radnego|do radnego/.test(n))return S.doRadnego(1);
   if(/plan\w* miejsc|magazyn|zmienia.*(dom|okolic)|uwag\w* do planu|przy (moim|twoim) domu/.test(n))return S.plan();
   if(/inicjatyw|projekt uchwaly|podpis\w* pod/.test(n))return S.inicjatywa();
   if(/pseudonim|anonim|zapytaj rad/.test(n))return S.pytanie();
@@ -228,7 +276,7 @@ function gminaInit(){
   if(/kandyd|zostac radn|soltysk/.test(n))return S.kandyduj();
   if(/zabrac glos|zabierz glos/.test(n))return S.glos();
   if(/radn|wojt|rada gminy|kto rzadzi/.test(n))return S.gRada();
-  if(/sesj/.test(n))return S.gSesja();
+  if(/sesj|uchwal/.test(n))return S.gSesja();
   if(/budzet|zadluz|w liczbach|wydatk/.test(n))return S.gLiczby();
   if(/umow|przetarg|zamowien|darczyn|placi najwiecej|pieniadze gminy/.test(n))return S.gUmowy();
   if(/nabor|praca w gminie|prace? w urzedzie/.test(n))return S.gNabory();
