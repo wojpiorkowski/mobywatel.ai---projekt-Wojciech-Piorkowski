@@ -1,0 +1,164 @@
+/* ---------- Moja gmina: co się zmienia przy mnie, kto decyduje, jak zareagować (dane fikcyjne) ----------
+   Ładowany po osoby.js, przed core.js: dokłada kartę „Moja gmina” do portfela osoby, która ma dane gminy.
+   Scenariusze i trasy dopina po załadowaniu reszty (DOMContentLoaded), bo S i route są w scenarios.js. */
+const GMINY={
+ ewa:{
+  nazwa:'Gmina Lipowiec',krotko:'Lipowiec',typ:'gmina wiejska, powiat lubelski',mieszk:'8 940',solectwo:'Lipowiec Kolonia',soltys:'Halina Mazur',
+  urzad:'Urząd Gminy Lipowiec',bip:'BIP Gminy Lipowiec',
+  wojt:{kto:'Zbigniew Kordas',od:2006,kad:'5. kadencja (od 2006)',wybory:'2024: jedyny kandydat, 68% głosów „tak”',limit:'Obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.), chyba że Sejm zniesie limit.'},
+  rada:{n:15,wojta:13,komitet:'KWW Razem dla Lipowca',jeden:'w 9 z 15 okręgów był tylko jeden kandydat',frekw:'49%',
+   radny:{kto:'Stanisław Wójcik',okreg:'okręg nr 4',komitet:'KWW Razem dla Lipowca',dyzur:'pierwszy poniedziałek miesiąca, 16:00–17:00, urząd gminy, pok. 12'},
+   glosy:[['Przystąpienie do zmiany planu „Pola Południowe” (03.2025)','za'],['Podwyżka opłaty za odpady do 39 zł (12.2025)','za'],['Nagrania posiedzeń komisji (09.2026, wniosek radnej spoza klubu wójta)','przeciw']]},
+  sesja:{kiedy:'26.11.2026, godz. 10:00',gdzie:'sala GOK, transmisja na BIP',porzadek:['Projekt budżetu na 2027 r. (pierwsze czytanie)','Stawki podatku od nieruchomości na 2027 r.','Sprzedaż działki 214/3 w trybie bezprzetargowym']},
+  plan:{nazwa:'Zmiana planu miejscowego „Pola Południowe”',odl:'380 m od Twojego domu',pow:'42 ha',
+   teraz:'tereny rolnicze (R), grunty III klasy',projekt:'produkcja, składy i magazyny (P/U), budynki do 18 m',
+   dojazd:'ul. Szkolną, obok Szkoły Podstawowej w Lipowcu',wniosek:'na wniosek właściciela gruntów (spółka prawa handlowego)',
+   wylozenie:'13.11–18.12.2026',spotkanie:'25.11.2026, godz. 17:00, sala GOK',uwagi:'18.12.2026',nr:'RPP.6721.4.2025',
+   za:['ok. 120 miejsc pracy według wnioskodawcy','ok. 1,1 mln zł rocznie z podatku od nieruchomości (ok. 4% dochodów gminy)','dojazd do drogi wojewódzkiej bez wjazdu do centrum'],
+   przeciw:['prognoza: ok. 60 ciężarówek na dobę ulicą Szkolną','praca magazynów także nocą, hałas przy domach','utrata 42 ha gruntów rolnych III klasy']},
+  liczby:[['Dochody na mieszkańca','5 820 zł','5 640 zł',103],['Zadłużenie (% dochodów)','31%','18%',172,1],['Promocja i biuletyn na mieszkańca','46 zł','19 zł',242,1],['Inwestycje (% wydatków)','14%','21%',67,1],['Oświata (% wydatków)','38%','36%',106]],
+  umowy:[['Drogbud sp. z o.o.','4,82 mln zł','3 umowy na drogi, przetargi, po 1 ofercie'],['Eko-Wywóz sp. z o.o.','2,10 mln zł','odbiór odpadów, przetarg, 2 oferty'],['Lipa Media','186 tys. zł','biuletyn „Wieści Lipowieckie”, zamówienie z wolnej ręki'],['Kancelaria radcy prawnego','96 tys. zł','obsługa urzędu, zapytanie ofertowe']],
+  darczyncy:{komitet:'KWW Razem dla Lipowca (wybory 2024)',suma:'48 600 zł od 21 osób',najwieksze:[['Członek zarządu Drogbud sp. z o.o.','12 000 zł'],['Właściciel Lipa Media','8 000 zł'],['Pozostałe 19 wpłat','28 600 zł']]},
+  nabory:[['Inspektor ds. zamówień publicznych','Urząd Gminy','do 14.11.2026'],['Nauczyciel matematyki','SP w Lipowcu','do 20.11.2026'],['Kierowca, operator koparki','Gminny Zakład Komunalny sp. z o.o.','do 30.11.2026']],
+  naborStat:'W 2026 r. 11 naborów, w 7 z nich zgłosiła się jedna osoba.'
+ }
+};
+const GM=GMINY[OS.id]||null;
+if(GM)OS.docs.push({id:'gmina',name:'Moja gmina',img:'assets/card-gmina.svg',sub:GM.nazwa,alert:'Zmiana planu przy Tobie',holder:GM.nazwa.toUpperCase(),line:GM.typ,
+ f:[['Sołectwo',GM.solectwo],['Uwagi do planu','do '+GM.plan.uwagi]],rows:[]});
+
+/* mapka okolicy: dom, szkoła, obszar zmiany planu i dojazd ciężarówek */
+function mapaPlanu(){const P=GM.plan;return `<svg class="gmap" viewBox="0 0 320 172" role="img" aria-label="Mapka: obszar zmiany planu ${P.odl}, dojazd ${P.dojazd}">
+ <defs><pattern id="kres" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#fdecef"/><path d="M0 0v7" stroke="#dc143c" stroke-width="2.2" stroke-opacity=".55"/></pattern></defs>
+ <rect width="320" height="172" rx="12" fill="#eef3ec"/>
+ <path d="M0 58h320" stroke="#fff" stroke-width="9"/><path d="M150 58v114" stroke="#fff" stroke-width="7"/><path d="M150 132h170" stroke="#fff" stroke-width="7"/>
+ <text x="8" y="50" class="ml">ul. Lubelska</text><text x="156" y="82" class="ml">ul. Szkolna</text>
+ <g fill="#d5dccf"><rect x="40" y="18" width="16" height="12" rx="2"/><rect x="66" y="22" width="14" height="10" rx="2"/><rect x="100" y="70" width="18" height="13" rx="2"/><rect x="40" y="76" width="15" height="11" rx="2"/><rect x="72" y="104" width="16" height="12" rx="2"/></g>
+ <rect x="194" y="142" width="122" height="27" fill="url(#kres)" stroke="#dc143c" stroke-width="1.4"/><rect x="222" y="80" width="94" height="46" fill="url(#kres)" stroke="#dc143c" stroke-width="1.4"/>
+ <text x="227" y="97" class="mt">Pola Południowe</text><text x="227" y="111" class="ml">${P.pow}, magazyny</text>
+ <rect x="160" y="92" width="34" height="22" rx="3" fill="#4a6fa5"/><text x="177" y="107" class="ms">SP</text>
+ <path d="M228 132H158V66" fill="none" stroke="#dc143c" stroke-width="2" stroke-dasharray="5 4"/><path d="m153 72 5-8 5 8" fill="none" stroke="#dc143c" stroke-width="2"/>
+ <text x="196" y="125" class="mr">dojazd TIR</text>
+ <path d="M124 34 226 86" stroke="#6b7280" stroke-width="1" stroke-dasharray="2 3"/><text x="176" y="54" class="ml" transform="rotate(26 176 54)">${P.odl.split(' ')[0]} m</text>
+ <g transform="translate(112 12)"><path d="M12 0a12 12 0 0 1 12 12c0 9-12 20-12 20S0 21 0 12A12 12 0 0 1 12 0z" fill="#16805a"/><path d="M6.5 16v-5l5.5-4.2 5.5 4.2v5h-3.6v-3.4h-3.8V16z" fill="#fff"/></g>
+ <text x="140" y="26" class="mt">Twój dom</text>
+</svg>`}
+
+/* ---------- panel „Moja gmina” (zamiast zwykłych szczegółów dokumentu) ---------- */
+function openGmina(){
+ const det=$('#detail'),top=getComputedStyle($('.status')).display!=='none'?50:6,d=DOCS.find(x=>x.id==='gmina'),P=GM.plan;
+ const it=(k,ic,h,s)=>`<button class="it" data-k="${k}"><span class="gi">${svg(ic)}</span><span class="x"><b>${h}</b><small>${s}</small></span>${svg('chev')}</button>`;
+ det.innerHTML=`<div style="height:${top}px;flex:none"></div><div class="nav"><button class="back" id="dclose">${svg('back')}Wróć</button><b>Moja gmina</b><span></span></div>
+  <div class="body"><div class="bigcard" style="background-image:url(${d.img})">${faceHTML(d)}</div>
+  <div class="ui galert"><div class="hd"><div class="ic">${svg('alert')}</div><div class="tt">Zmienia się coś przy Tobie<small>${P.nazwa}, ${P.odl}</small></div></div>
+   <div class="body">${mapaPlanu()}</div>
+   <div class="rows">${rowsH([['Teraz',P.teraz],['Projekt',P.projekt],['Uwagi do','<em>'+P.uwagi+'</em>']])}</div>
+   <div class="actions"><button class="btn primary" data-k="plan">Zobacz i zgłoś uwagę</button></div>${srcH(GM.bip+', rejestr urbanistyczny (dane fikcyjne)')}</div>
+  <div class="ui list glist">${hd('doc','Twoja gmina')}
+   ${it('gRada','id','Rada i wójt',GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · Twój radny: '+GM.rada.radny.kto)}
+   ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.sesja.porzadek.length+' sprawy')}
+   ${it('gLiczby','coin','Gmina w liczbach','budżet i dług na tle podobnych gmin')}
+   ${it('gUmowy','db','Kto dostaje pieniądze gminy','umowy z Centralnego Rejestru Umów')}
+   ${it('gNabory','bell','Praca w gminie',GM.nabory.length+' otwarte nabory')}
+   ${srcH(GM.typ+', '+GM.mieszk+' mieszkańców')}</div></div>`;
+ tick();det.classList.add('on');
+ $('#dclose').onclick=()=>det.classList.remove('on');
+ const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmie się najbliższa sesja rady?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?'};
+ det.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{det.classList.remove('on');setTimeout(()=>startTopic(Q[b.dataset.k],()=>S[b.dataset.k]()),180)});
+}
+
+const lista=a=>'<ul class="gul">'+a.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+const ZG={ruch:'Ruch ciężarówek przy szkole',noc:'Praca magazynów nocą',wys:'Budynki do 18 m',ziel:'Brak pasa zieleni od domów'};
+const ZGT={ruch:'wyznaczenie dojazdu do terenu P/U bezpośrednio z drogi wojewódzkiej, z zakazem ruchu pojazdów powyżej 3,5 t na ul. Szkolnej',
+ noc:'ograniczenie działalności powodującej hałas w porze nocnej (22:00–6:00) od strony zabudowy mieszkaniowej',
+ wys:'obniżenie maksymalnej wysokości zabudowy do 12 m',ziel:'wprowadzenie pasa zieleni izolacyjnej o szerokości co najmniej 30 m od zabudowy mieszkaniowej'};
+
+function gminaInit(){
+ if(!GM)return;
+ const _open=openDoc;openDoc=function(id){id==='gmina'?openGmina():_open(id)};
+ const P=GM.plan,R=GM.rada;
+ Object.assign(S,{
+  async gmina(){
+   await say(`W ${GM.nazwa.replace('Gmina','gminie')} najważniejsza sprawa przy Tobie to projekt zmiany planu miejscowego, 380 m od Twojego domu. Uwagi można składać do <b>${P.uwagi}</b>.`);
+   chips([{label:'Co się zmienia przy moim domu?',go:S.plan},{label:'Kto rządzi w mojej gminie?',go:S.gRada},{label:'Budżet na tle podobnych gmin',go:S.gLiczby},{label:'Kto dostaje pieniądze gminy?',go:S.gUmowy}]);
+  },
+  async plan(){
+   await say(`Gmina wyłożyła projekt zmiany planu miejscowego. Dotyczy terenu ${P.odl}, a dojazd ma prowadzić ${P.dojazd}.`);
+   await info({icon:'alert',title:P.nazwa,source:GM.bip+', sprawa '+P.nr+' (dane fikcyjne)',body:mapaPlanu(),
+    rows:[['Obszar',P.pow],['Teraz',P.teraz],['Projekt',P.projekt],['Dojazd',P.dojazd],['Skąd zmiana',P.wniosek],['Wyłożenie projektu',P.wylozenie],['Spotkanie z projektantem',P.spotkanie],['Uwagi do','<b>'+P.uwagi+'</b>']]});
+   await info({icon:'doc',title:'Argumenty za i przeciw',source:'Uzasadnienie projektu, prognoza oddziaływania na środowisko, uwagi mieszkańców z etapu wniosków',
+    body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
+    note:'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.'});
+   await say('Każdy może złożyć uwagę do projektu, nie trzeba być właścicielem działki. Wójt musi ją rozpatrzyć, a uwagi nieuwzględnione trafiają do rady razem z projektem.');
+   chips([{label:'Złóż uwagę',go:S.uwaga},{label:'Zapisz mnie na spotkanie 25.11',go:S.spotkanie},{label:'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','11.12.2026, 9:00'],['O czym','uwagi do planu do '+P.uwagi]]})}]);
+  },
+  async uwaga(){
+   await say('Co chcesz zgłosić? Możesz wybrać kilka spraw, przygotuję z nich pismo.');
+   multi(Object.values(ZG),async sel=>{
+    const k=Object.keys(ZG).filter(x=>sel.includes(ZG[x]));
+    const tresc=`Wnoszę uwagę do projektu: ${P.nazwa.replace('Zmiana','zmiany')} (${P.nr}). Wnioskuję o: `+k.map(x=>ZGT[x]).join('; ')+'. Uzasadnienie: ulica Szkolna prowadzi bezpośrednio obok szkoły podstawowej i domów jednorodzinnych; prognozowany ruch ok. 60 ciężarówek na dobę zagraża bezpieczeństwu dzieci i ogranicza możliwość korzystania z nieruchomości.';
+    await info({icon:'doc',title:'Szkic uwagi',body:tresc,note:'Możesz poprawić treść, napisz po prostu, co zmienić.'});
+    await confirmCard({icon:'mail',title:'Uwaga do projektu planu',source:'Do: '+GM.urzad+', przez e-Doręczenia',
+     rows:[['Do','Wójt '+GM.nazwa.replace('Gmina','Gminy')],['Od',OS.imie+' '+OS.nazwisko+', '+OS.moje.adres],['Sprawa',P.nr],['Wnioski',String(k.length)],['Termin','do '+P.uwagi]],
+     label:'Podpisz i wyślij',then:async()=>{
+      await result({title:'Uwaga złożona',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Sprawa','w Twoich sprawach'],['Wynik','dostaniesz w skrzynce po rozpatrzeniu uwag']]});
+      await say('Gotowe. Dam Ci znać, jak wójt rozpatrzy uwagę i kiedy rada będzie głosować nad planem. Chcesz, żeby sąsiedzi też się dowiedzieli?');
+      chips([{label:'Powiadom sąsiadów',go:S.sasiedzi},{label:'Zapisz mnie na spotkanie 25.11',go:S.spotkanie},{label:'Na razie wystarczy',go:()=>say('Dobrze. Sprawę znajdziesz w zakładce Moja gmina.')}]);
+     }});
+   });
+  },
+  async spotkanie(){
+   await confirmCard({icon:'clock',title:'Spotkanie z projektantem planu',source:GM.urzad,rows:[['Kiedy',P.spotkanie.split(', sala')[0]],['Gdzie','sala GOK, ul. Lubelska 2'],['Pytania z góry','możesz wysłać teraz, projektant odpowie na spotkaniu']],label:'Zapisz mnie',then:()=>result({title:'Zapisano na spotkanie',rows:[['Kalendarz','dodane do kalendarza'],['Przypomnienie','25.11, 15:00']]})});
+  },
+  async sasiedzi(){
+   await say('Sąsiedzi dostaną to samo podsumowanie z mapką i terminami, bez Twoich danych i bez treści Twojej uwagi.');
+   await info({icon:'qr',title:'Udostępnij informację o planie',body:`<div class="gqr">${qrSVG(41)}</div>`,rows:[['Link','mobywatel.gov.pl/gmina/plan/'+P.nr.replace(/\D/g,'')],['Kto zobaczy','każdy, także bez aplikacji']],note:'Mieszkańcy sołectwa '+GM.solectwo+' z aplikacją dostali już powiadomienie, bo mieszkają w promieniu 1 km.'});
+  },
+  async gRada(){
+   await info({icon:'id',title:'Wójt i rada gminy',source:'PKW, '+GM.bip+' (dane fikcyjne)',
+    rows:[['Wójt',GM.wojt.kto],['Urzęduje',GM.wojt.kad],['Ostatnie wybory',GM.wojt.wybory],['Rada gminy',R.n+' radnych, '+R.wojta+' z komitetu wójta'],['Wybory do rady 2024',R.jeden],['Frekwencja 2024',R.frekw]],
+    note:GM.wojt.limit});
+   await info({icon:'doc',title:'Twój radny: '+R.radny.kto,source:'Imienne wyniki głosowań, '+GM.bip,
+    rows:[['Okręg',R.radny.okreg],['Komitet',R.radny.komitet],['Dyżur',R.radny.dyzur],...R.glosy.map(([n,v])=>['<i class="gw">'+n+'</i>',v])]});
+   chips([{label:'Napisz do radnego',go:()=>say('W następnej wersji. Napiszesz tu pismo, a odpowiedź radnego trafi do Twojej skrzynki.')},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+  },
+  async gSesja(){
+   await info({icon:'clock',title:'Sesja Rady Gminy',source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]],body:'Porządek obrad:'+lista(GM.sesja.porzadek)});
+   chips([{label:'Przypomnij i pokaż transmisję',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','26.11.2026, 9:45'],['Transmisja','link w powiadomieniu']]})},{label:'Kto rządzi w mojej gminie?',go:S.gRada}]);
+  },
+  async gLiczby(){
+   const bar=([n,v,p,w,zle])=>`<div class="gbar"><div class="gl"><span>${n}</span><b>${v}</b></div><div class="gt"><i class="${zle&&w>130?'hi':''}" style="width:${Math.min(100,w/2.5)}%"></i><u style="left:40%"></u></div><small>podobne gminy: ${p}</small></div>`;
+   await info({icon:'coin',title:GM.nazwa+' na tle podobnych gmin',source:'Sprawozdania budżetowe 2025 (RIO, Ministerstwo Finansów), GUS (dane fikcyjne)',
+    body:GM.liczby.map(bar).join(''),note:'Kreska to średnia 5 gmin wiejskich z województwa o podobnej liczbie mieszkańców.'});
+   await say('Najbardziej odstają zadłużenie i wydatki na promocję, w tym biuletyn gminy. Chcesz zobaczyć, komu gmina płaci najwięcej?');
+   chips([{label:'Kto dostaje pieniądze gminy?',go:S.gUmowy},{label:'Na razie wystarczy'}]);
+  },
+  async gUmowy(){
+   await info({icon:'db',title:'Najwięksi wykonawcy w 2026 r.',source:'Centralny Rejestr Umów jednostek sektora finansów publicznych (dane fikcyjne)',
+    rows:GM.umowy.map(([k,v,o])=>[k+'<small class="gsm">'+o+'</small>',v])});
+   await say('W dwóch z trzech przetargów drogowych wpłynęła tylko jedna oferta. Mogę pokazać obok darczyńców komitetów wyborczych z jawnych sprawozdań PKW.');
+   chips([{label:'Pokaż darczyńców komitetów',go:async()=>{
+    await info({icon:'doc',title:'Wpłaty na komitet wójta',source:'Sprawozdanie finansowe komitetu, PKW (dane fikcyjne)',rows:[['Komitet',GM.darczyncy.komitet],['Razem',GM.darczyncy.suma],...GM.darczyncy.najwieksze],
+     note:'To nie jest dowód nieprawidłowości. Pokazuję jawne dane obok siebie, ocena należy do Ciebie.'});
+   }},{label:'Budżet na tle podobnych gmin',go:S.gLiczby}]);
+  },
+  async gNabory(){
+   await info({icon:'bell',title:'Otwarte nabory w gminie',source:GM.bip+', spółki gminne',rows:GM.nabory.map(([s,g,t])=>[s+'<small class="gsm">'+g+'</small>',t]),flag:GM.naborStat});
+   chips([{label:'Powiadamiaj o nowych naborach',go:()=>result({title:'Powiadomienia włączone',rows:[['Co','nabory w urzędzie, szkołach i spółkach gminy'],['Wyniki naborów','też dostaniesz']]})},{label:'Na razie wystarczy'}]);
+  }
+ });
+ const _route=route;
+ route=function(t){
+  if(pending)return _route(t);
+  const n=norm(t);
+  if(/plan\w* miejsc|magazyn|zmienia.*(dom|okolic)|uwag\w* do planu|przy (moim|twoim) domu/.test(n))return S.plan();
+  if(/radn|wojt|rada gminy|kto rzadzi/.test(n))return S.gRada();
+  if(/sesj/.test(n))return S.gSesja();
+  if(/budzet|zadluz|w liczbach|wydatk/.test(n))return S.gLiczby();
+  if(/umow|przetarg|zamowien|darczyn|placi najwiecej|pieniadze gminy/.test(n))return S.gUmowy();
+  if(/nabor|praca w gminie|prace? w urzedzie/.test(n))return S.gNabory();
+  if(/gmin|soltys|solectw/.test(n))return S.gmina();
+  return _route(t);
+ };
+}
+document.addEventListener('DOMContentLoaded',gminaInit);
