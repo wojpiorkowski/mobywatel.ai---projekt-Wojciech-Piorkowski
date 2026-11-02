@@ -577,4 +577,65 @@ def r_karta_uslugi(a, s):
                         warianty=[dict(wariant=v['wariant'], sekcje={x['sekcja']: re.sub(r'\[([^\]]*)\]\([^)]*\)', r'\1', x['tresc']).replace('**', '') for x in v['sekcje']}) for v in k['warianty']]))
     return dict(znaleziono=True, karty=out), None
 
+# --- Moja gmina (dane w gmina.py): fakty i argumenty obu stron ze źródłami, bez ocen
+from gmina import G
+def _zp(za, przeciw):
+    li = lambda a: '<ul class="gul">' + ''.join('<li>%s</li>' % x for x in a) + '</ul>'
+    return '<div class="gzp"><div><h4>Za</h4>%s</div><div><h4>Przeciw</h4>%s</div></div>' % (li(za), li(przeciw))
+
+def r_moja_gmina(a, s):
+    g = G(); w, r, p = g['wojt'], g['rada'], g['plan']
+    return dict(gmina=g['nazwa'], typ=g['typ'], mieszkancy=g['mieszkancy'], solectwo=g['solectwo'], soltys=g['soltys'], wojt=w, rada={k: v for k, v in r.items() if k != 'twoj_radny'},
+                twoj_radny=r['twoj_radny'], najblizsza_sesja=dict(g['sesja'], projekty=[u['tytul'] for u in g['uchwaly']]),
+                zmiana_przy_domu=dict(nazwa=p['nazwa'], odleglosc=p['odleglosc'], uwagi_do=p['uwagi_do'])), \
+        dict(icon='id', title=g['nazwa'], source='PKW, ' + g['bip'] + ' (dane fikcyjne)',
+             rows=[['Wójt', '%s, %s' % (w['kto'], w['kadencja'])], ['Wybory wójta 2024', w['wybory_2024']], ['Rada gminy', '%d radnych, %d z komitetu wójta' % (r['radnych'], r['z_komitetu_wojta'])],
+                   ['Okręgi z jednym kandydatem', r['okregi_z_jednym_kandydatem']], ['Twój radny', '%s, %s' % (r['twoj_radny']['kto'], r['twoj_radny']['okreg'])],
+                   ['Najbliższa sesja', g['sesja']['kiedy']], ['Zmiana przy Twoim domu', '%s, uwagi do %s' % (p['nazwa'].replace('Zmiana planu miejscowego ', ''), p['uwagi_do'])]],
+             note='Limit kadencji: ' + w['limit'] + '.')
+
+def r_plan_miejscowy(a, s):
+    p = G()['plan']
+    return dict(p, uwage_moze_zlozyc='każdy, nie trzeba być właścicielem działki; wójt rozpatruje uwagi, a nieuwzględnione trafiają do rady razem z projektem',
+                uwaga_juz_zlozona=bool(s.get('uwaga_do_planu'))), \
+        dict(icon='alert', title=p['nazwa'], source=G()['bip'] + ', sprawa ' + p['nr'] + '; ' + p['zrodla'], mapa=1, body=_zp(p['za'], p['przeciw']),
+             rows=[['Obszar', p['powierzchnia'] + ', ' + p['odleglosc']], ['Teraz', p['teraz']], ['Projekt', p['projekt']], ['Dojazd', p['dojazd']], ['Skąd zmiana', p['skad']],
+                   ['Konsultacje', p['wylozenie']], ['Spotkanie', p['spotkanie']], ['Uwagi do', p['uwagi_do']]])
+
+def r_uchwaly_sesji(a, s):
+    g = G(); u = next((x for x in g['uchwaly'] if x['id'] == a.get('uchwala')), None)
+    if not u:
+        return dict(sesja=g['sesja'], projekty=[dict(id=x['id'], tytul=x['tytul'], co=x['co']) for x in g['uchwaly']]), \
+            dict(icon='clock', title='Sesja Rady Gminy, ' + g['sesja']['kiedy'], source=g['bip'] + ', projekty uchwał', rows=[[x['tytul'], x['nr']] for x in g['uchwaly']])
+    return dict(u, sesja=g['sesja']), dict(icon='doc', title=u['tytul'], source=u['zrodla'], body=_zp(u['za'], u['przeciw']),
+                                           rows=[['Co się zmienia', u['co']], ['Kogo dotyczy', u['kogo']]] + u['rows'] + [['Opinia komisji', u['komisja']]],
+                                           note='Streszczenie dokumentów, bez oceny. Pełny tekst projektu jest na BIP.')
+
+def r_finanse_gminy(a, s):
+    g = G(); z = a.get('zakres') or 'budzet'
+    if z == 'umowy':
+        return dict(umowy=g['umowy'], uwaga='w 2 z 3 przetargów drogowych wpłynęła jedna oferta'), \
+            dict(icon='db', title='Najwięksi wykonawcy w 2026 r.', source='Centralny Rejestr Umów jednostek sektora finansów publicznych (dane fikcyjne)', rows=[[k + ' (' + o + ')', v] for k, v, o in g['umowy']])
+    if z == 'darczyncy':
+        d_ = g['darczyncy']
+        return dict(d_, uwaga='to jawne dane, nie dowód nieprawidłowości; nie sugeruj związku między wpłatami a umowami'), \
+            dict(icon='doc', title='Wpłaty na komitet wójta', source='Sprawozdanie finansowe komitetu, PKW (dane fikcyjne)', rows=[['Komitet', d_['komitet']], ['Razem', d_['suma']]] + d_['najwieksze'],
+                 note='To nie jest dowód nieprawidłowości. Jawne dane pokazane obok siebie.')
+    return dict(wskazniki=[dict(nazwa=n, gmina=v, podobne_gminy=p) for n, v, p in g['liczby']], porownanie='średnia 5 gmin wiejskich z województwa o podobnej liczbie mieszkańców'), \
+        dict(icon='coin', title=g['nazwa'] + ' na tle podobnych gmin', source='Sprawozdania budżetowe 2025 (RIO, MF), GUS (dane fikcyjne)', rows=[[n, '%s (podobne: %s)' % (v, p)] for n, v, p in g['liczby']])
+
+def r_nabory_w_gminie(a, s):
+    g = G()
+    return dict(nabory=g['nabory'], statystyka=g['nabory_statystyka']), \
+        dict(icon='bell', title='Otwarte nabory w gminie', source=g['bip'] + ', spółki gminne', rows=[[n + ' (' + k + ')', t] for n, k, t in g['nabory']], flag=g['nabory_statystyka'].capitalize() + '.')
+
+def r_jak_zabrac_glos(a, s):
+    g = G(); i, db, w = g['inicjatywa'], g['debata'], g['wybory']
+    return dict(inicjatywa_uchwalodawcza=dict(i, uwaga='dziś podpisy zbiera się na papierze; zbiórka w aplikacji to proponowana zmiana'),
+                debata_o_raporcie=db, kandydowanie=w, pytanie_do_rady='pod pseudonimem: proponowana zmiana regulaminu lub przepisów; dziś z imienia i nazwiska'), \
+        dict(icon='mail', title='Jak zabrać głos w gminie', source='Ustawa o samorządzie gminnym, Kodeks wyborczy (progi do sprawdzenia)',
+             rows=[['Projekt uchwały mieszkańców', '%d podpisów, rada zajmie się nim najpóźniej %s' % (i['podpisow'], i['sesja_najpozniej'])],
+                   ['Debata o raporcie o stanie gminy', '%s, %d podpisów pod zgłoszeniem' % (db['kiedy'], db['podpisow'])],
+                   ['Kandydowanie do rady', w['radny'] + ', wybory ' + w['kiedy']], ['Kandydowanie na wójta', w['wojt']], ['Pytanie do rady', 'pod pseudonimem (proponowana zmiana)']])
+
 READ = {k[2:]: v for k, v in list(globals().items()) if k.startswith('r_')}

@@ -6,6 +6,7 @@ ValueError z wyjaśnieniem dla modelu; agent przekazuje je jako błąd narzędzi
 import datetime, random, re
 from dane import DOKUMENTY, OSOBA, POJAZD, NALEZNOSCI, DRUGA_STRONA, DZIS, pl, d, zl, KURSY, rodz, imie_nazwisko, norm_rej, sylw
 from persony import P
+from gmina import G
 
 def nr(p): return '%s/2026/%03d %03d' % (p, random.randint(100, 999), random.randint(100, 999))
 def teraz(): return datetime.datetime.now().strftime('%H:%M')
@@ -620,3 +621,48 @@ def wykonaj(a, s):
     return dict(kod_wyslany=True, zapisano=False, dalej='poproś o kod i wywołaj tę akcję ponownie z parametrem kod; kod jest ważny 24 godziny'), \
         dict(icon='check', tone='ok', title='Kod wysłany', source='Rejestr Danych Kontaktowych',
              rows=r + [['Potwierdź', 'kodem z SMS-a, w ciągu 24 godzin' if tel else 'kodem z e-maila, w ciągu 24 godzin']])
+
+# --- Moja gmina
+@akcja('zloz_uwage_do_planu')
+def podglad(a, s):
+    g = G(); p = g['plan']
+    return dict(icon='mail', title='Uwaga do projektu planu', source='Do: ' + g['urzad'] + ', przez e-Doręczenia', body=a.get('tresc', ''),
+                rows=[['Do', 'Wójt ' + g['dop']], ['Od', imie_nazwisko() + ', ' + OSOBA['adres']], ['Sprawa', p['nr']], ['Termin', 'do ' + p['uwagi_do']]], label='Podpisz i wyślij')
+@akcja('zloz_uwage_do_planu')
+def wykonaj(a, s):
+    s['uwaga_do_planu'] = True
+    return dict(zlozono=True, dalej='wójt rozpatrzy uwagę; wynik przyjdzie do skrzynki; zaproponuj zapis na spotkanie albo powiadomienie sąsiadów'), \
+        dict(icon='check', tone='ok', title='Uwaga złożona', source='e-Doręczenia, dowód otrzymania', rows=[['Dowód otrzymania', 'godz. ' + teraz()], ['Sprawa', G()['plan']['nr']], ['Wynik', 'w skrzynce po rozpatrzeniu uwag']])
+
+@akcja('napisz_do_radnego')
+def podglad(a, s):
+    r = G()['rada']['twoj_radny']
+    return dict(icon='mail', title='Wiadomość do radnego', source='Do: %s, %s, przez skrzynkę rady' % (r['kto'], r['okreg']), body=a.get('tresc', ''),
+                rows=[['Sprawa', a.get('sprawa') or 'sprawy gminy'], ['Od', imie_nazwisko() + ', ' + rodz('mieszkanka', 'mieszkaniec') + ' okręgu'], ['Odpowiedź', 'do Twojej skrzynki']], label='Wyślij')
+@akcja('napisz_do_radnego')
+def wykonaj(a, s):
+    r = G()['rada']['twoj_radny']
+    return dict(wyslano=True), dict(icon='check', tone='ok', title='Wiadomość wysłana', rows=[['Do', r['kto']], ['Przypomnienie', 'jeśli nie odpowie w 14 dni']])
+
+@akcja('pytanie_do_rady')
+def podglad(a, s):
+    g = G()
+    return dict(icon='mail', title='Pytanie do Rady Gminy', source='Rada %s, publiczna lista pytań mieszkańców' % g['dop'], body='„%s”' % a.get('tresc', ''),
+                rows=[['Podpis', '%s sołectwa %s, %s mObywatelem' % (rodz('Mieszkanka', 'Mieszkaniec'), g['solectwo'], rodz('zweryfikowana', 'zweryfikowany'))], ['Twoje dane', 'nie trafiają do urzędu ani rady'], ['Odpowiedź', 'publicznie, termin 14 dni']],
+                note='Tak mogłoby działać. Wymaga zmiany regulaminu rady albo przepisów; dziś pytania zadaje się z imienia i nazwiska.', label='Wyślij pod pseudonimem')
+@akcja('pytanie_do_rady')
+def wykonaj(a, s):
+    return dict(opublikowano=True), dict(icon='check', tone='ok', title='Pytanie opublikowane', rows=[['Podpis', rodz('Mieszkanka', 'Mieszkaniec') + ' ' + G()['solectwo']], ['Odpowiedź', 'do 14 dni, dostaniesz powiadomienie']])
+
+@akcja('zloz_projekt_uchwaly')
+def podglad(a, s):
+    g = G(); i = g['inicjatywa']
+    return dict(icon='id', title='Projekt uchwały mieszkańców', source='Rejestr mieszkańców gminy (tożsamość z mDowodu)', body='<b>%s</b><br>%s' % (a.get('tytul', ''), a.get('tresc', '')),
+                rows=[[rodz('Pełnomocniczka', 'Pełnomocnik'), imie_nazwisko()], ['Komitet', ', '.join(i['komitet']) + ' (potwierdzili)'], ['Wymagane podpisy', str(i['podpisow'])], ['Rada zajmie się projektem', 'najpóźniej ' + i['sesja_najpozniej']]],
+                note='Tak mogłoby działać. Dziś prawo wymaga podpisów na papierze, więc ten krok pokazuje proponowaną zmianę.', label='Podpisz i otwórz zbiórkę')
+@akcja('zloz_projekt_uchwaly')
+def wykonaj(a, s):
+    i = G()['inicjatywa']; n = i['podpisow'] + 17
+    return dict(podpisow=n, zlozono=True, numer='BRG.0006.1.2026', pokaz='w pokazie podpisy zbierają się od razu'), \
+        dict(icon='check', tone='ok', title='Projekt złożony w radzie', source='e-Doręczenia, dowód otrzymania',
+             rows=[['Podpisy', '%d (wymagane %d)' % (n, i['podpisow'])], ['Numer', 'BRG.0006.1.2026'], ['Sesja', 'najpóźniej ' + i['sesja_najpozniej']], ['Powiadomienia', 'Ty i wszyscy podpisani']])
