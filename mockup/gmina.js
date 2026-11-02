@@ -20,7 +20,14 @@ const GMINY={
   umowy:[['Drogbud sp. z o.o.','4,82 mln zł','3 umowy na drogi, przetargi, po 1 ofercie'],['Eko-Wywóz sp. z o.o.','2,10 mln zł','odbiór odpadów, przetarg, 2 oferty'],['Lipa Media','186 tys. zł','biuletyn „Wieści Lipowieckie”, zamówienie z wolnej ręki'],['Kancelaria radcy prawnego','96 tys. zł','obsługa urzędu, zapytanie ofertowe']],
   darczyncy:{komitet:'KWW Razem dla Lipowca (wybory 2024)',suma:'48 600 zł od 21 osób',najwieksze:[['Członek zarządu Drogbud sp. z o.o.','12 000 zł'],['Właściciel Lipa Media','8 000 zł'],['Pozostałe 19 wpłat','28 600 zł']]},
   nabory:[['Inspektor ds. zamówień publicznych','Urząd Gminy','do 14.11.2026'],['Nauczyciel matematyki','SP w Lipowcu','do 20.11.2026'],['Kierowca, operator koparki','Gminny Zakład Komunalny sp. z o.o.','do 30.11.2026']],
-  naborStat:'W 2026 r. 11 naborów, w 7 z nich zgłosiła się jedna osoba.'
+  naborStat:'W 2026 r. 11 naborów, w 7 z nich zgłosiła się jedna osoba.',
+  glos:{prog:200,progOpis:'200 podpisów (gmina do 20 tys. mieszkańców)',komitet:['Ewa Nowak','Piotr Sadowski','Agnieszka Lis'],
+   projekt:{tytul:'Uchwała w sprawie panelu obywatelskiego o zmianie planu „Pola Południowe”',
+    tresc:['§ 1. Przed uchwaleniem zmiany planu „Pola Południowe” przeprowadza się panel obywatelski: 24 mieszkańców gminy wylosowanych z rejestru mieszkańców, z zachowaniem proporcji wieku, płci i sołectw.','§ 2. Panel zapoznaje się ze stanowiskami wnioskodawcy, urzędu i mieszkańców oraz przyjmuje rekomendacje większością 80% głosów.','§ 3. Wójt przedstawia radzie rekomendacje panelu wraz z projektem planu i informacją, jak je uwzględniono.'],
+    uzas:'Zmiana planu dotyczy 42 ha i kilkuset gospodarstw w trzech sołectwach. Panel pozwala rozważyć argumenty za i przeciw przez mieszkańców, którzy nie są stroną sporu.'},
+   sesjaProjektu:'28.01.2027',debata:{raport:'Raport o stanie gminy za 2026 r.',kiedy:'czerwiec 2027',podpisy:'20 podpisów mieszkańców'},
+   wybory:{kiedy:'wiosna 2029',radny:'25 podpisów wyborców z okręgu',wojt:'150 podpisów (gmina do 20 tys. mieszkańców)',dieta:'ok. 900 zł miesięcznie (uchwała rady, dane fikcyjne)',
+    soltys:'zebranie wiejskie po wyborach samorządowych, kandydata zgłasza się na zebraniu'}}
  }
 };
 const GM=GMINY[OS.id]||null;
@@ -60,13 +67,16 @@ function openGmina(){
    ${it('gLiczby','coin','Gmina w liczbach','budżet i dług na tle podobnych gmin')}
    ${it('gUmowy','db','Kto dostaje pieniądze gminy','umowy z Centralnego Rejestru Umów')}
    ${it('gNabory','bell','Praca w gminie',GM.nabory.length+' otwarte nabory')}
+   ${it('glos','mail','Zabierz głos','projekt uchwały, pytanie do rady, kandydowanie')}
    ${srcH(GM.typ+', '+GM.mieszk+' mieszkańców')}</div></div>`;
  tick();det.classList.add('on');
  $('#dclose').onclick=()=>det.classList.remove('on');
- const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmie się najbliższa sesja rady?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?'};
+ const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmie się najbliższa sesja rady?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?',glos:'Jak mogę zabrać głos w sprawach gminy?'};
  det.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{det.classList.remove('on');setTimeout(()=>startTopic(Q[b.dataset.k],()=>S[b.dataset.k]()),180)});
 }
 
+const ETYKIETA='Tak mogłoby działać. Dziś prawo wymaga podpisów na papierze, więc ten krok pokazuje proponowaną zmianę.';
+const kroki=a=>'<ol class="gsteps">'+a.map(([t,d,st])=>`<li class="${st||''}"><b>${t}</b><small>${d}</small></li>`).join('')+'</ol>';
 const lista=a=>'<ul class="gul">'+a.map(x=>`<li>${x}</li>`).join('')+'</ul>';
 const ZG={ruch:'Ruch ciężarówek przy szkole',noc:'Praca magazynów nocą',wys:'Budynki do 18 m',ziel:'Brak pasa zieleni od domów'};
 const ZGT={ruch:'wyznaczenie dojazdu do terenu P/U bezpośrednio z drogi wojewódzkiej, z zakazem ruchu pojazdów powyżej 3,5 t na ul. Szkolnej',
@@ -145,6 +155,66 @@ function gminaInit(){
   async gNabory(){
    await info({icon:'bell',title:'Otwarte nabory w gminie',source:GM.bip+', spółki gminne',rows:GM.nabory.map(([s,g,t])=>[s+'<small class="gsm">'+g+'</small>',t]),flag:GM.naborStat});
    chips([{label:'Powiadamiaj o nowych naborach',go:()=>result({title:'Powiadomienia włączone',rows:[['Co','nabory w urzędzie, szkołach i spółkach gminy'],['Wyniki naborów','też dostaniesz']]})},{label:'Na razie wystarczy'}]);
+  },
+  async glos(){
+   await say('W gminie możesz zrobić więcej niż głosować raz na pięć lat. Co Cię interesuje?');
+   chips([{label:'Złóż projekt uchwały z sąsiadami',go:S.inicjatywa},{label:'Zapytaj radę pod pseudonimem',go:S.pytanie},{label:'Zabierz głos o raporcie o stanie gminy',go:S.debata},{label:'Kandyduj na radną albo sołtyskę',go:S.kandyduj}]);
+  },
+  async inicjatywa(){
+   const G=GM.glos,J=G.projekt;
+   await say(`Mieszkańcy mogą sami złożyć projekt uchwały. Potrzebny jest komitet i <b>${G.progOpis}</b>. Rada musi się nim zająć najpóźniej 3 miesiące po złożeniu.`);
+   await say('Na podstawie sprawy planu „Pola Południowe” przygotowałem przykładowy projekt. Możesz go zmienić albo zacząć od własnego pomysłu.');
+   await info({icon:'doc',title:J.tytul,body:lista(J.tresc)+'<p class="gp"><b>Uzasadnienie.</b> '+J.uzas+'</p>',note:'Projekt sprawdzi radca prawny urzędu, ale rada nie może go odrzucić z powodów formalnych bez wezwania komitetu do poprawek.'});
+   chips([{label:'Utwórz komitet z sąsiadami',go:S.komitet},{label:'Mam własny pomysł',go:()=>say('Opisz go własnymi słowami, a przygotuję projekt uchwały i uzasadnienie. W tej wersji pokazu działa przykład z planem.')}]);
+  },
+  async komitet(){
+   const G=GM.glos;
+   await confirmCard({icon:'id',title:'Komitet inicjatywy uchwałodawczej',source:'Rejestr mieszkańców gminy (tożsamość z mDowodu)',
+    rows:[['Pełnomocniczka',G.komitet[0]],['Członkowie',G.komitet.slice(1).join(', ')],['Zaproszenia','wysłane, obaj sąsiedzi potwierdzili'],['Projekt',GM.glos.projekt.tytul.replace('Uchwała w sprawie ','')],['Zbiórka podpisów','w aplikacji, od dziś']],
+    note:ETYKIETA,label:'Podpisz i otwórz zbiórkę',then:S.zbiorka});
+  },
+  async zbiorka(){
+   const G=GM.glos;
+   await say('Zbiórka otwarta. Mieszkańcy gminy, którzy obserwują sprawę planu, dostali powiadomienie i mogą podpisać się mDowodem.');
+   const c=await card(`<div class="ui">${hd('id','Podpisy pod projektem')}<div class="body"><div class="gcnt"><b>0</b> z ${G.prog}</div><div class="gprog"><i></i></div><small class="gsm2">Każdy podpis to zweryfikowany mieszkaniec gminy. Nazwiska widzi tylko komitet i urząd.</small></div>${srcH('Pokaz: sąsiedzi podpisują w kilka sekund')}</div>`);
+   const b=c.querySelector('.gcnt b'),i=c.querySelector('.gprog i'),N=G.prog+17;
+   for(let k=1;k<=14;k++){await sleep(230);const v=Math.round(N*k/14);b.textContent=v;i.style.width=Math.min(100,v/G.prog*100)+'%';if(v>=G.prog)c.classList.add('ok')}
+   await say(`Jest ${N} podpisów, więcej niż wymagane ${G.prog}. Złożyć projekt w urzędzie?`);
+   chips([{label:'Złóż projekt w urzędzie',go:()=>confirmCard({icon:'mail',title:'Złożenie projektu uchwały',source:'Do: Przewodniczący Rady Gminy Lipowiec, przez e-Doręczenia',
+    rows:[['Projekt',G.projekt.tytul.replace('Uchwała w sprawie ','')],['Komitet',G.komitet.length+' osoby'],['Podpisy',N+' (wymagane '+G.prog+')'],['Rada zajmie się projektem','najpóźniej 3 miesiące po złożeniu']],label:'Podpisz i złóż',then:S.sledz})}]);
+  },
+  async sledz(){
+   const G=GM.glos;
+   await result({title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]});
+   await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','grudzień 2026'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', pełnomocniczka może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
+    note:'Powiadomię Ciebie i wszystkie osoby, które się podpisały, o każdym kroku.'});
+   chips([{label:'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
+  },
+  async pytanie(){
+   await say('Napisz pytanie do rady. Rada i urząd zobaczą tylko, że pyta zweryfikowany mieszkaniec Twojego sołectwa, a nie kto.');
+   chips([{label:'Ile ciężarówek będzie jeździć obok szkoły?',go:()=>S.pytanie2('Ile ciężarówek na dobę ma jeździć ulicą Szkolną po zmianie planu i czy gmina rozważała inny dojazd?')},{label:'Dlaczego komisje nie są nagrywane?',go:()=>S.pytanie2('Dlaczego rada odrzuciła nagrywanie posiedzeń komisji i czy wróci do tej sprawy?')}]);
+   pending=t=>S.pytanie2(t);
+  },
+  async pytanie2(q){
+   pending=null;
+   await confirmCard({icon:'mail',title:'Pytanie do Rady Gminy',source:'Rada Gminy Lipowiec, publiczna lista pytań mieszkańców',body:'„'+esc(q)+'”',
+    rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' sołectwa '+GM.solectwo+', '+rodz('zweryfikowana','zweryfikowany')+' mObywatelem'],['Twoje dane','nie trafiają do urzędu ani rady'],['Odpowiedź','publicznie, termin 14 dni']],
+    note:'Tak mogłoby działać. Wymaga zmiany regulaminu rady albo przepisów; dziś pytania zadaje się z imienia i nazwiska.',label:'Wyślij pod pseudonimem',
+    then:()=>result({title:'Pytanie opublikowane',rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.solectwo],['Podpisało się pod pytaniem','powiadomię, gdy inni dołączą'],['Odpowiedź','do 14 dni, dostaniesz powiadomienie']]})});
+  },
+  async debata(){
+   const D=GM.glos.debata;
+   await info({icon:'doc',title:'Debata o raporcie o stanie gminy',source:'Ustawa o samorządzie gminnym, '+GM.bip,
+    rows:[['Raport',D.raport],['Debata',D.kiedy+', na sesji rady'],['Kto może zabrać głos','każdy mieszkaniec'],['Co trzeba',D.podpisy+' pod zgłoszeniem'],['Kiedy zgłosić','najpóźniej dzień przed sesją']],
+    note:'Wójt przedstawia raport co roku do 31 maja. Po debacie rada głosuje nad wotum zaufania.'});
+   chips([{label:'Przypomnij, gdy raport będzie gotowy',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','gdy raport pojawi się na BIP (do 31.05.2027)'],['Potem','zbiórka 20 podpisów w aplikacji, kilka minut']]})},{label:'Na razie wystarczy'}]);
+  },
+  async kandyduj(){
+   const W=GM.glos.wybory;
+   await info({icon:'id',title:'Kandydowanie w gminie',source:'Kodeks wyborczy, PKW (dane gminy fikcyjne)',
+    rows:[['Najbliższe wybory',W.kiedy],['Do rady, Twój okręg',W.radny],['Na wójta',W.wojt],['Dieta radnego',W.dieta],['Sołtys',W.soltys]],
+    flag:'W 2024 r. w 9 z 15 okręgów był tylko jeden kandydat, a na wójta jeden kandydat.'});
+   chips([{label:'Przypomnij, gdy ruszy kalendarz wyborczy',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','po ogłoszeniu wyborów w 2029 r.'],['Dostaniesz','plan krok po kroku i terminy']]})},{label:'Jak wygląda praca radnej?',go:()=>say('Sesje mniej więcej raz w miesiącu, posiedzenia komisji, dyżury dla mieszkańców. Radna głosuje imiennie, a jej głosy są publiczne.')}]);
   }
  });
  const _route=route;
@@ -152,6 +222,11 @@ function gminaInit(){
   if(pending)return _route(t);
   const n=norm(t);
   if(/plan\w* miejsc|magazyn|zmienia.*(dom|okolic)|uwag\w* do planu|przy (moim|twoim) domu/.test(n))return S.plan();
+  if(/inicjatyw|projekt uchwaly|podpis\w* pod/.test(n))return S.inicjatywa();
+  if(/pseudonim|anonim|zapytaj rad/.test(n))return S.pytanie();
+  if(/raport|debat|debac/.test(n))return S.debata();
+  if(/kandyd|zostac radn|soltysk/.test(n))return S.kandyduj();
+  if(/zabrac glos|zabierz glos/.test(n))return S.glos();
   if(/radn|wojt|rada gminy|kto rzadzi/.test(n))return S.gRada();
   if(/sesj/.test(n))return S.gSesja();
   if(/budzet|zadluz|w liczbach|wydatk/.test(n))return S.gLiczby();
