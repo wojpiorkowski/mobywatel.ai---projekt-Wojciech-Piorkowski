@@ -184,6 +184,16 @@ PERSONY['ewa'] = dict(
     zalatwienia_extra=[['Emerytura', 'wiek emerytalny 03.02.2029, wniosek złożysz od 04.01.2029']],
 )
 
+# Moja praca (e-teczka) Ewy; odpowiednik mockup/praca.js
+PERSONY['ewa']['praca'] = dict(
+    pracodawca='Szkoła Podstawowa w Lipowcu', stanowisko='nauczycielka matematyki', awans='nauczycielka dyplomowana', od='01.09.1993', staz='33 lata', wymiar='pełny etat',
+    historia=[['09.1993–08.2001', 'SP nr 24 w Lublinie, nauczycielka'], ['09.2001–obecnie', 'SP w Lipowcu, nauczycielka, od 2011 r. dyplomowana'], ['07.2015–08.2015', 'Obóz językowy „Lato”, umowa zlecenia']],
+    kwalifikacje=[['Magister matematyki', 'UMCS, 1993'], ['Studia podyplomowe z informatyki', 'UMCS, 2005'], ['Kierownik wycieczek szkolnych', 'kurs, 2018'], ['Pierwsza pomoc', 'ważne do 15.03.2027']],
+    wolontariat=[['Świetlica w Lipowcu Kolonii', 'korepetycje z matematyki, 46 h w 2026 r.'], ['OSP Lipowiec', 'festyn rodzinny, 12 h w 2026 r.']],
+    oferta=dict(firma='Lingwa Plus sp. z o.o.', co='korepetycje online z matematyki', umowa='umowa zlecenia', stawka='70 zł za godzinę, ok. 20 h miesięcznie',
+                rejestry='KRS aktywna od 2015 r., bez upadłości; Biała lista VAT: czynny, rachunek na liście; brak wpisów w rejestrach dłużników',
+                wyliczenie='1400 zł brutto; bez składek emerytalnej i rentowej (etat powyżej minimalnej); zdrowotna 126 zł; zaliczka PIT 134 zł; ok. 1140 zł na rękę (uproszczone)'))
+
 # ---------------------------------------------------------------- Kacper Zieliński: student z Gdańska, świeże prawo jazdy
 PERSONY['kacper'] = dict(
     id='kacper', plec='M', dop='Kacpra', okolica='Gdańsk-Wrzeszcz', miasto='Gdańsk',
