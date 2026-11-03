@@ -14,6 +14,12 @@ def T(name, desc, props=None, req=None):
 DOK = ['dowod', 'paszport']
 
 ODCZYTY = [
+    T('moja_gmina', 'Gmina, w której mieszka użytkowniczka: wójt (kadencje, wybory), rada (skład, Twój radny z dyżurem i imiennymi głosowaniami), sołectwo, najbliższa sesja i zmiana planu przy jej domu. Użyj na pytania o gminę, wójta, radnego, sołtysa.'),
+    T('plan_miejscowy', 'Projekt zmiany planu miejscowego przy domu użytkowniczki: co się zmienia, dojazd, terminy konsultacji i uwag, argumenty za i przeciw ze źródłami. Uwagę złożysz akcją zloz_uwage_do_planu.'),
+    T('uchwaly_sesji', 'Projekty uchwał na najbliższej sesji rady gminy. Bez parametru: lista. Z parametrem uchwala: wyjaśnienie prostym językiem (co się zmienia, kogo dotyczy, ile to kosztuje użytkowniczkę, opinia komisji, za i przeciw).', {'uchwala': S(e=['budzet', 'podatek', 'dzialka'])}),
+    T('finanse_gminy', 'Finanse gminy: budzet (wskaźniki na tle podobnych gmin), umowy (najwięksi wykonawcy z Centralnego Rejestru Umów), darczyncy (wpłaty na komitet wójta z jawnych sprawozdań PKW).', {'zakres': S(e=['budzet', 'umowy', 'darczyncy'])}),
+    T('nabory_w_gminie', 'Otwarte nabory do pracy w urzędzie gminy, szkołach i spółkach gminnych oraz statystyka naborów.'),
+    T('jak_zabrac_glos', 'Jak mieszkaniec może wpływać na gminę: projekt uchwały mieszkańców (ile podpisów), debata o raporcie o stanie gminy, kandydowanie (radny, wójt, sołtys), pytanie do rady.'),
     T('gdzie_zalatwic', 'Gdy sprawy nie załatwisz w tej aplikacji (część z nich da się zrobić online na gov.pl): zwraca, gdzie i jak to załatwić. Np. zameldowanie, wymeldowanie, rejestracja auta, wniosek o prawo jazdy, wtórnik lub wymiana prawa jazdy, paszport dla dorosłego lub dziecka od 12 lat, paszport tymczasowy, badanie techniczne, ślub, zmiana nazwiska, zgon, L4, roczny PIT, Karta Dużej Rodziny, zgłoszenie dziecka do ubezpieczenia, wizyta u lekarza, wniosek o emeryturę. Wywołaj od razu, zanim o cokolwiek zapytasz.', {'sprawa': S()}, ['sprawa']),
     T('karta_uslugi', 'Oficjalne karty usług z gov.pl i biznes.gov.pl: czy sprawę da się załatwić przez internet, co trzeba zrobić osobiście w urzędzie, dokumenty, opłaty, terminy, podstawa prawna. Użyj ZANIM powiesz, jak lub gdzie coś załatwić, ile to kosztuje, ile trwa albo czy da się to zrobić w aplikacji.', {'zapytanie': S(d='nazwa sprawy po polsku, np. wniosek o dowód osobisty, zameldowanie, rejestracja pojazdu używanego')}, ['zapytanie']),
     T('do_zalatwienia', 'Zbiorcza lista spraw z terminami: pisma do odpowiedzi, płatności, OC i badania, ważność dokumentów. Użyj na pytania typu „co mam do załatwienia”, „czy coś mi się kończy”.'),
@@ -52,6 +58,10 @@ ODCZYTY = [
 ]
 
 AKCJE = [
+    T('zloz_uwage_do_planu', 'Składa uwagę do projektu planu miejscowego (plan_miejscowy) przez e-Doręczenia do wójta. Każdy może ją złożyć. Treść ułóż z jej słów: czego dotyczy, czego żąda, krótkie uzasadnienie.', {'tresc': S(d='pełna treść uwagi')}, ['tresc']),
+    T('napisz_do_radnego', 'Wysyła wiadomość do radnego z okręgu użytkowniczki (np. przed głosowaniem nad uchwałą). Odpowiedź trafi do jej skrzynki.', {'tresc': S(), 'sprawa': S(d='np. tytuł projektu uchwały')}, ['tresc']),
+    T('pytanie_do_rady', 'Publikuje pytanie do rady gminy pod pseudonimem: rada widzi tylko, że pyta zweryfikowany mieszkaniec sołectwa. Proponowana zmiana (dziś pytania zadaje się z imienia i nazwiska); powiedz o tym.', {'tresc': S()}, ['tresc']),
+    T('zloz_projekt_uchwaly', 'Obywatelska inicjatywa uchwałodawcza: tworzy komitet z sąsiadami, otwiera zbiórkę podpisów w aplikacji i po zebraniu wymaganej liczby składa projekt w radzie. Zbiórka w aplikacji to proponowana zmiana (dziś podpisy na papierze); powiedz o tym. Najpierw ustal z użytkowniczką temat i treść.', {'tytul': S(), 'tresc': S(d='paragrafy projektu'), 'uzasadnienie': S()}, ['tytul', 'tresc']),
     T('zastrzez_dokumenty', 'Zastrzega utracony dowód lub paszport w systemie Dokumenty Zastrzeżone (banki, operatorzy); to cofniesz w aplikacji. Opcjonalnie unieważnia dowód w Rejestrze Dowodów Osobistych albo paszport w Rejestrze Dokumentów Paszportowych (nieodwracalne; przy dowodzie PESEL zastrzeże się sam). Prawa jazdy tu nie zastrzeżesz: gdzie_zalatwic (wtórnik).',
       {'dokumenty': ARR(e=DOK), 'uniewaznij': S('boolean', 'true tylko, gdy użytkowniczka wie, że dokument przepadł lub został skradziony')}, ['dokumenty']),
     T('zawies_dowod', 'Blokuje (zawiesza) e-dowód na 14 dni, gdy może się znaleźć: przez ten czas nie da się nim posłużyć. W tym czasie odblokujesz go tutaj (odwies_dowod); bez odblokowania po 14 dniach zostanie unieważniony. Tylko e-dowód (z warstwą elektroniczną). PESEL nie zastrzega się wtedy sam.'),

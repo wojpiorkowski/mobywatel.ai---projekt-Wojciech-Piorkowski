@@ -35,7 +35,7 @@ const GMINY={
   plan:{nazwa:'Zmiana planu miejscowego „Pola Południowe”',odl:'380 m od Twojego domu',pow:'42 ha',
    teraz:'tereny rolnicze (R), grunty III klasy',projekt:'produkcja, składy i magazyny (P/U), budynki do 18 m',
    dojazd:'ul. Szkolną, obok Szkoły Podstawowej w Lipowcu',wniosek:'na wniosek właściciela gruntów (spółka prawa handlowego)',
-   wylozenie:'13.11–18.12.2026',spotkanie:'25.11.2026, godz. 17:00, sala GOK',uwagi:'18.12.2026',nr:'RPP.6721.4.2025',
+   wylozenie:'12.10–18.12.2026',spotkanie:'25.11.2026, godz. 17:00, sala GOK',uwagi:'18.12.2026',nr:'RPP.6721.4.2025',
    za:['ok. 120 miejsc pracy według wnioskodawcy','ok. 1,1 mln zł rocznie z podatku od nieruchomości (ok. 4% dochodów gminy)','dojazd do drogi wojewódzkiej bez wjazdu do centrum'],
    przeciw:['prognoza: ok. 60 ciężarówek na dobę ulicą Szkolną','praca magazynów także nocą, hałas przy domach','utrata 42 ha gruntów rolnych III klasy']},
   liczby:[['Dochody na mieszkańca','5 820 zł','5 640 zł',103],['Zadłużenie (% dochodów)','31%','18%',172,1],['Promocja i biuletyn na mieszkańca','46 zł','19 zł',242,1],['Inwestycje (% wydatków)','14%','21%',67,1],['Oświata (% wydatków)','38%','36%',106]],
