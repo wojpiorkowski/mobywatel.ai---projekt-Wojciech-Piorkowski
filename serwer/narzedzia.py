@@ -14,6 +14,7 @@ def T(name, desc, props=None, req=None):
 DOK = ['dowod', 'paszport']
 
 ODCZYTY = [
+    T('moja_praca', 'E-teczka: pracodawca, stanowisko, historia zatrudnienia z ZUS, kwalifikacje i uprawnienia (z datami ważności), potwierdzony wolontariat oraz oferta pracy ze skrzynki z wynikiem sprawdzenia firmy w rejestrach i wyliczeniem kwoty na rękę.'),
     T('moja_gmina', 'Gmina, w której mieszka użytkowniczka: wójt (kadencje, wybory), rada (skład, Twój radny z dyżurem i imiennymi głosowaniami), sołectwo, najbliższa sesja i zmiana planu przy jej domu. Użyj na pytania o gminę, wójta, radnego, sołtysa.'),
     T('plan_miejscowy', 'Projekt zmiany planu miejscowego przy domu użytkowniczki: co się zmienia, dojazd, terminy konsultacji i uwag, argumenty za i przeciw ze źródłami. Uwagę złożysz akcją zloz_uwage_do_planu.'),
     T('uchwaly_sesji', 'Projekty uchwał na najbliższej sesji rady gminy. Bez parametru: lista. Z parametrem uchwala: wyjaśnienie prostym językiem (co się zmienia, kogo dotyczy, ile to kosztuje użytkowniczkę, opinia komisji, za i przeciw).', {'uchwala': S(e=['budzet', 'podatek', 'dzialka'])}),

@@ -638,4 +638,10 @@ def r_jak_zabrac_glos(a, s):
                    ['Debata o raporcie o stanie gminy', '%s, %d podpisów pod zgłoszeniem' % (db['kiedy'], db['podpisow'])],
                    ['Kandydowanie do rady', w['radny'] + ', wybory ' + w['kiedy']], ['Kandydowanie na wójta', w['wojt']], ['Pytanie do rady', 'pod pseudonimem (proponowana zmiana)']])
 
+def r_moja_praca(a, s):
+    w = P().get('praca')
+    if not w: return dict(blad='W tej wersji pokazu e-teczkę ma tylko Ewa Nowak.'), None
+    return w, dict(icon='id', title='Moja praca', source='ZUS, e-Akta, System Informacji Oświatowej (dane fikcyjne)',
+                   rows=[['Pracodawca', w['pracodawca']], ['Stanowisko', w['stanowisko'] + ', ' + w['awans']], ['Staż', w['staz']]] + w['kwalifikacje'] + w['wolontariat'])
+
 READ = {k[2:]: v for k, v in list(globals().items()) if k.startswith('r_')}
