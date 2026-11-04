@@ -1,0 +1,46 @@
+# Podgląd prototypu online (tryb skryptowy, bez AI) na GitHub Pages z gałęzi gh-pages:
+# - każdy push do main aktualizuje stronę główną podglądu,
+# - każdy PR dostaje własny podgląd pod /pr-preview/pr-<numer>/ (link w komentarzu PR-a), usuwany po zamknięciu PR-a.
+# Jednorazowo: Settings → Pages → Source: "Deploy from a branch", gałąź gh-pages, katalog / (root).
+name: Podgląd online
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    types: [opened, reopened, synchronize, closed]
+
+permissions:
+  contents: write
+  pull-requests: write
+
+concurrency: podglad-${{ github.ref }}
+
+jobs:
+  strona:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Zbuduj stronę statyczną
+        if: github.event.action != 'closed'
+        run: python3 testy/strona_statyczna.py _site
+
+      - name: Opublikuj main
+        if: github.event_name == 'push'
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          folder: _site
+          branch: gh-pages
+          clean-exclude: pr-preview/
+
+      - name: Opublikuj podgląd PR-a
+        if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
+        uses: rossjrw/pr-preview-action@v1
+        with:
+          source-dir: _site
+          preview-branch: gh-pages
+          umbrella-dir: pr-preview
+          action: auto

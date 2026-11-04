@@ -56,6 +56,14 @@ Otwórz http://127.0.0.1:8790/aplikacja (adres `/` też pokazuje aplikację, `/k
 
 Możesz też trzymać ustawienia w pliku: `cp .env.example .env`, uzupełnij i uruchom `set -a; . ./.env; set +a; python3 serwer/server.py`.
 
+## Podgląd online (GitHub Pages)
+
+Workflow `.github/workflows/podglad.yml` publikuje statyczną wersję prototypu (tryb skryptowy, bez asystenta AI, mowy
+i znaku mObywatela) po każdym pushu do `main`, a każdy pull request dostaje własny podgląd pod `/pr-preview/pr-<numer>/`
+(link pojawia się w komentarzu PR-a). Stronę buduje `python3 testy/strona_statyczna.py`. Jednorazowo trzeba włączyć
+Pages: Settings → Pages → Source: „Deploy from a branch”, gałąź `gh-pages`, katalog `/ (root)`.
+Uwaga: strona jest publiczna, razem z grafikami mObywatela i zdjęciami osób, których nie obejmuje licencja MIT.
+
 ## Uruchomienie w Dockerze
 
 ```bash
