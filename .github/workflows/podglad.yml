@@ -39,6 +39,7 @@ jobs:
           folder: _site
           branch: gh-pages
           clean-exclude: pr-preview/
+          force: false   # zwykły push zamiast --force: GitHub odrzucał wymuszony push na gh-pages
 
       - name: Opublikuj podgląd PR-a
         if: github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
