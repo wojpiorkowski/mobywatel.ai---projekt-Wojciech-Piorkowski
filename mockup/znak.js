@@ -123,7 +123,7 @@ function odebrano(d){
  const wynik={imie_nazwisko:name||'osoba pełnoletnia',zakres:z.nazwa,dane:Object.fromEntries(rest),status:'przekazane z mObywatela'};
  const o=pScreen(`${pTop(z.nazwa)}<div class="qbody">
   <div class="okbar">${svg('check')}<b>Dane z mObywatela</b><span>Face ID, ${hhmm()}</span></div>
-  <div class="person">${foto?`<span class="pav photo"><span class="ph" style="background-image:url(assets/foto-${/^[a-z]+$/.test(d.dane.foto||'')?d.dane.foto:'marta'}.jpg)"></span></span>`:'<span class="pav">•</span>'}<div><b>${E(name||'Osoba pełnoletnia')}</b><small>Dane z rejestrów państwowych</small></div></div>
+  <div class="person">${foto?`<span class="pav photo"><span class="ph" style="background-image:url(assets/foto-${/^[a-z]+$/.test(d.dane.foto||'')?d.dane.foto:'jan'}.jpg)"></span></span>`:'<span class="pav">•</span>'}<div><b>${E(name||'Osoba pełnoletnia')}</b><small>Dane z rejestrów państwowych</small></div></div>
   ${d.dane&&d.dane.pojazd&&d.dane.pojazd.model&&typeof SYLWETKI!=='undefined'?`<div class="otrz-syl">${SYLWETKI.svg(String(d.dane.pojazd.model),String(d.dane.pojazd.kolor||''))}</div>`:''}
   <div class="dlist">${rowsHTML(rest.filter(r=>r[1]!==name))}</div>
   <p class="qnote c">Dane znikną z ekranu za <b class="pt">${mmss(left)}</b></p>

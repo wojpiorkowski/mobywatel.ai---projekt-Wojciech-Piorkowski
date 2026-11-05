@@ -15,10 +15,7 @@ function openDocQR(id){qrFlow({doc:id})}
 function docActions(d){
  const base=[['scan','Potwierdź dane',()=>openDocQR(d.id)],['doc','Szczegóły',()=>openDoc(d.id)]];
  const ctx={dowod:['shield','Zastrzeż PESEL',()=>startTopic('Zastrzeż mój PESEL')],
-  kdr:['coin','Partnerzy KDR',()=>startTopic('Gdzie mogę użyć Karty Dużej Rodziny?')],
-  leg:['coin','Ulgi studenta',()=>startTopic(OS.ask.leg)],
-  pj:['clock','Punkty karne',()=>startTopic('Ile mam punktów karnych?')],
-  auto:['car','OC i badanie',()=>startTopic(OS.ask.auto)]}[d.id];
+  leg:['coin','Ulgi studenta',()=>startTopic(OS.ask.leg)]}[d.id];
  if(d.id==='dowod')base[0]=['scan','Potwierdź dane',()=>openDocQR(d.id)];
  const ask=['dots','Zapytaj',()=>startTopic(OS.ask[d.id]||'Opowiedz mi o tym dokumencie')];
  return [...base,ctx,ask];

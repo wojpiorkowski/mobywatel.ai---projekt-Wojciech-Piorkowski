@@ -26,58 +26,6 @@ KDR_ULGI = lambda miasto: [['PKP Intercity', 'rodzice 37% (miesięczny 49%), od 
 
 PERSONY = {}
 
-# ---------------------------------------------------------------- Marta Kowalska (dotychczasowa)
-PERSONY['marta'] = dict(
-    id='marta', plec='K', dop='Marty', okolica='Warszawa-Mokotów', miasto='Warszawa',
-    osoba=dict(imie='Marta', nazwisko='Kowalska', pesel='91071427765', data_urodzenia='14.07.1991', miejsce_urodzenia='Warszawa',
-               adres='ul. Kwiatowa 12, 02-580 Warszawa (Mokotów)', telefon='+48 601 234 567', email='marta.kowalska@poczta.pl'),
-    rodzina=[dict(rola='mąż', imie='Tomasz Kowalski', pesel='89030512357', mobywatel=True),
-             dict(rola='syn', imie='Antoni Kowalski', pesel='14250312345', wiek=12, paszport='brak'),
-             dict(rola='córka', imie='Zofia Kowalska', pesel='20221104567', wiek=6, paszport='brak'),
-             dict(rola='syn', imie='Jan Kowalski', pesel='23282009871', wiek=3, paszport='brak')],
-    rodzina_opis='mąż Tomasz, dzieci: Antoni (12), Zofia (6), Jan (3)',
-    drugi_rodzic='Tomasz Kowalski', drugi_rodzic_dop='Tomasza Kowalskiego', nazwisko_dziecka=('Kowalska', 'Kowalski'), rodzice='Marta i Tomasz Kowalscy',
-    szpital='Szpital Bielański, Warszawa', zameldowanie_krotko='ul. Kwiatowa 12', usc='USC Warszawa',
-    dokumenty={'dowod': dict(nazwa='Dowód osobisty', numer='ABC 123456', wydany='20.05.2021', wazny_do='2031-05-20', organ='Prezydent m.st. Warszawy', e_dowod=True),
-               'paszport': dict(nazwa='Paszport', numer='EP 4471029', wazny_do='2029-06-30', organ='Wojewoda Mazowiecki'),
-               'prawo_jazdy': dict(nazwa='Prawo jazdy', numer='01234/20/1465', wazny_do='2035-06-30', kategorie='B'),
-               'kdr': dict(nazwa='Karta Dużej Rodziny', numer='2024/118 554', wazny_do='bezterminowo')},
-    paszport_opis='EP 4471029, ważny do 30.06.2029', dzieci_paszporty='brak paszportów',
-    pojazdy=[dict(nr='WX 4521K', marka='Toyota Corolla 1.8 Hybrid', model='Toyota Corolla', dop='Toyoty', kolor='srebrny', rok=2021, vin='SB1Z93BE10E215501',
-                  oc_do='2026-10-29', ubezpieczyciel='Warta', polisa='908 123 456 789', oc_auto=True, badanie_do='2027-04-12', licznik='58 210 km (12.04.2026)')],
-    pojazdy_dawne=['Zgłoszenie zbycia pojazdu Skoda Fabia WX 1180C', 'zakończona 03.2026'],
-    wydzial_komunikacji='Urząd m.st. Warszawy, wydział komunikacji',
-    urzad='Urząd Dzielnicy Mokotów', urzad_paszportowy='Mazowiecki Urząd Wojewódzki, Warszawa',
-    naleznosci=[dict(id='POD-NIER-IV', tytul='Podatek od nieruchomości, IV rata 2026', kwota=210.0, termin='2026-11-16', wierzyciel='Urząd m.st. Warszawy',
-                     kanal='eplatnosci', metody=['BLIK', 'karta', 'Apple Pay', 'Google Pay'])],
-    mandaty=[],
-    skrzynka=[dict(id='US-1', krotko='Pismo z Urzędu Skarbowego', od='Urząd Skarbowy Warszawa-Mokotów', temat='Wezwanie do złożenia wyjaśnień', doreczono='2026-10-17', termin='2026-10-26',
-                   tresc='Urząd prosi o udokumentowanie ulgi termomodernizacyjnej z zeznania PIT-37 za 2025 r. (odliczono 32 520 zł) za dom jednorodzinny przy ul. Kwiatowej 12. Wymagane faktury za materiały i usługi.', przeczytana=True),
-              dict(id='ZUS-1', od='ZUS', temat='Informacja o stanie konta ubezpieczonego', doreczono='2026-09-30', termin=None, tresc='Roczna informacja o zgromadzonych składkach.', przeczytana=True)],
-    pliki=[dict(nazwa='FV 2025/03/118 Termo-Bud.pdf', opis='docieplenie ścian domu, ul. Kwiatowa 12, 18 450,00 zł'),
-           dict(nazwa='FV 2025/04/022 Termo-Bud.pdf', opis='styropian i klej, dom ul. Kwiatowa 12, 9 870,00 zł'),
-           dict(nazwa='FV 2025/05/301 Okna-Lux.pdf', opis='stolarka okienna, dom ul. Kwiatowa 12, 4 200,00 zł'),
-           dict(nazwa='Umowa najmu garażu.pdf', opis='najem garażu przy ul. Kwiatowej 21, od 01.11.2026, wynajmujący: Jerzy Malinowski, 350 zł/mies.')],
-    pesel_stan='niezastrzeżony',
-    pesel_hist=[['01.03.2024', 'zastrzeżenie (w aplikacji)'], ['10.06.2025', 'cofnięcie zastrzeżenia (kredyt hipoteczny)']],
-    pesel_spr=[['02.09.2026', 'mBank S.A., wynik: niezastrzeżony'], ['14.10.2026', 'Plus (Polkomtel), wynik: niezastrzeżony']],
-    sprawy=[['Wezwanie US Warszawa-Mokotów (ulga termomodernizacyjna)', 'czeka na Twoją odpowiedź do 26.10.2026'],
-            ['Zgłoszenie zbycia pojazdu Skoda Fabia WX 1180C', 'zakończona 03.2026'], ['Karta Dużej Rodziny dla Jana', 'zakończona 09.2024']],
-    emerytura=dict(skladki='214 380 zł', subkonto='61 200 zł', wiek=60, tabela={60: 3140, 62: 3730, 65: 4830, 67: 5740}, krok=0.09),
-    punkty=dict(punkty=5, limit=24, wykroczenia=[dict(data='12.05.2026', opis='przekroczenie prędkości o 21–25 km/h', punkty=5, wygasaja='12.05.2027')]),
-    recepty=[dict(osoba='Zofia (córka)', lek='Amoksiklav 457 mg/5 ml, zawiesina', wazna_do='22.10.2026', kod='4821'),
-             dict(osoba='Marta', lek='Letrox 50, tabletki', wazna_do='12.03.2027', kod='7730')],
-    kursy=KURSY_W('Warszawa-Mokotów', 'Warszawa-Bemowo', 'Warszawa-Wesoła', 'Legionowo'),
-    wybory=dict(obwod='nr 145', lokal='Szkoła Podstawowa nr 98, ul. Kwiatowa 30, Warszawa', krotko='SP nr 98, ul. Kwiatowa 30'),
-    firma=dict(ceidg='brak działalności gospodarczej', krs=[dict(podmiot='Stowarzyszenie „Przyjaciele Pola Mokotowskiego"', krs='0000712345', funkcja='członkini zarządu')],
-               rows=[['CEIDG', 'brak działalności'], ['KRS 0000712345', 'Stow. „Przyjaciele Pola Mokotowskiego", członkini zarządu']]),
-    ksiegi=[dict(numer='WA4M/00412345/6', opis='dom jednorodzinny, ul. Kwiatowa 12', wlasnosc='współwłasność z Tomaszem Kowalskim')],
-    partnerzy_kdr=KDR_ULGI('Warszawa'),
-    bilety=[dict(przewoznik='PKP Intercity', trasa='Warszawa Centralna → Kraków Główny', kiedy='24.10.2026, 7:15', miejsce='wagon 5, miejsce 43', pociag='IC 5302 „Mehoffer"')],
-    konto='PL •• 4412', liczba_osob=5,
-    zalatwienia_extra=[],
-)
-
 # ---------------------------------------------------------------- Jan Wiśniewski: przedsiębiorca z Krakowa, ojciec trójki
 PERSONY['jan'] = dict(
     id='jan', plec='M', dop='Jana', okolica='Kraków-Podgórze', miasto='Kraków',
@@ -194,52 +142,7 @@ PERSONY['ewa']['praca'] = dict(
                 rejestry='KRS aktywna od 2015 r., bez upadłości; Biała lista VAT: czynny, rachunek na liście; brak wpisów w rejestrach dłużników',
                 wyliczenie='1400 zł brutto; bez składek emerytalnej i rentowej (etat powyżej minimalnej); zdrowotna 126 zł; zaliczka PIT 134 zł; ok. 1140 zł na rękę (uproszczone)'))
 
-# ---------------------------------------------------------------- Kacper Zieliński: student z Gdańska, świeże prawo jazdy
-PERSONY['kacper'] = dict(
-    id='kacper', plec='M', dop='Kacpra', okolica='Gdańsk-Wrzeszcz', miasto='Gdańsk',
-    osoba=dict(imie='Kacper', nazwisko='Zieliński', pesel=pesel('062321', '417', 1), data_urodzenia='21.03.2006', miejsce_urodzenia='Elbląg',
-               adres='ul. Grunwaldzka 102 m. 7, 80-244 Gdańsk (Wrzeszcz), pobyt czasowy; stały: ul. Ogólna 5, Elbląg', telefon='+48 733 908 211', email='kacper.zielinski@student.pg.edu.pl'),
-    rodzina=[dict(rola='mama', imie='Anna Zielińska', pesel=pesel('780302', '210', 6), mobywatel=True),
-             dict(rola='tata', imie='Robert Zieliński', pesel=pesel('760915', '144', 3), mobywatel=True),
-             dict(rola='siostra', imie='Ola Zielińska', pesel=pesel('102208', '355', 4), wiek=16)],
-    rodzina_opis='rodzice Anna i Robert (Elbląg)',
-    drugi_rodzic='', drugi_rodzic_dop='', nazwisko_dziecka=('Zielińska', 'Zieliński'), rodzice='Kacper Zieliński',
-    szpital='Szpital Kliniczny UCK, Gdańsk', zameldowanie_krotko='ul. Grunwaldzka 102 m. 7', usc='USC Gdańsk',
-    dokumenty={'dowod': dict(nazwa='Dowód osobisty', numer='DFT 220419', wazny_do='2034-04-02', organ='Prezydent Miasta Elbląg', e_dowod=True),
-               'prawo_jazdy': dict(nazwa='Prawo jazdy', numer='00512/26/2861', wazny_do='2041-01-14', kategorie='B', wydane='14.01.2026', okres_probny='do 14.01.2028'),
-               'legitymacja': dict(nazwa='Legitymacja studencka', numer='198442', wazny_do='2027-03-31', uczelnia='Politechnika Gdańska')},
-    paszport_opis='brak paszportu, do krajów UE wystarczy dowód', dzieci_paszporty='nie dotyczy',
-    pojazdy=[dict(nr='GD 8K113', marka='Volkswagen Golf IV 1.4', model='Volkswagen Golf IV', dop='Golfa', kolor='czarny', rok=2003, vin='WVWZZZ1JZ3W512288',
-                  oc_do='2027-02-01', ubezpieczyciel='Ergo Hestia', polisa='EH 330 128 774', oc_auto=True, badanie_do='2027-01-20', licznik='251 300 km (20.01.2026)')],
-    pojazdy_dawne=['Zgłoszenie nabycia pojazdu Volkswagen Golf GD 8K113', 'zakończona 02.2026'],
-    wydzial_komunikacji='Urząd Miejski w Gdańsku, wydział komunikacji',
-    urzad='Urząd Miejski w Gdańsku, ul. Partyzantów 74', urzad_paszportowy='Pomorski Urząd Wojewódzki, Gdańsk',
-    naleznosci=[dict(id='MK-1029', tytul='Mandat karny MK 2026/1 840 212 (prędkość)', kwota=200.0, termin='2026-10-22', wierzyciel='Policja, Pomorski Urząd Wojewódzki',
-                     kanal='mandat', metody=[])],
-    mandaty=[dict(numer='MK 2026/1 840 212', kwota='200 zł', termin='22.10.2026', data='15.10.2026', opis='przekroczenie prędkości o 18 km/h (16–20 km/h), Gdańsk, al. Grunwaldzka',
-                  punkty=3, organ='Komenda Miejska Policji w Gdańsku', odbiorca='Pomorski Urząd Wojewódzki', jak_zaplacic='przelew według instrukcji z mandatu, 7 dni od wręczenia')],
-    skrzynka=[dict(id='PG-1', od='Politechnika Gdańska', temat='Decyzja o przyznaniu stypendium rektora', doreczono='2026-10-14', termin=None,
-                   tresc='Stypendium rektora na rok akademicki 2026/2027: 1 100 zł miesięcznie, od października 2026.', przeczytana=False)],
-    pliki=[dict(nazwa='Umowa najmu pokoju Grunwaldzka.pdf', opis='pokój przy ul. Grunwaldzkiej 102 m. 7, 1 250 zł/mies., do 30.06.2027'),
-           dict(nazwa='Umowa kupna Golf.pdf', opis='zakup VW Golf IV od Mariusza Lewandowskiego, 7 500 zł, 02.2026')],
-    pesel_stan='niezastrzeżony', pesel_hist=[], pesel_spr=[['01.10.2026', 'Revolut, wynik: niezastrzeżony']],
-    sprawy=[['Mandat karny MK 2026/1 840 212', 'do zapłaty 200 zł do 22.10.2026'], ['Zgłoszenie nabycia pojazdu VW Golf GD 8K113', 'zakończona 02.2026'],
-            ['Zameldowanie czasowe w Gdańsku', 'zakończona 10.2025']],
-    emerytura=dict(skladki='6 240 zł', subkonto='1 180 zł', wiek=65, tabela={65: 3920, 67: 4660, 70: 6030}, krok=0.09),
-    punkty=dict(punkty=3, limit=20, pierwszy_rok_do='14.01.2027', limit_potem=24, okres_probny='do 14.01.2028',
-                wykroczenia=[dict(data='15.10.2026', opis='przekroczenie prędkości o 16–20 km/h', punkty=3, wygasaja='rok po opłaceniu mandatu', mandat='MK-1029')]),
-    recepty=[],
-    kursy=KURSY_W('Gdańsk-Wrzeszcz', 'Gdynia', 'Gdańsk', 'Wejherowo'),
-    wybory=dict(obwod='nr 7 w Elblągu', lokal='Szkoła Podstawowa nr 11, ul. Ogólna 20, Elbląg', krotko='SP nr 11, Elbląg (miejsce zameldowania na stałe)'),
-    firma=dict(ceidg='brak działalności gospodarczej', krs=[], rows=[['CEIDG', 'brak działalności'], ['KRS', 'brak funkcji w podmiotach']]),
-    ksiegi=[],
-    partnerzy_kdr=[],
-    bilety=[dict(przewoznik='Polregio', trasa='Gdańsk Główny → Elbląg', kiedy='31.10.2026, 15:42', miejsce='bez rezerwacji', pociag='R 50124, ulga studencka 51%')],
-    konto='PL •• 6610', liczba_osob=1,
-    zalatwienia_extra=[['Miejsce głosowania', 'jesteś w rejestrze w Elblągu, możesz na stałe przepisać się do obwodu w Gdańsku']],
-)
-
-DOMYSLNA = 'marta'
+DOMYSLNA = 'jan'
 _ctx = threading.local()
 def ustaw(osoba):
     _ctx.p = PERSONY.get(osoba or DOMYSLNA, PERSONY[DOMYSLNA])
