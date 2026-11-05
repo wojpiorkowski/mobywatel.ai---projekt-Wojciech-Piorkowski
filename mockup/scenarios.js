@@ -209,6 +209,15 @@ $('#homeBtn').onclick=()=>{
  // na ekranie głównym orzełek prowadzi na stronę startową (z prefiksem języka, np. /de/)
  if(!app.classList.contains('chatting')&&!$('#detail').classList.contains('on')){const m=location.pathname.match(/^\/([a-z]{2})\//);location.href=m?'/'+m[1]+'/':'/';return}
  $('#detail').classList.remove('on');exitChat();$('#tiles').scrollTo({left:0,behavior:'smooth'})};
+// „Wróć” w rozmowie: wraca tam, skąd rozmowa się zaczęła (panel karty, np. Moja gmina), a w innym razie na ekran główny
+let PANEL=null,POWROT=null;
+document.addEventListener('DOMContentLoaded',()=>{const _o=openDoc;openDoc=function(id){PANEL=id;return _o(id)};
+ const _s=startTopic;startTopic=function(t,fn){if(!app.classList.contains('chatting'))POWROT=PANEL;PANEL=null;return _s(t,fn)}});
+// panel zamknięty ręcznie (Wróć w panelu albo orzełek) nie jest już miejscem powrotu
+document.addEventListener('click',e=>{if(e.target.closest('#dclose,#homeBtn'))PANEL=null},true);
+// rozmowa zaczęta od pisania na ekranie głównym wraca na ekran główny (capture: przed enterChat)
+document.addEventListener('focusin',e=>{if(e.target===input&&!app.classList.contains('chatting'))POWROT=PANEL=null},true);
+$('#backBtn').onclick=()=>{closeHist();exitChat();const p=POWROT;POWROT=null;if(p)openDoc(p)};
 $('#mailBtn').onclick=()=>{closeHist();startTopic('Co mam w skrzynce?')};
 $('#bellBtn').onclick=()=>{closeHist();startTopic('Co mam do załatwienia?')};
 input.addEventListener('focus',enterChat);
