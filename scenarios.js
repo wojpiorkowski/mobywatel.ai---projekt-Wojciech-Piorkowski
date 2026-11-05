@@ -184,9 +184,6 @@ function route(t){
  if(pending){const p=pending;pending=null;return p(t)}
  const n=norm(t);
  if(/pokaz.*(dowod|mdowod)/.test(n))return S.docShow('dowod');
- if(/pokaz.*(prawo|prawk)/.test(n))return S.docShow('pj');
- if(/pokaz.*(auto|pojazd|samoch)/.test(n))return S.docShow('auto');
- if(/pokaz.*(kdr|duzej rodziny)/.test(n))return S.docShow('kdr');
  if(/dowod.*(waz|traci)|waznosc dowodu/.test(n))return S.dowodWaz();
  if(/zastrz.*pesel/.test(n))return S.pesel();
  if(/znalaz|odblok\w* dowod/.test(n))return S.znaleziony();
