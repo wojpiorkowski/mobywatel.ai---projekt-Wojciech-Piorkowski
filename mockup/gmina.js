@@ -57,7 +57,7 @@ const GMINY={
    przeciw:['prognoza: ok. 60 ciężarówek na dobę ulicą Szkolną','praca magazynów także nocą, hałas przy domach','utrata 42 ha gruntów rolnych III klasy']},
   /* kolejne sprawy przy domu: każda ma inną procedurę i inne działanie (uwagi, deklaracja) */
   inne:[
-   {nazwa:'Ferma drobiu w Woli Lipowieckiej',odl:'1,1 km od Twojego domu',nr:'OŚ.6220.3.2026',ikona:'alert',krotko:'decyzja środowiskowa · uwagi do 27.11',q:'Co z fermą drobiu w Woli Lipowieckiej?',
+   {nazwa:'Ferma drobiu w Woli Lipowieckiej',odl:'1,1 km od Twojego domu',nr:'OŚ.6220.3.2026',ikona:'info',krotko:'decyzja środowiskowa · uwagi do 27.11',q:'Co z fermą drobiu w Woli Lipowieckiej?',
     teraz:'pole uprawne, 6 ha',projekt:'4 kurniki, 160 tys. kurcząt w cyklu',uwagi:'27.11.2026',re:/ferm|kurnik|drob|brojler|smrod|odor/,
     mapa:{obiekt:'Ferma drobiu',opis:'4 kurniki',odl:'1,1 km',wiatr:1},
     intro:'Wójt prowadzi postępowanie w sprawie decyzji środowiskowej dla fermy drobiu, 1,1 km od Twojego domu. Wiatr wieje u Was najczęściej od strony fermy.',
@@ -172,7 +172,7 @@ const GMINY={
    spotkanieTyt:'Spotkanie konsultacyjne',spotkanieKiedy:'19.11.2026, godz. 18:00',spotkanieGdzie:'Szkoła Podstawowa nr 34, ul. Wielicka 40',spotkaniePrzyp:'19.11, 16:00',
    przyp:['27.11.2026, 9:00','uwagi do przebudowy ul. Wielickiej do 30.11.2026'],sasiedzi:'Mieszkańcy ul. Wielickiej z aplikacją dostali już powiadomienie, bo mieszkają w promieniu 300 m od przebudowy.'},
   inne:[
-   {nazwa:'Blok 14-piętrowy przy ul. Wielickiej 30',odl:'120 m od Twojego domu',nr:'AU-2.6735.9.2026',ikona:'alert',krotko:'tzw. lex deweloper · uwagi do 26.11',q:'Co z blokiem przy Wielickiej 30?',
+   {nazwa:'Blok 14-piętrowy przy ul. Wielickiej 30',odl:'120 m od Twojego domu',nr:'AU-2.6735.9.2026',ikona:'info',krotko:'tzw. lex deweloper · uwagi do 26.11',q:'Co z blokiem przy Wielickiej 30?',
     teraz:'pawilon handlowy i parking',projekt:'do 45 m, 186 mieszkań, garaż na 150 aut',uwagi:'26.11.2026',re:/blok|wiezowiec|deweloper|14.pietr|inwestycj\w* mieszkan|lex/,
     mapa:{obiekt:'Blok 14 pięter',opis:'186 mieszkań',odl:'120 m'},
     intro:'Deweloper chce postawić 14-piętrowy blok 120 m od Ciebie, choć plan miejscowy pozwala tam na budynki do 12 m. Korzysta ze specustawy mieszkaniowej (tzw. lex deweloper), więc o zgodzie zdecyduje Rada Miasta uchwałą.',
@@ -288,8 +288,8 @@ function openGmina(){
  const it=(k,ic,h,s)=>`<button class="it" data-k="${k}"><span class="gi">${svg(ic)}</span><span class="x"><b>${h}</b><small>${s}</small></span>${svg('chev')}</button>`;
  det.innerHTML=`<div style="height:${top}px;flex:none"></div><div class="nav"><button class="back" id="dclose">${svg('back')}Wróć</button><b>Moja gmina</b><span></span></div>
   <div class="body"><div class="bigcard" style="background-image:url(${d.img})">${faceHTML(d)}</div>
-  <div class="ui galert glist">${hd('alert','Zmienia się coś przy Tobie')}
-   ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'alert')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}</small></span>${svg('chev')}</summary>
+  <div class="ui galert glist">${hd('info','Zmienia się coś przy Tobie')}
+   ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
     <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
   <div class="ui list glist">${hd('doc','Twoja gmina')}
@@ -340,7 +340,7 @@ function gminaInit(){
   async plan(i=0){
    const P=ZM[i];
    await say(P.intro);
-   await info({icon:'alert',title:P.nazwa,source:GM.bip+', sprawa '+P.nr+' (dane fikcyjne)',body:mapaZ(P),
+   await info({icon:'info',title:P.nazwa,source:GM.bip+', sprawa '+P.nr+' (dane fikcyjne)',body:mapaZ(P),
     rows:P.rows||[['Obszar',P.pow],['Teraz',P.teraz],['Projekt',P.projekt],['Dojazd',P.dojazd],['Skąd zmiana',P.wniosek],['Wyłożenie projektu',P.wylozenie],['Spotkanie z projektantem',P.spotkanie],['Uwagi do','<b>'+P.uwagi+'</b>']]});
    await info({icon:'doc',title:'Argumenty za i przeciw',
     body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
