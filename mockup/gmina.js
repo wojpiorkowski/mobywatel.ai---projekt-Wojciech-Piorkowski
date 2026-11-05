@@ -306,7 +306,7 @@ function openGmina(){
  const it=(k,ic,h,s)=>`<button class="it" data-k="${k}"><span class="gi">${svg(ic)}</span><span class="x"><b>${h}</b><small>${s}</small></span>${svg('chev')}</button>`;
  det.innerHTML=`<div style="height:${top}px;flex:none"></div><div class="nav"><button class="back" id="dclose">${svg('back')}Wróć</button><b>Moja gmina</b><span></span></div>
   <div class="body"><div class="bigcard" style="background-image:url(${d.img})">${faceHTML(d)}</div>
-  <div class="ui galert glist">${hd('info','Zmienia się coś przy Tobie')}
+  <div class="ui galert glist">${hd('dom','Zmienia się coś przy Tobie')}
    ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
     <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
