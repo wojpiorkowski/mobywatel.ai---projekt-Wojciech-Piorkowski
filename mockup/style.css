@@ -317,6 +317,8 @@ button:focus-visible,input:focus-visible{outline:2px solid var(--red);outline-of
 /* ---------- historia rozmów ---------- */
 .chatonly{display:none}
 .phone.chatting .chatonly{display:grid;animation:fadein .3s}
+.top .back{align-items:center;gap:1px;margin-left:-8px;padding:6px 4px;color:var(--red);font-size:17px}.phone.chatting .top .back{display:flex}
+.top .back svg{width:22px;height:22px}
 @keyframes fadein{from{opacity:0}to{opacity:1}}
 .ico .hc{position:absolute;top:5px;right:2px;min-width:17px;height:17px;padding:0 4px;border-radius:9px;background:var(--ink);color:#fff;font-size:11px;font-weight:600;line-height:17px;text-align:center;box-shadow:0 0 0 2px var(--bg)}
 .ico.has .hc{background:var(--red)}
