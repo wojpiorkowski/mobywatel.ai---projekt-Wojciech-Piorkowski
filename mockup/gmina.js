@@ -279,17 +279,19 @@ function mapaProsta(Z){const M=Z.mapa,dom=`<g transform="translate(112 12)"><pat
  return `<svg class="gmap" viewBox="0 0 320 172" role="img" aria-label="Mapka: ${Z.nazwa}, ${Z.odl}"><defs><pattern id="kres2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#fdecef"/><path d="M0 0v7" stroke="#dc143c" stroke-width="2.2" stroke-opacity=".55"/></pattern></defs>${tlo}${obiekt}${dom}</svg>`}
 const MAPY={ewa:mapaPlanu,jan:mapaWielicka},mapa=()=>(MAPY[OS.id]||mapaPlanu)(),mapaZ=Z=>Z.mapa?mapaProsta(Z):mapa();
 
+// wszystkie sprawy „przy Tobie”: główna (plan) i pozostałe, każda zwinięta w karcie
+const ZMIANY=()=>[GM.plan,...(GM.inne||[])];
+
 /* ---------- panel „Moja gmina” (zamiast zwykłych szczegółów dokumentu) ---------- */
 function openGmina(){
- const det=$('#detail'),top=getComputedStyle($('.status')).display!=='none'?50:6,d=DOCS.find(x=>x.id==='gmina'),P=GM.plan;
+ const det=$('#detail'),top=getComputedStyle($('.status')).display!=='none'?50:6,d=DOCS.find(x=>x.id==='gmina');
  const it=(k,ic,h,s)=>`<button class="it" data-k="${k}"><span class="gi">${svg(ic)}</span><span class="x"><b>${h}</b><small>${s}</small></span>${svg('chev')}</button>`;
  det.innerHTML=`<div style="height:${top}px;flex:none"></div><div class="nav"><button class="back" id="dclose">${svg('back')}Wróć</button><b>Moja gmina</b><span></span></div>
   <div class="body"><div class="bigcard" style="background-image:url(${d.img})">${faceHTML(d)}</div>
-  <div class="ui galert"><div class="hd"><div class="ic">${svg('alert')}</div><div class="tt">Zmienia się coś przy Tobie<small>${P.nazwa}, ${P.odl}</small></div></div>
-   <div class="body">${mapa()}</div>
-   <div class="rows">${rowsH([['Teraz',P.teraz],['Projekt',P.projekt],['Uwagi do','<em>'+P.uwagi+'</em>']])}</div>
-   <div class="actions"><button class="btn primary" data-k="plan">Zobacz i zgłoś uwagę</button></div>${srcH(P.zrodlo)}</div>
-  ${GM.inne?`<div class="ui list glist">${hd('alert','Zmienia się też przy Tobie')}${GM.inne.map((z,i)=>it('z'+(i+1),z.ikona,z.nazwa,z.odl+' · '+z.krotko)).join('')}</div>`:''}
+  <div class="ui galert glist">${hd('alert','Zmienia się coś przy Tobie')}
+   ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'alert')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}</small></span>${svg('chev')}</summary>
+    <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
+    <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${srcH(Z.zrodlo||Z.zrodla)}</div></details>`).join('')}</div>
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · Twój radny: '+GM.rada.radny.kto)}
    ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
@@ -303,7 +305,7 @@ function openGmina(){
  tick();det.classList.add('on');
  $('#dclose').onclick=()=>det.classList.remove('on');
  const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmie się najbliższa sesja rady?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?',gBO:'Jak zagłosować w budżecie obywatelskim?',gZam:'Jakie zlecenia od miasta są dla mojej firmy?',glos:'Jak mogę zabrać głos w sprawach gminy?'};
- (GM.inne||[]).forEach((z,i)=>Q['z'+(i+1)]=z.q);
+ ZMIANY().forEach((z,i)=>Q['z'+i]=i?z.q:Q.plan);
  const idz=k=>k[0]==='z'?S.plan(+k.slice(1)):S[k]();
  det.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{det.classList.remove('on');setTimeout(()=>startTopic(Q[b.dataset.k],()=>idz(b.dataset.k)),180)});
 }

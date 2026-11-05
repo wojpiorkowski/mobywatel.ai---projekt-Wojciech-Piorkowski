@@ -629,6 +629,10 @@ html:not([lang="pl"]) .quick button{flex:1 1 0;width:auto;min-width:0;font-size:
 .gmap .ml{font-size:9.5px;fill:#5b6472}.gmap .mt{font-size:10.5px;font-weight:600;fill:#1f2937}.gmap .mr{font-size:9.5px;font-weight:600;fill:#dc143c}.gmap .ms{font-size:10px;font-weight:700;fill:#fff;text-anchor:middle}
 .sheet .galert{border:1.5px solid var(--red-wash)}
 .sheet .galert .actions .btn{flex:1}
+.galert .gz summary{list-style:none;cursor:pointer}.galert .gz summary::-webkit-details-marker{display:none}
+.galert .gz .it .gi{background:var(--red-wash);color:#dc143c}
+.galert .gz .it>svg{transition:transform .2s}.galert .gz[open] .it>svg{transform:rotate(90deg)}
+.galert .gzb{padding:4px 16px 12px}.galert .gzb .rows{padding:6px 0 0}.galert .gzb .actions{padding:12px 0 0}
 .glist .it{display:flex;align-items:center;gap:12px;width:100%;padding:11px 16px;border-top:1px solid var(--hair);text-align:left}
 .glist .it .gi{width:32px;height:32px;border-radius:10px;display:grid;place-items:center;background:#e8f4ee;color:#16805a;flex:none}
 .glist .it .gi svg{width:18px;height:18px}
