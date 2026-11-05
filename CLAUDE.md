@@ -41,7 +41,7 @@ Narzędzia (`narzedzia.py`, JSON Schema) dzielą się na trzy grupy:
 - `UI`: sterują interfejsem (np. przekazanie danych, pytania z opcjami).
 Nowe narzędzie = definicja w `narzedzia.py` + implementacja w `dane.py` lub `akcje.py` + ewentualnie obsługa zdarzenia w `mockup/agent.js`.
 
-`persony.py`: cztery fikcyjne osoby (`marta` domyślna, `jan`, `ewa`, `kacper`) z dokumentami, rodziną, pojazdami, należnościami, skrzynką.
+`persony.py`: dwie fikcyjne osoby (`jan` domyślny, `ewa`) z dokumentami, rodziną, pojazdami, należnościami, skrzynką.
 `P()` zwraca dane osoby bieżącego wątku. `dane.py` ma stałą datę świata `DZIS = 2026-10-18`. Odpowiedniki osób po stronie frontu: `mockup/osoby.js`.
 
 `wiedza.py`: wyszukiwanie BM25 (bez zależności) po kartach usług gov.pl i biznes.gov.pl w `serwer/wiedza/*.jsonl` (ok. 62 MB, nie edytować ręcznie).
