@@ -124,8 +124,21 @@ const GMINY={
   wojt:{kto:'Marek Zawada',od:2024,kad:'1. kadencja (od 2024)',wybory:'2024: II tura, 51,2% głosów',limit:'Prezydent przedstawia co roku raport o stanie miasta, a rada głosuje nad wotum zaufania.'},
   wladzaRows:[['Prezydent miasta','Marek Zawada, 1. kadencja (od 2024)'],['Ostatnie wybory','2024: II tura, 51,2% głosów, frekwencja 41%'],['Rada Miasta Krakowa','43 radnych, koalicja 24 radnych'],['Rada Dzielnicy XIII Podgórze','21 radnych, dzieli pieniądze dzielnicy i opiniuje sprawy miasta'],['Twój okręg do Rady Miasta','nr 3: Podgórze, Prokocim, Bieżanów, 8 radnych']],
   rada:{nazwa:'Rada Miasta Krakowa',n:43,wojta:24,komitet:'koalicja KWW Kraków Razem i KWW Nowy Kraków',jeden:'',frekw:'47%',
-   radny:{kto:'Tomasz Gil',okreg:'okręg nr 3 (Podgórze, Prokocim, Bieżanów)',komitet:'KWW Kraków Razem',dyzur:'drugi wtorek miesiąca, 17:00–18:00, siedziba Rady Dzielnicy XIII'},
-   glosy:[['Wniosek o strefę płatnego parkowania na Podgórzu (06.2026)','za'],['Budżet obywatelski 2027: 40 mln zł (03.2026)','za'],['Nocny zakaz sprzedaży alkoholu w całym mieście (09.2026)','wstrzymał się']]},
+   // miasto powyżej 20 tys.: okręg wielomandatowy, więc mieszkaniec ma kilku równorzędnych radnych
+   okregNr:'3',okregOpis:'Podgórze, Prokocim, Bieżanów',
+   glosyTyt:['Wniosek o strefę płatnego parkowania na Podgórzu (06.2026)','Budżet obywatelski 2027: 40 mln zł (03.2026)','Nocny zakaz sprzedaży alkoholu w całym mieście (09.2026)'],
+   radni:[
+    {kto:'Tomasz Gil',p:'m',komitet:'KWW Kraków Razem',dyzur:'drugi wtorek miesiąca, 17:00–18:00, siedziba Rady Dzielnicy XIII',glosy:['za','za','wstrz']},
+    {kto:'Anna Sowa',p:'k',komitet:'KWW Nowy Kraków',dyzur:'pierwszy czwartek miesiąca, 16:00–17:00, biuro radnej przy ul. Kalwaryjskiej',glosy:['za','za','za']},
+    {kto:'Paweł Kret',p:'m',komitet:'KWW Kraków Razem',dyzur:'po umówieniu przez skrzynkę rady',glosy:['za','za','przeciw']},
+    {kto:'Magdalena Wrona',p:'k',komitet:'KWW Wspólny Kraków',dyzur:'ostatni poniedziałek miesiąca, 18:00–19:00, klub osiedlowy Prokocim',glosy:['przeciw','za','przeciw']},
+    {kto:'Jerzy Lis',p:'m',komitet:'KWW Nowy Kraków',dyzur:'trzecia środa miesiąca, 17:00–18:00, siedziba Rady Dzielnicy XIII',glosy:['za','przeciw','za']},
+    {kto:'Ewelina Bąk',p:'k',komitet:'KWW Kraków Razem',dyzur:'drugi piątek miesiąca, 15:00–16:00, filia biblioteki w Bieżanowie',glosy:['za','za','za']},
+    {kto:'Krzysztof Dudek',p:'m',komitet:'KWW Wspólny Kraków',dyzur:'po umówieniu przez skrzynkę rady',glosy:['przeciw','przeciw','wstrz']},
+    {kto:'Iwona Czajka',p:'k',komitet:'KWW Nowy Kraków',dyzur:'pierwszy wtorek miesiąca, 16:30–17:30, magistrat, pok. 201',glosy:['za','za','za']}],
+   dzielnica:{rada:'Rada Dzielnicy XIII Podgórze',okreg:'okręg nr 5 (rejon ul. Wielickiej i Płaszowa)',
+    osoby:[{kto:'Agnieszka Rak',p:'k',dyzur:'każda środa, 18:00–19:00, siedziba Rady Dzielnicy XIII'},{kto:'Michał Zięba',p:'m',dyzur:'po umówieniu przez skrzynkę rady dzielnicy'}],
+    note:'Rada dzielnicy opiniuje sprawy takie jak przebudowa ul. Wielickiej i dzieli pieniądze dzielnicy, np. na remonty chodników.'}},
   sesja:{tytul:'Sesja Rady Miasta Krakowa',przyp:'25.11.2026, 8:45',kiedy:'25.11.2026, godz. 9:00',gdzie:'sala obrad magistratu, transmisja na BIP'},
   uchwaly:[
    {re:/parkow|strefa? platn|abonament/,tytul:'Strefa płatnego parkowania na Podgórzu',nr:'projekt uchwały nr 1840/2026',
@@ -188,7 +201,7 @@ const GMINY={
     uwagaWstep:'Zgłaszam uwagi do wniosku o ustalenie lokalizacji inwestycji mieszkaniowej przy ul. Wielickiej 30 (AU-2.6735.9.2026). Wnioskuję o: ',
     uzas:'mieszkam przy ul. Wielickiej 28, 120 m od planowanego budynku; inwestycja kilkukrotnie przekracza wysokość dopuszczoną w planie miejscowym i zwiększy ruch na ulicy, na której miasto planuje likwidację miejsc postojowych.',
     uwagaTyt:'Uwagi do lokalizacji inwestycji',adresat:'Prezydent Miasta Krakowa',kanal:'Do: Urząd Miasta Krakowa, wydział architektury, przez e-Doręczenia',wynik:'trafią do Rady Miasta razem z projektem uchwały',
-    potem:'Gotowe. Dam Ci znać, kiedy Rada Miasta zajmie się uchwałą i jak zagłosuje Twój radny. Chcesz, żeby sąsiedzi też się dowiedzieli?',
+    potem:'Gotowe. Dam Ci znać, kiedy Rada Miasta zajmie się uchwałą i jak zagłosują radni z Twojego okręgu. Chcesz, żeby sąsiedzi też się dowiedzieli?',
     przyp:['23.11.2026, 9:00','uwagi do bloku przy Wielickiej 30 do 26.11.2026'],sasiedzi:'Mieszkańcy w promieniu 500 m z aplikacją dostali powiadomienie o wniosku.'},
    {nazwa:'Połączenie szkoły Hani i Igora',odl:'SP nr 34, 600 m od domu',nr:'OK-3.4430.5.2026',ikona:'info',krotko:'Hania od 2027 r. 1,6 km dalej · opinie do 04.12',q:'Co się zmienia w szkole moich dzieci?',
     teraz:'klasy 1–8 przy ul. Wielickiej 40',projekt:'zespół z SP nr 128, klasy 4–8 przy ul. Teligi',uwagi:'04.12.2026',re:/zmian\w* w szkole|szkol\w* (moich )?dzieci|polaczeni\w* szkol|sp (nr )?34|sp (nr )?128/,
@@ -279,6 +292,11 @@ function mapaProsta(Z){const M=Z.mapa,dom=`<g transform="translate(112 12)"><pat
  return `<svg class="gmap" viewBox="0 0 320 172" role="img" aria-label="Mapka: ${Z.nazwa}, ${Z.odl}"><defs><pattern id="kres2" width="7" height="7" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><rect width="7" height="7" fill="#fdecef"/><path d="M0 0v7" stroke="#dc143c" stroke-width="2.2" stroke-opacity=".55"/></pattern></defs>${tlo}${obiekt}${dom}</svg>`}
 const MAPY={ewa:mapaPlanu,jan:mapaWielicka},mapa=()=>(MAPY[OS.id]||mapaPlanu)(),mapaZ=Z=>Z.mapa?mapaProsta(Z):mapa();
 
+// radni Twojego okręgu: w gminie do 20 tys. jeden (JOW), w większym mieście kilku (okręg wielomandatowy)
+const radniPod=()=>{const R=GM.rada;return R.radni?'Twoi radni z okręgu nr '+R.okregNr+': '+R.radni.length+' osób':'Twój radny z '+R.radny.okreg.replace('okręg','okręgu')+': '+R.radny.kto};
+const GLOS={za:['za','za'],przeciw:['przeciw','przeciw'],wstrz:['wstrzymał się','wstrzymała się']},glosH=(r,g)=>(GLOS[g]||[g,g])[r.p==='k'?1:0];
+const osobyH=a=>'<ul class="gos">'+a.map(r=>`<li><b>${r.kto}</b><small>${[r.komitet,'dyżur: '+r.dyzur].filter(Boolean).join(' · ')}</small></li>`).join('')+'</ul>';
+
 // wszystkie sprawy „przy Tobie”: główna (plan) i pozostałe, każda zwinięta w karcie
 const ZMIANY=()=>[GM.plan,...(GM.inne||[])];
 
@@ -293,7 +311,7 @@ function openGmina(){
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
     <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
   <div class="ui list glist">${hd('doc','Twoja gmina')}
-   ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · Twój radny: '+GM.rada.radny.kto)}
+   ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · '+radniPod())}
    ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
    ${it('gLiczby','coin',(GM.wladza==='Wójt'?'Gmina':'Miasto')+' w liczbach',GM.liczbyPod)}
    ${GM.bo?it('gBO','check','Budżet obywatelski','głosowanie do '+GM.bo.do+' · '+GM.bo.dzielnica.length+' projektów w dzielnicy'):''}
@@ -381,9 +399,21 @@ function gminaInit(){
    await info({icon:'id',title:GM.radaTyt,source:'PKW, '+GM.bip+' (dane fikcyjne)',
     rows:GM.wladzaRows||[['Wójt',GM.wojt.kto],['Urzęduje',GM.wojt.kad],['Ostatnie wybory',GM.wojt.wybory],['Rada gminy',R.n+' radnych, '+R.wojta+' z komitetu wójta'],['Wybory do rady 2024',R.jeden],['Frekwencja 2024',R.frekw]],
     note:GM.wojt.limit});
-   await info({icon:'doc',title:'Twój radny: '+R.radny.kto,source:'Imienne wyniki głosowań, '+GM.bip,
-    rows:[['Okręg',R.radny.okreg],['Komitet',R.radny.komitet],['Dyżur',R.radny.dyzur],...R.glosy.map(([n,v])=>['<i class="gw">'+n+'</i>',v])]});
-   chips([{label:'Napisz do radnego',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+   if(!R.radni){
+    await info({icon:'doc',title:'Twój radny z '+R.radny.okreg.replace('okręg','okręgu')+': '+R.radny.kto,source:'Imienne wyniki głosowań, '+GM.bip,
+     rows:[['Okręg',R.radny.okreg],['Komitet',R.radny.komitet],['Dyżur',R.radny.dyzur],...R.glosy.map(([n,v])=>['<i class="gw">'+n+'</i>',v])],
+     note:'W gminie do 20 tys. mieszkańców każdy okręg wybiera jednego radnego. Twój okręg wynika z adresu zameldowania.'});
+    return chips([{label:'Napisz do radnego',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+   }
+   await info({icon:'id',title:'Twoi radni z okręgu nr '+R.okregNr,source:'PKW, wyniki wyborów 2024, '+GM.bip+' (dane fikcyjne)',body:osobyH(R.radni),
+    note:'W mieście powyżej 20 tys. mieszkańców okręg wybiera kilku radnych z różnych komitetów. Każdy z nich reprezentuje '+R.okregOpis+'; okręg wynika z Twojego adresu zameldowania.'});
+   const ile=j=>{const c={};R.radni.forEach(r=>c[r.glosy[j]]=(c[r.glosy[j]]||0)+1);return ['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>(g==='wstrz'?'wstrz.':g)+' '+c[g]).join(' · ')};
+   await info({icon:'doc',title:'Jak głosowali radni z Twojego okręgu',source:'Imienne wyniki głosowań, '+GM.bip,
+    rows:R.glosyTyt.map((t,j)=>['<i class="gw">'+t+'</i>',ile(j)]),
+    note:`<details class="gdok"><summary>${svg('id')}<span>Głosy imiennie</span>${svg('chev')}</summary><ul>${R.radni.map(r=>`<li class="os"><b>${r.kto}</b><small>${r.glosy.map((g,j)=>R.glosyTyt[j].split(' (')[0].split(':')[0]+': <strong>'+glosH(r,g)+'</strong>').join('<br>')}</small></li>`).join('')}</ul></details>`});
+   const D=R.dzielnica;
+   if(D)await info({icon:'id',title:'Radni dzielnicy z Twojego okręgu',source:D.rada+' (dane fikcyjne)',rows:[['Rada',D.rada],['Okręg',D.okreg]],body:osobyH(D.osoby),note:D.note});
+   chips([{label:'Napisz do radnych',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
   },
   async gSesja(){
    await info({icon:'clock',title:GM.sesja.tytul,source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]]});
@@ -401,13 +431,22 @@ function gminaInit(){
    chips([{label:'Napisz do radnego przed sesją',go:()=>S.doRadnego(i)},...inne]);
   },
   async doRadnego(i){
-   const R=GM.rada.radny,u=GM.uchwaly[i!=null?i:GM.uchwalaRadny];
-   await say(`Co chcesz przekazać radnemu ${R.kto.split(' ')[0]}owi przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.`);
+   const RR=GM.rada;
+   if(!RR.radni)return S.pisz(i,{kto:RR.radny.kto,okreg:RR.radny.okreg,pyt:`Co chcesz przekazać radnemu ${RR.radny.kto.split(' ')[0]}owi przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.`});
+   const ok='okręg nr '+RR.okregNr,D=RR.dzielnica,pyt='Co chcesz przekazać przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.';
+   await say(`Z okręgu nr ${RR.okregNr} do Rady Miasta jest ${RR.radni.length} radnych. Napiszesz do wszystkich naraz czy do jednej osoby?`);
+   chips([{label:'Wszyscy radni z okręgu ('+RR.radni.length+')',go:()=>S.pisz(i,{kto:'radni z okręgu nr '+RR.okregNr+' ('+RR.radni.length+' osób)',okreg:ok,pyt,wielu:1})},
+    ...RR.radni.map(r=>({label:r.kto+' · '+r.komitet.replace('KWW ',''),go:()=>S.pisz(i,{kto:r.kto,okreg:ok,pyt})})),
+    ...(D?[{label:'Radni dzielnicy ('+D.osoby.length+')',go:()=>S.pisz(i,{kto:'radni '+D.rada.replace('Rada','Rady')+', '+D.okreg.split(' (')[0],okreg:D.okreg.split(' (')[0],pyt,wielu:1})}]:[])]);
+  },
+  async pisz(i,R){
+   const u=GM.uchwaly[i!=null?i:GM.uchwalaRadny];
+   await say(R.pyt);
    const wyslij=async t=>{pending=null;msgs.querySelectorAll('.chips').forEach(x=>x.remove());
-    await confirmCard({icon:'mail',title:'Wiadomość do radnego',source:'Do: '+R.kto+', '+R.okreg+', przez skrzynkę rady',body:'„'+esc(t)+'”',
+    await confirmCard({icon:'mail',title:R.wielu?'Wiadomość do radnych':'Wiadomość do radnego',source:'Do: '+R.kto+(R.wielu?'':', '+R.okreg)+', przez skrzynkę rady',body:'„'+esc(t)+'”',
      rows:[['Sprawa',u.tytul],['Od',OS.imie+' '+OS.nazwisko+', '+rodz('mieszkanka','mieszkaniec')+' okręgu'],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
      then:async()=>{await result({title:'Wiadomość wysłana',rows:[['Do',R.kto],['Przed sesją',GM.sesja.kiedy],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
-      await say('Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}})};
+      await say(R.wielu?'Po sesji pokażę Ci, jak głosował każdy z nich w tej sprawie.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}})};
    chips([{label:'Proszę głosować przeciw',go:()=>wyslij('Proszę o głosowanie przeciw projektowi „'+u.tytul+'” w obecnym kształcie.')},{label:'Proszę o wyjaśnienie na sesji',go:()=>wyslij('Proszę o zadanie na sesji pytania o uzasadnienie projektu „'+u.tytul+'” i przekazanie mi odpowiedzi.')},{label:'Popieram projekt',go:()=>wyslij('Popieram projekt „'+u.tytul+'” i proszę o głosowanie za.')}]);
    pending=t=>wyslij(t);
   },
@@ -484,7 +523,7 @@ function gminaInit(){
    await result({title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]});
    await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','grudzień 2026'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', '+rodz('pełnomocniczka','pełnomocnik')+' może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
     note:'Powiadomię Ciebie i wszystkie osoby, które się podpisały, o każdym kroku.'});
-   chips([{label:'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
+   chips([{label:GM.rada.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
   },
   async pytanie(){
    await say('Napisz pytanie do rady. Rada i urząd zobaczą tylko, że pyta zweryfikowany mieszkaniec '+GM.twojaJedn+', a nie kto.');
