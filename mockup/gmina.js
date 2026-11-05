@@ -291,7 +291,7 @@ function openGmina(){
   <div class="ui galert glist">${hd('alert','Zmienia się coś przy Tobie')}
    ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'alert')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
-    <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${srcH(Z.zrodlo||Z.zrodla)}</div></details>`).join('')}</div>
+    <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · Twój radny: '+GM.rada.radny.kto)}
    ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
@@ -313,6 +313,20 @@ function openGmina(){
 const ETYKIETA='Tak mogłoby działać. Dziś prawo wymaga podpisów na papierze, więc ten krok pokazuje proponowaną zmianę.';
 const kroki=a=>'<ol class="gsteps">'+a.map(([t,d,st])=>`<li class="${st||''}"><b>${t}</b><small>${d}</small></li>`).join('')+'</ol>';
 const lista=a=>'<ul class="gul">'+a.map(x=>`<li>${x}</li>`).join('')+'</ul>';
+/* Dokumenty źródłowe sprawy: zwinięta lista fikcyjnych odnośników do BIP, budowana z pola `zrodla`.
+   Domena .example jest zarezerwowana, więc żaden odnośnik nie trafi do prawdziwego urzędu. */
+const DOMYSL_ZR='Uzasadnienie projektu, prognoza oddziaływania na środowisko, uwagi mieszkańców z etapu wniosków';
+const slug=t=>norm(t).replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
+function dokumentyH(Z){
+ const nazwy=(Z.zrodla||DOMYSL_ZR).split(/,\s*/).filter(Boolean),dom='bip.'+slug(GM.krotko)+'.example',nr=slug(Z.nr||Z.tytul||'sprawa');
+ return `<details class="gdok"><summary>${svg('doc')}<span>Dokumenty źródłowe · ${nazwy.length}</span>${svg('chev')}</summary><ul>${nazwy.map((n,i)=>{
+  const u=`https://${dom}/sprawy/${nr}/${slug(n)}.pdf`,kb=180+(n.length*37+i*211)%2400,dzien=String(2+i*5).padStart(2,'0');
+  return `<li><a class="gdl" href="${u}" data-fikcja="1"><b>${n.replace(/^./,c=>c.toUpperCase())}</b><small>PDF · ${kb>1000?(kb/1000).toFixed(1).replace('.',',')+' MB':kb+' kB'} · ${dzien}.10.2026</small><small class="u">${u.replace('https://','')}</small></a></li>`}).join('')}</ul>
+  <div class="note">Odnośniki są fikcyjne (prototyp). W prawdziwej aplikacji otwierałyby dokument z BIP.</div></details>`}
+// odnośniki fikcyjne: zamiast przejścia pod nieistniejący adres krótko podświetlamy uwagę pod listą
+document.addEventListener('click',e=>{const a=e.target.closest('a.gdl[data-fikcja]');if(!a)return;e.preventDefault();
+ const n=a.closest('.gdok').querySelector('.note');n.classList.remove('miga');void n.offsetWidth;n.classList.add('miga')});
+
 
 function gminaInit(){
  if(!GM)return;
@@ -328,9 +342,9 @@ function gminaInit(){
    await say(P.intro);
    await info({icon:'alert',title:P.nazwa,source:GM.bip+', sprawa '+P.nr+' (dane fikcyjne)',body:mapaZ(P),
     rows:P.rows||[['Obszar',P.pow],['Teraz',P.teraz],['Projekt',P.projekt],['Dojazd',P.dojazd],['Skąd zmiana',P.wniosek],['Wyłożenie projektu',P.wylozenie],['Spotkanie z projektantem',P.spotkanie],['Uwagi do','<b>'+P.uwagi+'</b>']]});
-   await info({icon:'doc',title:'Argumenty za i przeciw',source:P.zrodla||'Uzasadnienie projektu, prognoza oddziaływania na środowisko, uwagi mieszkańców z etapu wniosków',
+   await info({icon:'doc',title:'Argumenty za i przeciw',
     body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
-    note:P.decyzja||'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.'});
+    note:(P.decyzja||'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.')+dokumentyH(P)});
    await say(P.kto);
    chips([{label:P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy',P.przyp[0]],['O czym',P.przyp[1]]]})},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
   },
@@ -381,7 +395,7 @@ function gminaInit(){
   async uchwala(i){
    const u=GM.uchwaly[i];
    await say(u.co);
-   await info({icon:'doc',title:u.tytul,source:u.zrodla,rows:[['Kogo dotyczy',u.kogo],...u.rows,['Opinia komisji',u.komisja]]});
+   await info({icon:'doc',title:u.tytul,rows:[['Kogo dotyczy',u.kogo],...u.rows,['Opinia komisji',u.komisja]],note:dokumentyH(u)});
    await info({icon:'doc',title:'Za i przeciw',body:`<div class="gzp"><div><h4>Za</h4>${lista(u.za)}</div><div><h4>Przeciw</h4>${lista(u.przeciw)}</div></div>`,note:'Streszczam dokumenty, nie oceniam. Pełny tekst projektu jest na BIP.'});
    const inne=GM.uchwaly.map((x,j)=>j===i?null:{label:x.tytul,go:()=>S.uchwala(j)}).filter(Boolean);
    chips([{label:'Napisz do radnego przed sesją',go:()=>S.doRadnego(i)},...inne]);
