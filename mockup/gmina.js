@@ -3,6 +3,9 @@
    Scenariusze i trasy dopina po załadowaniu reszty (DOMContentLoaded), bo S i route są w scenarios.js. */
 const GMINY={
  ewa:{
+  aktywnosc:[
+   {ikona:'check',h:'Podpis pod pytaniem do rady',kiedy:'09.09.2026',s:'rada odrzuciła wniosek',o:{title:'Pytanie o nagrywanie posiedzeń komisji',rows:[['Podpisów','64 mieszkańców'],['Odpowiedź rady','wniosek odrzucony, 8 głosów do 7 (09.2026)']]}},
+   {ikona:'mail',h:'Uwaga do studium gminy',kiedy:'14.03.2025',s:'uwzględniona częściowo',o:{title:'Uwaga do studium gminy',rows:[['Co','pas zieleni między Polami Południowymi a szkołą'],['Rozstrzygnięcie','uwzględniona częściowo: pas 30 m zamiast 50 m'],['Uzasadnienie','raport wójta, s. 12 (BIP)']]}}],
   nazwa:'Gmina Lipowiec',krotko:'Lipowiec',typ:'gmina wiejska, powiat lubelski',mieszk:'8 940',solectwo:'Lipowiec Kolonia',soltys:'Halina Mazur',
   urzad:'Urząd Gminy Lipowiec',bip:'BIP Gminy Lipowiec',jednostka:'sołectwa Lipowiec Kolonia',twojaJedn:'Twojego sołectwa',wladza:'Wójt',
   etykRada:'Rada i wójt',radaTyt:'Wójt i rada gminy',alert:'Zmiana planu przy Tobie',f:[['Sołectwo','Lipowiec Kolonia'],['Uwagi do planu','do 18.01.2027']],uchwalaRadny:1,
@@ -115,6 +118,9 @@ const GMINY={
  /* Jan: duże miasto z dzielnicami; inne sprawy niż u Ewy: konsultacje inwestycji drogowej, strefa parkowania,
     budżet obywatelski i zlecenia miasta dla jego firmy. Miasto prawdziwe, ludzie, liczby i projekty fikcyjne. */
  jan:{
+  aktywnosc:[
+   {ikona:'mail',h:'Pytanie do Rady Dzielnicy XIII',kiedy:'02.10.2026',s:'odpowiedź 14.10.2026',o:{title:'Pytanie do Rady Dzielnicy XIII',rows:[['Pytanie','kiedy naprawa chodnika przy ul. Wielickiej 24–30'],['Odpowiedź','ZDMK: w ramach przebudowy ulicy, do tego czasu łatanie ubytków do 15.12.2026']]}},
+   {ikona:'check',h:'Głos w budżecie obywatelskim 2026',kiedy:'17.06.2025',s:'2 z 3 projektów wygrały',o:{title:'Budżet obywatelski 2026',rows:[['Wygrały','Oświetlenie przejścia przy SP 34, Zielone podwórko przy Wielickiej'],['Nie wygrał','Siłownia plenerowa w Płaszowie'],['Realizacja','oświetlenie gotowe (09.2026), podwórko w budowie']]}}],
   nazwa:'Kraków',krotko:'Kraków',typ:'miasto na prawach powiatu, Dzielnica XIII Podgórze',mieszk:'806 tys.',solectwo:'Dzielnica XIII Podgórze',soltys:'',
   urzad:'Urząd Miasta Krakowa',bip:'BIP Miasta Krakowa',jednostka:'Dzielnicy XIII Podgórze',twojaJedn:'Twojej dzielnicy',wladza:'Prezydent miasta',
   etykRada:'Prezydent i rady',radaTyt:'Władze miasta i dzielnicy',alert:'Konsultacje do 30.12',f:[['Dzielnica','XIII Podgórze'],['Uwagi do','30.12.2026']],uchwalaRadny:0,
@@ -297,6 +303,10 @@ const radniPod=()=>{const R=GM.rada;return R.radni?'Twoi radni z okręgu nr '+R.
 const GLOS={za:['za','za'],przeciw:['przeciw','przeciw'],wstrz:['wstrzymał się','wstrzymała się']},glosH=(r,g)=>(GLOS[g]||[g,g])[r.p==='k'?1:0];
 const osobyH=a=>'<ul class="gos">'+a.map(r=>`<li><b>${r.kto}</b><small>${[r.komitet,'dyżur: '+r.dyzur].filter(Boolean).join(' · ')}</small></li>`).join('')+'</ul>';
 
+// Moja aktywność: nowe wpisy z tej sesji na górze, potem wcześniejsze (fikcyjne) z danych gminy
+const AKT={},aktyw=()=>[...(AKT[OS.id]||[]),...(GM.aktywnosc||[])];
+const dodajAkt=a=>{(AKT[OS.id]=AKT[OS.id]||[]).unshift({kiedy:today(),...a})};
+const rez=(ikona,h,s,o)=>{dodajAkt({ikona,h,s,o});return result(o)};
 // uwagi złożone w tej sesji (prototyp: tylko w pamięci przeglądarki), klucz: osoba i numer sprawy
 const ZLOZ={},kluczU=Z=>OS.id+':'+Z.nr;
 const rozm=b=>b>=1e6?(b/1e6).toFixed(1).replace('.',',')+' MB':Math.max(1,Math.round(b/1e3))+' kB';
@@ -316,6 +326,7 @@ function openGmina(){
    ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}${ZLOZ[kluczU(Z)]?' · <b class="gok">uwaga złożona</b>':''}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
     <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
+  ${(A=>A.length?`<div class="ui list glist">${hd('clock','Moja aktywność')}${A.slice(0,4).map((a,j)=>it('a'+j,a.ikona,a.h,a.kiedy+' · '+a.s)).join('')}${A.length>4?it('aWszystko','dots','Cała aktywność',A.length+' wpisów'):''}</div>`:'')(aktyw())}
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · '+radniPod())}
    ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
@@ -329,8 +340,8 @@ function openGmina(){
  tick();det.classList.add('on');
  $('#dclose').onclick=()=>det.classList.remove('on');
  const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmie się najbliższa sesja rady?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?',gBO:'Jak zagłosować w budżecie obywatelskim?',gZam:'Jakie zlecenia od miasta są dla mojej firmy?',glos:'Jak mogę zabrać głos w sprawach gminy?'};
- ZMIANY().forEach((z,i)=>Q['z'+i]=i?z.q:Q.plan);
- const idz=k=>k[0]==='z'?S.plan(+k.slice(1)):S[k]();
+ ZMIANY().forEach((z,i)=>Q['z'+i]=i?z.q:Q.plan);aktyw().forEach((a,j)=>Q['a'+j]=a.h);Q.aWszystko='Pokaż całą moją aktywność';
+ const idz=k=>k==='aWszystko'?S.aktWszystko():k[0]==='z'?S.plan(+k.slice(1)):k[0]==='a'&&k!=='a'?S.akt(+k.slice(1)):S[k]();
  det.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{det.classList.remove('on');setTimeout(()=>startTopic(Q[b.dataset.k],()=>idz(b.dataset.k)),180)});
 }
 
@@ -370,7 +381,7 @@ function gminaInit(){
     body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
     note:(P.decyzja||'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.')+dokumentyH(P)});
    await say(P.kto);
-   chips([...(ZLOZ[kluczU(P)]?[{label:'Moja złożona uwaga',go:()=>S.mojaUwaga(i)}]:[]),{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy',P.przyp[0]],['O czym',P.przyp[1]]]})},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
+   chips([...(ZLOZ[kluczU(P)]?[{label:'Moja złożona uwaga',go:()=>S.mojaUwaga(i)}]:[]),{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>rez('bell','Przypomnienie: '+P.nazwa,P.przyp[0],{title:'Przypomnienie ustawione',rows:[['Kiedy',P.przyp[0]],['O czym',P.przyp[1]]]})},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
   },
   async inneZmiany(i=0){
    await say('Przy Tobie zmienia się też:');
@@ -411,10 +422,21 @@ function gminaInit(){
     then:async()=>{
      const nr=P.nr.split('.')[0]+'/U/'+String(40+Object.keys(ZLOZ).length*7+i).padStart(3,'0');
      ZLOZ[kluczU(P)]={...st,kiedy:'godz. '+now()+', '+today(),nr};
+     dodajAkt({ikona:'mail',h:'Uwaga złożona: '+P.nazwa,s:nr+' · czeka na rozpatrzenie',go:()=>S.mojaUwaga(i)});
      await result({title:P.zlozono||'Uwaga złożona',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer uwagi',nr],['Sprawa','w Twoich sprawach'],['Wynik',P.wynik]]});
      await say(P.potem);
      chips([{label:'Zobacz złożoną uwagę',go:()=>S.mojaUwaga(i)},{label:P.sasiedziLabel||'Powiadom sąsiadów',go:()=>S.sasiedzi(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:'Na razie wystarczy',go:()=>say('Dobrze. Sprawę i swoją uwagę znajdziesz w zakładce Moja gmina.')}]);
     }});
+  },
+  async akt(j){
+   const a=aktyw()[j];if(!a)return;
+   if(a.go)return a.go();
+   await info({icon:a.ikona,title:a.o.title||a.h,source:a.o.source||'Twoje sprawy w mObywatelu',rows:[['Kiedy',a.kiedy],...(a.o.rows||[])]});
+  },
+  async aktWszystko(){
+   const A=aktyw();
+   const c=await card(`<div class="ui list glist">${hd('clock','Moja aktywność')}${A.map((a,j)=>`<button class="it" data-j="${j}"><span class="gi">${svg(a.ikona)}</span><span class="x"><b>${a.h}</b><small>${a.kiedy} · ${a.s}</small></span>${svg('chev')}</button>`).join('')}${srcH('uwagi, zapisy, głosy, wiadomości i przypomnienia w sprawach gminy')}</div>`);
+   c.querySelectorAll('.it').forEach(b=>b.onclick=()=>act(()=>{addUser(A[+b.dataset.j].h);S.akt(+b.dataset.j)}));
   },
   async mojaUwaga(i=0){
    const P=ZM[i],Z=ZLOZ[kluczU(P)];
@@ -425,7 +447,7 @@ function gminaInit(){
   },
   async spotkanie(i=0){
    const P=ZM[i];
-   await confirmCard({icon:'clock',title:P.spotkanieTyt,source:GM.urzad,rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',P.spotkanieGdzie],['Pytania z góry',P.spotkaniePyt||'możesz wysłać teraz, projektant odpowie na spotkaniu']],label:'Zapisz mnie',then:()=>result({title:'Zapisano na spotkanie',rows:[['Kalendarz','dodane do kalendarza'],['Przypomnienie',P.spotkaniePrzyp]]})});
+   await confirmCard({icon:'clock',title:P.spotkanieTyt,source:GM.urzad,rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',P.spotkanieGdzie],['Pytania z góry',P.spotkaniePyt||'możesz wysłać teraz, projektant odpowie na spotkaniu']],label:'Zapisz mnie',then:()=>rez('clock','Zapis na spotkanie: '+P.nazwa,P.spotkanieKiedy,{title:'Zapisano na spotkanie',rows:[['Kalendarz','dodane do kalendarza'],['Przypomnienie',P.spotkaniePrzyp]]})});
   },
   async sasiedzi(i=0){
    const P=ZM[i];
@@ -457,7 +479,7 @@ function gminaInit(){
    await say('Rada zajmie się trzema projektami. Wybierz, a wyjaśnię prostym językiem, co zmieniają.');
    const c=await card(`<div class="ui list glist">${hd('doc','Porządek obrad')}${GM.uchwaly.map((u,i)=>`<button class="it" data-i="${i}"><span class="gi">${svg('doc')}</span><span class="x"><b>${u.tytul}</b><small>${u.nr}</small></span>${svg('chev')}</button>`).join('')}${srcH(GM.bip+', projekty uchwał')}</div>`);
    c.querySelectorAll('.it').forEach(b=>b.onclick=()=>act(()=>{addUser(GM.uchwaly[+b.dataset.i].tytul);S.uchwala(+b.dataset.i)}));
-   chips([{label:'Przypomnij i pokaż transmisję',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy',GM.sesja.przyp],['Transmisja','link w powiadomieniu']]})}]);
+   chips([{label:'Przypomnij i pokaż transmisję',go:()=>rez('bell','Przypomnienie o sesji rady',GM.sesja.kiedy,{title:'Przypomnienie ustawione',rows:[['Kiedy',GM.sesja.przyp],['Transmisja','link w powiadomieniu']]})}]);
   },
   async uchwala(i){
    const u=GM.uchwaly[i];
@@ -482,7 +504,7 @@ function gminaInit(){
    const wyslij=async t=>{pending=null;msgs.querySelectorAll('.chips').forEach(x=>x.remove());
     await confirmCard({icon:'mail',title:R.wielu?'Wiadomość do radnych':'Wiadomość do radnego',source:'Do: '+R.kto+(R.wielu?'':', '+R.okreg)+', przez skrzynkę rady',body:'„'+esc(t)+'”',
      rows:[['Sprawa',u.tytul],['Od',OS.imie+' '+OS.nazwisko+', '+rodz('mieszkanka','mieszkaniec')+' okręgu'],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
-     then:async()=>{await result({title:'Wiadomość wysłana',rows:[['Do',R.kto],['Przed sesją',GM.sesja.kiedy],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
+     then:async()=>{await rez('mail','Wiadomość: '+u.tytul,'do: '+R.kto,{title:'Wiadomość wysłana',rows:[['Do',R.kto],['Przed sesją',GM.sesja.kiedy],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
       await say(R.wielu?'Po sesji pokażę Ci, jak głosował każdy z nich w tej sprawie.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}})};
    chips([{label:'Proszę głosować przeciw',go:()=>wyslij('Proszę o głosowanie przeciw projektowi „'+u.tytul+'” w obecnym kształcie.')},{label:'Proszę o wyjaśnienie na sesji',go:()=>wyslij('Proszę o zadanie na sesji pytania o uzasadnienie projektu „'+u.tytul+'” i przekazanie mi odpowiedzi.')},{label:'Popieram projekt',go:()=>wyslij('Popieram projekt „'+u.tytul+'” i proszę o głosowanie za.')}]);
    pending=t=>wyslij(t);
@@ -505,7 +527,7 @@ function gminaInit(){
   },
   async gNabory(){
    await info({icon:'bell',title:'Otwarte nabory w gminie',source:GM.bip+', spółki gminne',rows:GM.nabory.map(([s,g,t])=>[s+'<small class="gsm">'+g+'</small>',t]),flag:GM.naborStat});
-   chips([{label:'Powiadamiaj o nowych naborach',go:()=>result({title:'Powiadomienia włączone',rows:[['Co','nabory w urzędzie, szkołach i spółkach gminy'],['Wyniki naborów','też dostaniesz']]})},{label:'Na razie wystarczy'}]);
+   chips([{label:'Powiadamiaj o nowych naborach',go:()=>rez('bell','Powiadomienia o naborach do pracy','włączone',{title:'Powiadomienia włączone',rows:[['Co','nabory w urzędzie, szkołach i spółkach gminy'],['Wyniki naborów','też dostaniesz']]})},{label:'Na razie wystarczy'}]);
   },
   async gBO(){
    const B=GM.bo;
@@ -516,9 +538,9 @@ function gminaInit(){
     if(sel.length>B.ile){await say('Możesz wybrać najwyżej '+B.ile+' projekty. Zaznacz jeszcze raz.');return wybierz()}
     await confirmCard({icon:'check',title:'Głos w budżecie obywatelskim',source:'Tożsamość z mDowodu, '+B.edycja,rows:[['Projekty',sel.join(', ')],['Dzielnica',GM.solectwo],['Zmiana głosu','możliwa do '+B.do]],label:'Oddaj głos',
      then:async()=>{
-      await result({title:'Głos oddany',source:B.edycja,rows:[['Projektów',String(sel.length)],['Wyniki','w styczniu 2027, dostaniesz powiadomienie']]});
+      await rez('check','Głos w budżecie obywatelskim','projektów: '+sel.length+' · wyniki w styczniu 2027',{title:'Głos oddany',source:B.edycja,rows:[['Projektów',String(sel.length)],['Wyniki','w styczniu 2027, dostaniesz powiadomienie']]});
       await say(B.rodzina+' Wysłać im zaproszenie?');
-      chips([{label:'Wyślij zaproszenie rodzinie',go:()=>result({title:'Zaproszenia wysłane',rows:[['Do',B.zaproszenie],['Dzieci','zagłosują po Twojej zgodzie w swojej aplikacji']]})},{label:'Na razie wystarczy'}]);
+      chips([{label:'Wyślij zaproszenie rodzinie',go:()=>rez('mail','Zaproszenie rodziny do głosowania',B.zaproszenie,{title:'Zaproszenia wysłane',rows:[['Do',B.zaproszenie],['Dzieci','zagłosują po Twojej zgodzie w swojej aplikacji']]})},{label:'Na razie wystarczy'}]);
      }});
    });
    wybierz();
@@ -526,7 +548,7 @@ function gminaInit(){
   async gZam(){
    await info({icon:'bell',title:'Zlecenia od miasta dla Twojej firmy',source:'Platforma e-Zamówienia, '+GM.bip+' (dane fikcyjne)',rows:GM.zamowienia.map(([n,k,w,t])=>[n+'<small class="gsm">'+k+', '+w+'</small>',t]),flag:GM.zamStat});
    await say('Do przeglądów instalacji gazowych zamawiający wymaga ważnych świadectw kwalifikacyjnych przez cały czas trwania umowy. Mogę sprawdzić Twoje.');
-   chips([{label:'Sprawdź moje uprawnienia',go:()=>S.pKwalif()},{label:'Powiadamiaj o zamówieniach z mojej branży',go:()=>result({title:'Powiadomienia włączone',rows:[['Co','zamówienia miasta i spółek miejskich, PKD 43.22.Z'],['Gdzie','Kraków i powiat krakowski']]})}]);
+   chips([{label:'Sprawdź moje uprawnienia',go:()=>S.pKwalif()},{label:'Powiadamiaj o zamówieniach z mojej branży',go:()=>rez('bell','Powiadomienia o zamówieniach miasta','włączone',{title:'Powiadomienia włączone',rows:[['Co','zamówienia miasta i spółek miejskich, PKD 43.22.Z'],['Gdzie','Kraków i powiat krakowski']]})}]);
   },
   async glos(){
    await say('W gminie możesz zrobić więcej niż głosować raz na pięć lat. Co Cię interesuje?');
@@ -557,7 +579,7 @@ function gminaInit(){
   },
   async sledz(){
    const G=GM.glos;
-   await result({title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]});
+   await rez('doc','Projekt uchwały obywatelskiej złożony','BRG.0006.1.2026 · weryfikacja podpisów',{title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]});
    await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','styczeń 2027'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', '+rodz('pełnomocniczka','pełnomocnik')+' może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
     note:'Powiadomię Ciebie i wszystkie osoby, które się podpisały, o każdym kroku.'});
    chips([{label:GM.rada.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
@@ -572,21 +594,21 @@ function gminaInit(){
    await confirmCard({icon:'mail',title:'Pytanie do '+GM.rada.nazwa.replace('Rada','Rady'),source:GM.rada.nazwa+', publiczna lista pytań mieszkańców',body:'„'+esc(q)+'”',
     rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.jednostka+', '+rodz('zweryfikowana','zweryfikowany')+' mObywatelem'],['Twoje dane','nie trafiają do urzędu ani rady'],['Odpowiedź','publicznie, termin 14 dni']],
     note:'Tak mogłoby działać. Wymaga zmiany regulaminu rady albo przepisów; dziś pytania zadaje się z imienia i nazwiska.',label:'Wyślij pod pseudonimem',
-    then:()=>result({title:'Pytanie opublikowane',rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.jednostka],['Podpisało się pod pytaniem','powiadomię, gdy inni dołączą'],['Odpowiedź','do 14 dni, dostaniesz powiadomienie']]})});
+    then:()=>rez('mail','Pytanie do rady','czeka na odpowiedź',{title:'Pytanie opublikowane',rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.jednostka],['Podpisało się pod pytaniem','powiadomię, gdy inni dołączą'],['Odpowiedź','do 14 dni, dostaniesz powiadomienie']]})});
   },
   async debata(){
    const D=GM.glos.debata;
    await info({icon:'doc',title:'Debata o raporcie o stanie gminy',source:'Ustawa o samorządzie gminnym, '+GM.bip,
     rows:[['Raport',D.raport],['Debata',D.kiedy+', na sesji rady'],['Kto może zabrać głos','każdy mieszkaniec'],['Co trzeba',D.podpisy+' pod zgłoszeniem'],['Kiedy zgłosić','najpóźniej dzień przed sesją']],
     note:GM.wladza+' przedstawia raport co roku do 31 maja. Po debacie rada głosuje nad wotum zaufania.'});
-   chips([{label:'Przypomnij, gdy raport będzie gotowy',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','gdy raport pojawi się na BIP (do 31.05.2027)'],['Potem','zbiórka 20 podpisów w aplikacji, kilka minut']]})},{label:'Na razie wystarczy'}]);
+   chips([{label:'Przypomnij, gdy raport będzie gotowy',go:()=>rez('bell','Przypomnienie o raporcie','do 31.05.2027',{title:'Przypomnienie ustawione',rows:[['Kiedy','gdy raport pojawi się na BIP (do 31.05.2027)'],['Potem','zbiórka 20 podpisów w aplikacji, kilka minut']]})},{label:'Na razie wystarczy'}]);
   },
   async kandyduj(){
    const W=GM.glos.wybory;
    await info({icon:'id',title:'Kandydowanie w gminie',source:'Kodeks wyborczy, PKW (dane gminy fikcyjne)',
     rows:W.rows||[['Najbliższe wybory',W.kiedy],['Do rady, Twój okręg',W.radny],['Na wójta',W.wojt],['Dieta radnego',W.dieta],['Sołtys',W.soltys]],
     flag:W.flag});
-   chips([{label:'Przypomnij, gdy ruszy kalendarz wyborczy',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy',W.przyp],['Dostaniesz','plan krok po kroku i terminy']]})},{label:W.praca[0],go:()=>say(W.praca[1])}]);
+   chips([{label:'Przypomnij, gdy ruszy kalendarz wyborczy',go:()=>rez('bell','Przypomnienie o wyborach',W.przyp,{title:'Przypomnienie ustawione',rows:[['Kiedy',W.przyp],['Dostaniesz','plan krok po kroku i terminy']]})},{label:W.praca[0],go:()=>say(W.praca[1])}]);
   }
  });
  const _route=route;
