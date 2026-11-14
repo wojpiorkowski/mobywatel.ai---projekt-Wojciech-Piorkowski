@@ -271,6 +271,28 @@ const PLAN_INFO={
    kto:['dyrektor SP nr 34','przedstawiciel wydziału edukacji','przewodnicząca rady rodziców'],program:['plan połączenia i podział klas','dojazd na ul. Teligi i świetlica','pytania rodziców'],dostep:'aula na parterze, opieka nad dziećmi w świetlicy'}},
 };
 Object.values(GMINY).forEach(G=>[G.plan,...(G.inne||[])].forEach(Z=>Object.assign(Z,PLAN_INFO[Z.nr]||{})));
+/* Cała rada: radni z Twojego okręgu z danych + pozostali wygenerowani (fikcyjni, ta sama lista przy każdym uruchomieniu). */
+const SKLAD={ewa:{okregi:Array.from({length:15},(_,k)=>[k+1,1]),klub:['KWW Razem dla Lipowca',13],opoz:['KWW Nasza Gmina']},
+ jan:{okregi:[[1,6],[2,6],[3,8],[4,6],[5,6],[6,5],[7,6]],klub:['KWW Kraków Razem','KWW Nowy Kraków'],opoz:['KWW Wspólny Kraków','KWW Kraków dla Ludzi']}};
+function pelnaRada(G,id){
+ const R=G.rada,K=SKLAD[id];if(!K||R.wszyscy)return;
+ const tyt=R.glosyTyt||(R.glosyTyt=R.glosy.map(g=>g[0])),moj=+(R.okregNr||R.radny.okreg.match(/\d+/)[0]);R.okregNr=String(moj);
+ const swoi=(R.radni||[{...R.radny,p:'m',glosy:R.glosy.map(g=>g[1])}]).map(r=>({...r,okreg:moj}));
+ const IM={m:['Adam','Bartosz','Damian','Grzegorz','Kamil','Łukasz','Marcin','Mariusz','Piotr','Rafał','Robert','Sławomir','Wojciech','Andrzej','Dariusz','Henryk'],k:['Agata','Barbara','Dorota','Elżbieta','Joanna','Justyna','Katarzyna','Małgorzata','Monika','Renata','Teresa','Urszula','Beata','Halina']};
+ const NZ=['Wilk','Sikora','Kos','Zając','Pająk','Gołąb','Cieślak','Kur','Szpak','Wróbel','Kowal','Bednarz','Jeleń','Kania','Puchała','Baran','Mróz','Wiatr','Grad','Kmieć','Socha','Rogal','Fijał','Hajduk','Kufel','Marzec','Stróż','Sroka','Kwiek','Rybak','Ptak','Czyż','Bocian','Żuraw','Krupa','Szczygieł','Gawron','Drozd'];
+ let z=7+moj;const los=n=>((z=(z*1103515245+12345)%2147483648)>>>16)%n;
+ const inni=[];let nr=0,klubIle=R.wojta-swoi.filter(r=>!/Wspólny|Nasza/.test(r.komitet)).length;
+ const W0=K.okregi.filter(([o])=>o!==moj).reduce((n,[,ile])=>n+ile,0);
+ K.okregi.filter(([o])=>o!==moj).forEach(([o,ile])=>{for(let j=0;j<ile;j++){
+  const p=los(2)?'m':'k',zostalo=W0-inni.length,klub=klubIle>0&&(zostalo<=klubIle||los(10)<5);if(klub)klubIle--;
+  const komitet=klub?K.klub[los(Array.isArray(K.klub)&&typeof K.klub[1]==='string'?2:1)]:K.opoz[los(K.opoz.length)];
+  const g=klub?['za','za',['za','wstrz','przeciw'][los(3)]]:['przeciw',['za','przeciw'][los(2)],['za','wstrz','przeciw'][los(3)]];
+  if(id==='ewa'){g[0]=g[1]=klub?'za':'przeciw';g[2]=klub?'przeciw':'za'}
+  inni.push({kto:IM[p][los(IM[p].length)]+' '+NZ[nr++%NZ.length],p,komitet,okreg:o,dyzur:los(3)?'po umówieniu przez skrzynkę rady':'pierwszy poniedziałek miesiąca, 16:00–17:00, '+(id==='ewa'?'urząd gminy':'magistrat'),glosy:g.slice(0,tyt.length)});
+ }});
+ R.wszyscy=[...swoi,...inni];
+}
+Object.entries(GMINY).forEach(([id,G])=>pelnaRada(G,id));
 const GM=GMINY[OS.id]||null;
 if(GM)OS.docs.push({id:'gmina',name:'Moja gmina',img:'assets/card-gmina.svg',sub:GM.nazwa,alert:GM.alert,holder:GM.nazwa.toUpperCase(),line:GM.typ,
  f:GM.f,rows:[]});
@@ -499,25 +521,42 @@ function gminaInit(){
    await say((P.sasiedziLabel?'Inni rodzice':'Sąsiedzi')+' dostaną to samo podsumowanie z mapką i terminami, bez Twoich danych i bez treści Twojej uwagi.');
    await info({icon:'qr',title:P.udost||'Udostępnij informację o '+(i?'sprawie':'planie'),body:`<div class="gqr">${qrSVG(41)}</div>`,rows:[['Link','mobywatel.gov.pl/gmina/plan/'+P.nr.replace(/\D/g,'')],['Kto zobaczy','każdy, także bez aplikacji']],note:P.sasiedzi});
   },
+  // Rada: krótko o władzy, potem lista wszystkich radnych (Twój okręg na górze); szczegóły dopiero po kliknięciu w osobę.
   async gRada(){
    await info({icon:'id',title:GM.radaTyt,source:'PKW, '+GM.bip+' (dane fikcyjne)',
     rows:GM.wladzaRows||[['Wójt',GM.wojt.kto],['Urzęduje',GM.wojt.kad],['Ostatnie wybory',GM.wojt.wybory],['Rada gminy',R.n+' radnych, '+R.wojta+' z komitetu wójta'],['Wybory do rady 2024',R.jeden],['Frekwencja 2024',R.frekw]],
     note:GM.wojt.limit});
-   if(!R.radni){
-    await info({icon:'doc',title:'Twój radny z '+R.radny.okreg.replace('okręg','okręgu')+': '+R.radny.kto,source:'Imienne wyniki głosowań, '+GM.bip,
-     rows:[['Okręg',R.radny.okreg],['Komitet',R.radny.komitet],['Dyżur',R.radny.dyzur],...R.glosy.map(([n,v])=>['<i class="gw">'+n+'</i>',v])],
-     note:'W gminie do 20 tys. mieszkańców każdy okręg wybiera jednego radnego. Twój okręg wynika z adresu zameldowania.'});
-    return chips([{label:'Napisz do radnego',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
-   }
-   await info({icon:'id',title:'Twoi radni z okręgu nr '+R.okregNr,source:'PKW, wyniki wyborów 2024, '+GM.bip+' (dane fikcyjne)',body:osobyH(R.radni),
-    note:'W mieście powyżej 20 tys. mieszkańców okręg wybiera kilku radnych z różnych komitetów. Każdy z nich reprezentuje '+R.okregOpis+'; okręg wynika z Twojego adresu zameldowania.'});
-   const ile=j=>{const c={};R.radni.forEach(r=>c[r.glosy[j]]=(c[r.glosy[j]]||0)+1);return ['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>(g==='wstrz'?'wstrz.':g)+' '+c[g]).join(' · ')};
-   await info({icon:'doc',title:'Jak głosowali radni z Twojego okręgu',source:'Imienne wyniki głosowań, '+GM.bip,
-    rows:R.glosyTyt.map((t,j)=>['<i class="gw">'+t+'</i>',ile(j)]),
-    note:`<details class="gdok"><summary>${svg('id')}<span>Głosy imiennie</span>${svg('chev')}</summary><ul>${R.radni.map(r=>`<li class="os"><b>${r.kto}</b><small>${r.glosy.map((g,j)=>R.glosyTyt[j].split(' (')[0].split(':')[0]+': <strong>'+glosH(r,g)+'</strong>').join('<br>')}</small></li>`).join('')}</ul></details>`});
+   await S.radniLista(1);
+  },
+  async radniLista(zChipami){
+   const W=R.wszyscy,moj=+R.okregNr,swoi=W.filter(r=>r.okreg===moj),inni=W.filter(r=>r.okreg!==moj),jeden=swoi.length===1;
+   const os=(r,twoj)=>`<button class="it" data-r="${W.indexOf(r)}"><span class="gi">${svg('id')}</span><span class="x"><b>${r.kto}</b><small>${r.komitet.replace('KWW ','')}${twoj?'':' · okręg nr '+r.okreg}</small></span>${svg('chev')}</button>`;
+   const c=await card(`<div class="ui list glist">${hd('id',R.nazwa+': '+W.length+' radnych')}
+    <div class="gsek">${jeden?'Twój radny':'Twoi radni'} z okręgu nr ${moj}</div>${swoi.map(r=>os(r,1)).join('')}
+    <details class="gdok grad"><summary>${svg('id')}<span>Pozostali radni · ${inni.length}</span>${svg('chev')}</summary>${inni.map(r=>os(r)).join('')}</details>
+    <div class="note">${jeden?'W gminie do 20 tys. mieszkańców każdy okręg wybiera jednego radnego.':'W mieście powyżej 20 tys. mieszkańców okręg wybiera kilku radnych z różnych komitetów.'} Twój okręg wynika z adresu zameldowania. Dotknij osoby, żeby zobaczyć dyżur i głosowania.</div>${srcH('PKW, wyniki wyborów 2024 (dane fikcyjne)')}</div>`);
+   c.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>act(()=>{addUser(W[+b.dataset.r].kto);S.radny(+b.dataset.r)}));
+   if(zChipami)chips([{label:jeden?'Jak głosował mój radny?':'Jak głosowali radni z mojego okręgu?',go:S.radniGlosy},...(R.dzielnica?[{label:'Radni mojej dzielnicy',go:S.radniDz}]:[]),{label:jeden?'Napisz do radnego':'Napisz do radnych',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+  },
+  async radny(j){
+   const r=R.wszyscy[j],twoj=r.okreg===+R.okregNr;
+   await info({icon:'id',title:r.kto,source:'Imienne wyniki głosowań, '+GM.bip+' (dane fikcyjne)',
+    rows:[['Komitet',r.komitet],['Okręg','nr '+r.okreg+(twoj?' (Twój okręg)':'')],['Dyżur',r.dyzur],['Kontakt','skrzynka rady w aplikacji'],...R.glosyTyt.map((t,k)=>['<i class="gw">'+t+'</i>',glosH(r,r.glosy[k])])],
+    note:twoj?'':'To radny z innego okręgu. Możesz do niego napisać, ale reprezentuje przede wszystkim mieszkańców swojego okręgu.'});
+   chips([{label:'Napisz wiadomość',go:()=>S.pisz(GM.uchwalaRadny,{kto:r.kto,okreg:'okręg nr '+r.okreg,pyt:'Co chcesz przekazać przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.'})},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
+  },
+  async radniGlosy(){
+   const swoi=R.wszyscy.filter(r=>r.okreg===+R.okregNr);
+   const ile=k=>{if(swoi.length===1)return glosH(swoi[0],swoi[0].glosy[k]);const c={};swoi.forEach(r=>c[r.glosy[k]]=(c[r.glosy[k]]||0)+1);return ['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>(g==='wstrz'?'wstrz.':g)+' '+c[g]).join(' · ')};
+   await info({icon:'doc',title:swoi.length===1?'Jak głosował '+swoi[0].kto:'Jak głosowali radni z Twojego okręgu',source:'Imienne wyniki głosowań, '+GM.bip,
+    rows:R.glosyTyt.map((t,k)=>['<i class="gw">'+t+'</i>',ile(k)]),
+    note:swoi.length>1?`<details class="gdok"><summary>${svg('id')}<span>Głosy imiennie</span>${svg('chev')}</summary><ul>${swoi.map(r=>`<li class="os"><b>${r.kto}</b><small>${r.glosy.map((g,k)=>R.glosyTyt[k].split(' (')[0].split(':')[0]+': <strong>'+glosH(r,g)+'</strong>').join('<br>')}</small></li>`).join('')}</ul></details>`:''});
+   chips([{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
+  },
+  async radniDz(){
    const D=R.dzielnica;
-   if(D)await info({icon:'id',title:'Radni dzielnicy z Twojego okręgu',source:D.rada+' (dane fikcyjne)',rows:[['Rada',D.rada],['Okręg',D.okreg]],body:osobyH(D.osoby),note:D.note});
-   chips([{label:'Napisz do radnych',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+   await info({icon:'id',title:'Radni dzielnicy z Twojego okręgu',source:D.rada+' (dane fikcyjne)',rows:[['Rada',D.rada],['Okręg',D.okreg]],body:osobyH(D.osoby),note:D.note});
+   chips([{label:'Napisz do radnych dzielnicy',go:()=>S.pisz(GM.uchwalaRadny,{kto:'radni '+D.rada.replace('Rada','Rady')+', '+D.okreg.split(' (')[0],okreg:D.okreg.split(' (')[0],pyt:'Co chcesz przekazać? Możesz wybrać albo napisać własnymi słowami.',wielu:1})},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
   },
   async gSesja(){
    await info({icon:'clock',title:GM.sesja.tytul,source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]]});
@@ -543,16 +582,36 @@ function gminaInit(){
     ...RR.radni.map(r=>({label:r.kto+' · '+r.komitet.replace('KWW ',''),go:()=>S.pisz(i,{kto:r.kto,okreg:ok,pyt})})),
     ...(D?[{label:'Radni dzielnicy ('+D.osoby.length+')',go:()=>S.pisz(i,{kto:'radni '+D.rada.replace('Rada','Rady')+', '+D.okreg.split(' (')[0],okreg:D.okreg.split(' (')[0],pyt,wielu:1})}]:[])]);
   },
-  async pisz(i,R){
-   const u=GM.uchwaly[i!=null?i:GM.uchwalaRadny];
-   await say(R.pyt);
-   const wyslij=async t=>{pending=null;msgs.querySelectorAll('.chips').forEach(x=>x.remove());
-    await confirmCard({icon:'mail',title:R.wielu?'Wiadomość do radnych':'Wiadomość do radnego',source:'Do: '+R.kto+(R.wielu?'':', '+R.okreg)+', przez skrzynkę rady',body:'„'+esc(t)+'”',
-     rows:[['Sprawa',u.tytul],['Od',OS.imie+' '+OS.nazwisko+', '+rodz('mieszkanka','mieszkaniec')+' okręgu'],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
-     then:async()=>{await rez('mail','Wiadomość: '+u.tytul,'do: '+R.kto,{title:'Wiadomość wysłana',rows:[['Do',R.kto],['Przed sesją',GM.sesja.kiedy],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
-      await say(R.wielu?'Po sesji pokażę Ci, jak głosował każdy z nich w tej sprawie.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}})};
-   chips([{label:'Proszę głosować przeciw',go:()=>wyslij('Proszę o głosowanie przeciw projektowi „'+u.tytul+'” w obecnym kształcie.')},{label:'Proszę o wyjaśnienie na sesji',go:()=>wyslij('Proszę o zadanie na sesji pytania o uzasadnienie projektu „'+u.tytul+'” i przekazanie mi odpowiedzi.')},{label:'Popieram projekt',go:()=>wyslij('Popieram projekt „'+u.tytul+'” i proszę o głosowanie za.')}]);
-   pending=t=>wyslij(t);
+  // Wiadomość do radnych jak uwaga: własne słowa, podpowiedzi tylko pomocnicze, podgląd przed wysłaniem.
+  async pisz(i,R,szkic){
+   const U=GM.uchwaly,st=szkic||{t:'',u:i!=null?i:GM.uchwalaRadny};
+   await say(szkic?'Popraw, co chcesz. Nic jeszcze nie zostało wysłane.':'Napisz własnymi słowami, co chcesz przekazać. Wiadomość od mieszkańca z konkretnym przykładem działa lepiej niż szablon. Podpowiedzi są pod polem.');
+   const pod=k=>{const t=U[k].tytul;return [['Proszę głosować przeciw','Proszę o głosowanie przeciw projektowi „'+t+'” w obecnym kształcie.'],['Proszę o wyjaśnienie na sesji','Proszę o zadanie na sesji pytania o uzasadnienie projektu „'+t+'” i przekazanie mi odpowiedzi.'],['Popieram projekt','Popieram projekt „'+t+'” i proszę o głosowanie za.']]};
+   const c=await card(`<div class="ui guw">${hd('mail',R.wielu?'Wiadomość do radnych':'Wiadomość do radnego')}<div class="body">
+    <div class="gdo">Do: <b>${R.kto}</b></div>
+    <label class="gl" for="rdS">Sprawa</label><select id="rdS" class="gsel">${U.map((x,k)=>`<option value="${k}"${k===st.u?' selected':''}>${x.tytul}</option>`).join('')}<option value="-1"${st.u===-1?' selected':''}>Inna sprawa</option></select>
+    <label class="gl" for="rdT">Twoja wiadomość</label><textarea id="rdT" rows="5" placeholder="Np. mieszkam w Pana okręgu i chciałbym zwrócić uwagę na…">${esc(st.t)}</textarea><div class="gcnt"></div>
+    <details class="gdok"><summary>${svg('info')}<span>Podpowiedzi (opcjonalnie)</span>${svg('chev')}</summary><div class="gpod"></div><div class="note">Podpowiedź dopisuje zdanie na końcu tekstu. Zmień je po swojemu.</div></details>
+   </div><div class="actions"><button class="btn ghost gno">Anuluj</button><button class="btn primary">Podgląd</button></div>${srcH('przez skrzynkę rady w aplikacji')}</div>`);
+   const ta=c.querySelector('textarea'),sel=c.querySelector('select'),cnt=c.querySelector('.gcnt'),ok=c.querySelector('.btn.primary'),gp=c.querySelector('.gpod');
+   const odsw=()=>{const n=ta.value.trim().length;cnt.textContent=n<15?(n?'Napisz jeszcze kilka słów':''):n+' znaków';ok.disabled=n<15};
+   const dopisz=t=>{ta.value=(ta.value.trim()?ta.value.trim()+' ':'')+t;odsw()};
+   const podp=()=>{const k=+sel.value;gp.innerHTML=k<0?'<small class="ghint">Przy innej sprawie napisz, czego dotyczy i czego oczekujesz.</small>':pod(k).map(([l],j)=>`<button type="button" data-j="${j}">+ ${l}</button>`).join('');
+    gp.querySelectorAll('button').forEach(b=>b.onclick=()=>{dopisz(pod(k)[+b.dataset.j][1]);b.disabled=true})};
+   sel.onchange=()=>{st.u=+sel.value;podp()};ta.oninput=odsw;odsw();podp();
+   pending=t=>{dopisz(t);say('Dopisałem to do wiadomości.')};
+   const zamknij=()=>{pending=null;st.t=ta.value.trim();st.u=+sel.value;c.querySelector('.actions').remove();ta.readOnly=true;sel.disabled=true;c.querySelector('.gdok').remove()};
+   c.querySelector('.gno').onclick=()=>act(async()=>{zamknij();await say('Anulowałem. Nic nie zostało wysłane.');
+    chips([{label:'Wróć do pisania',go:()=>S.pisz(i,R,st)},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}])});
+   ok.onclick=()=>act(async()=>{zamknij();const sprawa=st.u<0?'inna sprawa':U[st.u].tytul;
+    await say('Tak będzie wyglądać wiadomość. Sprawdź ją przed wysłaniem.');
+    await confirmCard({icon:'mail',title:'Podgląd wiadomości',source:'Do: '+R.kto+(R.wielu?'':', '+R.okreg)+', przez skrzynkę rady',
+     body:`<div class="gpismo"><small>${today()} · do: ${R.kto}</small><b>${sprawa}</b><p>${esc(st.t).replace(/\n/g,'<br>')}</p><small>${OS.imie} ${OS.nazwisko}, ${rodz('mieszkanka','mieszkaniec')} ${R.okreg.replace('okręg','okręgu')}</small></div>`,
+     rows:[['Sprawa',sprawa],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
+     onCancel:async()=>{await say('Nic nie zostało wysłane.');chips([{label:'Popraw wiadomość',go:()=>S.pisz(i,R,st)},{label:'Napisz od nowa',go:()=>S.pisz(i,R)},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}])},
+     then:async()=>{await rez('mail','Wiadomość: '+sprawa,'do: '+R.kto,{title:'Wiadomość wysłana',rows:[['Do',R.kto],['Sprawa',sprawa],['Treść','„'+esc(st.t)+'”'],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
+      await say(st.u<0?'Odpowiedź przyjdzie do Twojej skrzynki.':R.wielu?'Po sesji pokażę Ci, jak głosował każdy z nich w tej sprawie.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}});
+   });
   },
   async gLiczby(){
    const bar=([n,v,p,w,zle])=>`<div class="gbar"><div class="gl"><span>${n}</span><b>${v}</b></div><div class="gt"><i class="${zle&&w>130?'hi':''}" style="width:${Math.min(100,w/2.5)}%"></i><u style="left:40%"></u></div><small>podobne gminy: ${p}</small></div>`;
