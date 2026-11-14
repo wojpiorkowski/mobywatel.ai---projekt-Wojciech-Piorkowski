@@ -249,6 +249,28 @@ const GMINY={
     rows:[['Wybory do rad dzielnic','maj 2027'],['Do Rady Dzielnicy XIII','20 podpisów mieszkańców Twojego okręgu'],['Do Rady Miasta, wiosna 2029','lista komitetu, 150 podpisów wyborców z okręgu'],['Na prezydenta','3 000 podpisów (miasto powyżej 200 tys. mieszkańców)'],['Dieta radnego dzielnicy','ok. 600 zł miesięcznie']]}}
  }
 };
+/* Etapy każdej sprawy (harmonogram) i opis spotkań. Status: done = za nami, now = trwa teraz. Dane fikcyjne. */
+const PLAN_INFO={
+ 'RPP.6721.4.2025':{etapy:[['Rada gminy przystępuje do zmiany planu','03.2025, uchwała rady','done'],['Wnioski do planu','04–05.2025','done'],['Projekt, opinie i uzgodnienia','2025–2026','done'],['Wyłożenie projektu i uwagi','12.11.2026–18.01.2027','now'],['Dyskusja publiczna z projektantem','14.01.2027, sala GOK'],['Wójt rozpatruje uwagi','do 21 dni po terminie uwag'],['Głosowanie rady gminy','I kwartał 2027'],['Kontrola wojewody, plan wchodzi w życie','ok. 2 miesiące po uchwale']],
+  spot:{czas:'17:00–19:00',forma:'na miejscu, transmisja na BIP',online:0,
+   cel:'To dyskusja publiczna, której wymaga ustawa. Projektant wyjaśnia projekt planu i odpowiada na pytania, a przebieg trafia do protokołu. Uwagę do planu trzeba jednak złożyć osobno.',
+   kto:['autor projektu planu (urbanista)','zastępca wójta','kierownik referatu planowania'],program:['prezentacja projektu, ok. 20 min','pytania mieszkańców','jak i do kiedy złożyć uwagę'],dostep:'sala na parterze, tłumacz PJM na zgłoszenie do 7 dni przed'}},
+ 'OŚ.6220.3.2026':{etapy:[['Wniosek inwestora z raportem o oddziaływaniu','08.2026','done'],['Uwagi mieszkańców','30 dni, do 28.12.2026','now'],['Uzgodnienia z RDOŚ i opinia sanepidu','do 01.2027'],['Decyzja wójta','I kwartał 2027'],['Odwołania do SKO','14 dni od doręczenia stronom'],['Pozwolenie na budowę','dopiero po prawomocnej decyzji']]},
+ 'GK.7021.12.2026':{etapy:[['Dofinansowanie budowy sieci','06.2026','done'],['Deklaracje przyłączenia','do 15.01.2027','now'],['Zebranie wiejskie z projektantem','07.01.2027, świetlica'],['Projekt sieci i przyłączy','do 06.2027'],['Budowa kanału w ul. Szkolnej','2028'],['Twoje przyłącze i dotacja','po odbiorze sieci, wniosek w aplikacji']],
+  spot:{czas:'18:00–19:30',forma:'na miejscu',online:0,
+   cel:'Projektant pokaże przebieg kanału i miejsca studzienek, wyjaśni koszty przyłącza i zasady dotacji. Można przyjść z mapką swojej działki.',
+   kto:['projektant sieci','pracownik Gminnego Zakładu Komunalnego','sołtys Lipowca Kolonii'],program:['przebieg sieci w ul. Szkolnej','gdzie stanie studzienka przy działkach','koszty i dotacja','pytania'],dostep:'świetlica na parterze, bez progów'}},
+ 'ZDMK.KS.17.2026':{etapy:[['Koncepcja przebudowy','2025','done'],['I etap konsultacji: wnioski mieszkańców','05.2026','done'],['II etap konsultacji: uwagi do projektu','02.12–30.12.2026','now'],['Spotkanie konsultacyjne','16.12.2026, SP nr 34'],['Raport z konsultacji z odpowiedziami','02.2027'],['Projekt budowlany i decyzja ZRID','2027–2028'],['Budowa, etapami','od 2029']],
+  spot:{czas:'18:00–20:00',forma:'na miejscu i online (transmisja z czatem)',online:1,
+   cel:'Drugie spotkanie konsultacyjne. Projektanci pokazują, co zmienili po pierwszym etapie, i zbierają opinie przy stolikach z mapami. Notatka ze spotkania trafi do raportu z konsultacji.',
+   kto:['projektant drogi','Zarząd Dróg Miasta Krakowa','moderator konsultacji','radni Dzielnicy XIII'],program:['prezentacja zmian, ok. 30 min','stoliki: parkowanie, zieleń, komunikacja','pytania do projektantów'],dostep:'pętla indukcyjna, tłumacz PJM na zgłoszenie do 7 dni przed'}},
+ 'AU-2.6735.9.2026':{etapy:[['Wniosek inwestora (specustawa mieszkaniowa)','10.2026','done'],['Uwagi mieszkańców','21 dni od publikacji, do 28.12.2026','now'],['Opinie architekta miasta i zarządcy drogi','do 01.2027'],['Uchwała Rady Miasta o lokalizacji','do 60 dni od wniosku'],['Pozwolenie na budowę','po uchwale, jeśli rada się zgodzi']]},
+ 'OK-3.4430.5.2026':{etapy:[['Analiza demograficzna wydziału edukacji','09.2026','done'],['Projekt uchwały intencyjnej','11.2026','done'],['Opinie rodziców, rady rodziców i rady szkoły','do 04.01.2027','now'],['Zebranie z rodzicami','15.12.2026, aula SP nr 34'],['Opinia kuratora oświaty','02.2027'],['Uchwała Rady Miasta','do 28.02.2027, 6 miesięcy przed zmianą'],['Połączenie szkół','od 1.09.2027']],
+  spot:{czas:'17:30–19:00',forma:'na miejscu i online',online:1,
+   cel:'Wydział edukacji i dyrekcja przedstawiają plan połączenia szkół i odpowiadają na pytania rodziców. Przebieg zebrania trafi do raportu dla Rady Miasta.',
+   kto:['dyrektor SP nr 34','przedstawiciel wydziału edukacji','przewodnicząca rady rodziców'],program:['plan połączenia i podział klas','dojazd na ul. Teligi i świetlica','pytania rodziców'],dostep:'aula na parterze, opieka nad dziećmi w świetlicy'}},
+};
+Object.values(GMINY).forEach(G=>[G.plan,...(G.inne||[])].forEach(Z=>Object.assign(Z,PLAN_INFO[Z.nr]||{})));
 const GM=GMINY[OS.id]||null;
 if(GM)OS.docs.push({id:'gmina',name:'Moja gmina',img:'assets/card-gmina.svg',sub:GM.nazwa,alert:GM.alert,holder:GM.nazwa.toUpperCase(),line:GM.typ,
  f:GM.f,rows:[]});
@@ -303,6 +325,8 @@ const radniPod=()=>{const R=GM.rada;return R.radni?'Twoi radni z okręgu nr '+R.
 const GLOS={za:['za','za'],przeciw:['przeciw','przeciw'],wstrz:['wstrzymał się','wstrzymała się']},glosH=(r,g)=>(GLOS[g]||[g,g])[r.p==='k'?1:0];
 const osobyH=a=>'<ul class="gos">'+a.map(r=>`<li><b>${r.kto}</b><small>${[r.komitet,'dyżur: '+r.dyzur].filter(Boolean).join(' · ')}</small></li>`).join('')+'</ul>';
 
+// harmonogram sprawy jako zwinięta lista (panel); w rozmowie pokazujemy go rozwinięty
+const etapyH=(Z,otw)=>Z.etapy?`<details class="gdok getap"${otw?' open':''}><summary>${svg('clock')}<span>Etapy sprawy · teraz: ${(Z.etapy.find(e=>e[2]==='now')||Z.etapy[0])[0].replace(/^.(?=[a-ząćęłńóśźż])/,c=>c.toLowerCase())}</span>${svg('chev')}</summary><div class="gse">${kroki(Z.etapy)}</div></details>`:'';
 // Moja aktywność: nowe wpisy z tej sesji na górze, potem wcześniejsze (fikcyjne) z danych gminy
 const AKT={},aktyw=()=>[...(AKT[OS.id]||[]),...(GM.aktywnosc||[])];
 const dodajAkt=a=>{(AKT[OS.id]=AKT[OS.id]||[]).unshift({kiedy:today(),...a})};
@@ -325,7 +349,7 @@ function openGmina(){
   <div class="ui galert glist">${hd('dom','Zmienia się coś przy Tobie')}
    ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}${ZLOZ[kluczU(Z)]?' · <b class="gok">uwaga złożona</b>':''}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
-    <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
+    <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${etapyH(Z)}${dokumentyH(Z)}</div></details>`).join('')}</div>
   ${(A=>A.length?`<div class="ui list glist">${hd('clock','Moja aktywność')}${A.slice(0,4).map((a,j)=>it('a'+j,a.ikona,a.h,a.kiedy+' · '+a.s)).join('')}${A.length>4?it('aWszystko','dots','Cała aktywność',A.length+' wpisów'):''}</div>`:'')(aktyw())}
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · '+radniPod())}
@@ -377,6 +401,7 @@ function gminaInit(){
    await say(P.intro);
    await info({icon:'info',title:P.nazwa,source:GM.bip+', sprawa '+P.nr+' (dane fikcyjne)',body:mapaZ(P),
     rows:P.rows||[['Obszar',P.pow],['Teraz',P.teraz],['Projekt',P.projekt],['Dojazd',P.dojazd],['Skąd zmiana',P.wniosek],['Wyłożenie projektu',P.wylozenie],['Spotkanie z projektantem',P.spotkanie],['Uwagi do','<b>'+P.uwagi+'</b>']]});
+   if(P.etapy)await info({icon:'clock',title:'Etapy sprawy',source:GM.bip+', sprawa '+P.nr,body:kroki(P.etapy),note:P.spot?'Spotkanie: '+P.spotkanieKiedy+'. Możesz się zapisać i wcześniej zadać pytanie.':''});
    await info({icon:'doc',title:'Argumenty za i przeciw',
     body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
     note:(P.decyzja||'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.')+dokumentyH(P)});
@@ -445,9 +470,29 @@ function gminaInit(){
     rows:[['Złożona',Z.kiedy],['Numer uwagi',Z.nr],['Do',P.adresat],['Status','przyjęta, czeka na rozpatrzenie'],['Co dalej',P.wynik]]});
    chips([{label:'Złóż kolejną uwagę',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}]);
   },
-  async spotkanie(i=0){
-   const P=ZM[i];
-   await confirmCard({icon:'clock',title:P.spotkanieTyt,source:GM.urzad,rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',P.spotkanieGdzie],['Pytania z góry',P.spotkaniePyt||'możesz wysłać teraz, projektant odpowie na spotkaniu']],label:'Zapisz mnie',then:()=>rez('clock','Zapis na spotkanie: '+P.nazwa,P.spotkanieKiedy,{title:'Zapisano na spotkanie',rows:[['Kalendarz','dodane do kalendarza'],['Przypomnienie',P.spotkaniePrzyp]]})});
+  // Zapis na spotkanie: najpierw o co chodzi i kto prowadzi, potem opcjonalne pytanie (to nie jest formalna uwaga).
+  async spotkanie(i=0,szkic){
+   const P=ZM[i],O=P.spot||{},st=szkic||{pyt:'',forma:'na miejscu'};
+   if(!szkic)await info({icon:'clock',title:P.spotkanieTyt,source:GM.urzad+' (dane fikcyjne)',
+    body:(O.cel?`<p class="gcel">${O.cel}</p>`:'')+(O.kto?`<h4 class="gh4">Prowadzą</h4>${lista(O.kto)}`:'')+(O.program?`<h4 class="gh4">Program</h4>${lista(O.program)}`:''),
+    rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',P.spotkanieGdzie],...(O.czas?[['Czas',O.czas]]:[]),...(O.forma?[['Forma',O.forma]]:[]),...(O.dostep?[['Dostępność',O.dostep]]:[])]});
+   const c=await card(`<div class="ui guw">${hd('clock','Zapis na spotkanie')}<div class="body">
+    ${O.online?`<div class="gl">Jak weźmiesz udział?</div><div class="gopt">${['na miejscu','online'].map(f=>`<button type="button" class="${st.forma===f?'sel':''}" data-f="${f}">${f}</button>`).join('')}</div>`:''}
+    <label class="gl" for="spP${i}">Pytanie do prowadzących (opcjonalnie)</label><textarea id="spP${i}" rows="3" placeholder="Np. czy w projekcie są miejsca dla dostaw?">${esc(st.pyt)}</textarea>
+    <p class="ghint">To nie jest uwaga do sprawy. Pytania zbieramy przed spotkaniem bez Twojego nazwiska, prowadzący odpowiedzą na miejscu, a odpowiedzi trafią do notatki ze spotkania. Uwagę złożysz osobno.</p>
+   </div><div class="actions"><button class="btn ghost gno">Anuluj</button><button class="btn primary">Zapisz mnie</button></div>${srcH(GM.urzad)}</div>`);
+   const ta=c.querySelector('textarea');
+   c.querySelectorAll('.gopt button').forEach(b=>b.onclick=()=>{st.forma=b.dataset.f;c.querySelectorAll('.gopt button').forEach(x=>x.classList.toggle('sel',x===b))});
+   pending=t=>{ta.value=(ta.value.trim()?ta.value.trim()+' ':'')+t;say('Dopisałem to do pytania.')};
+   const zamknij=()=>{pending=null;st.pyt=ta.value.trim();c.querySelector('.actions').remove();ta.readOnly=true;c.querySelector('.ghint').remove();c.querySelectorAll('.gopt button').forEach(b=>b.disabled=true)};
+   c.querySelector('.gno').onclick=()=>act(async()=>{zamknij();await say('Nie zapisałem Cię. Nic nie zostało wysłane.');
+    chips([{label:'Wróć do zapisu',go:()=>S.spotkanie(i,st)},{label:'Wróć do sprawy',go:()=>S.plan(i)}])});
+   c.querySelector('.btn.primary').onclick=()=>act(async()=>{zamknij();await faceid();c.classList.add('done');
+    const forma=O.online?st.forma:(O.forma||'na miejscu');
+    await rez('clock','Zapis na spotkanie: '+P.nazwa,P.spotkanieKiedy+' · '+forma+(st.pyt?' · z pytaniem':''),{title:'Zapisano na spotkanie',source:GM.urzad,
+     rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',forma==='online'?'link przyjdzie w dniu spotkania':P.spotkanieGdzie],['Kalendarz','dodane do kalendarza'],['Przypomnienie',P.spotkaniePrzyp],...(st.pyt?[['Twoje pytanie','„'+esc(st.pyt)+'”, wysłane bez nazwiska']]:[])]});
+    chips([{label:P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},{label:'Na razie wystarczy',go:()=>say('Dobrze. Zapis znajdziesz w Mojej aktywności.')}]);
+   });
   },
   async sasiedzi(i=0){
    const P=ZM[i];
