@@ -5,15 +5,15 @@ const GMINY={
  ewa:{
   nazwa:'Gmina Lipowiec',krotko:'Lipowiec',typ:'gmina wiejska, powiat lubelski',mieszk:'8 940',solectwo:'Lipowiec Kolonia',soltys:'Halina Mazur',
   urzad:'Urząd Gminy Lipowiec',bip:'BIP Gminy Lipowiec',jednostka:'sołectwa Lipowiec Kolonia',twojaJedn:'Twojego sołectwa',wladza:'Wójt',
-  etykRada:'Rada i wójt',radaTyt:'Wójt i rada gminy',alert:'Zmiana planu przy Tobie',f:[['Sołectwo','Lipowiec Kolonia'],['Uwagi do planu','do 18.12.2026']],uchwalaRadny:1,
-  wstep:'W gminie Lipowiec najważniejsza sprawa przy Tobie to projekt zmiany planu miejscowego, 380 m od Twojego domu. Uwagi można składać do <b>18.12.2026</b>.',
+  etykRada:'Rada i wójt',radaTyt:'Wójt i rada gminy',alert:'Zmiana planu przy Tobie',f:[['Sołectwo','Lipowiec Kolonia'],['Uwagi do planu','do 18.01.2027']],uchwalaRadny:1,
+  wstep:'W gminie Lipowiec najważniejsza sprawa przy Tobie to projekt zmiany planu miejscowego, 380 m od Twojego domu. Uwagi można składać do <b>18.01.2027</b>.',
   liczbyPod:'budżet i dług na tle podobnych gmin',liczbyTyt:'Gmina Lipowiec na tle podobnych gmin',liczbyOpis:'Kreska to średnia 5 gmin wiejskich z województwa o podobnej liczbie mieszkańców.',
   liczbyWniosek:'Najbardziej odstają zadłużenie i wydatki na promocję, w tym biuletyn gminy. Chcesz zobaczyć, komu gmina płaci najwięcej?',
   wojt:{kto:'Zbigniew Kordas',od:2006,kad:'5. kadencja (od 2006)',wybory:'2024: jedyny kandydat, 68% głosów „tak”',limit:'Obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.), chyba że Sejm zniesie limit.'},
   rada:{nazwa:'Rada Gminy Lipowiec',n:15,wojta:13,komitet:'KWW Razem dla Lipowca',jeden:'w 9 z 15 okręgów był tylko jeden kandydat',frekw:'49%',
    radny:{kto:'Stanisław Wójcik',okreg:'okręg nr 4',komitet:'KWW Razem dla Lipowca',dyzur:'pierwszy poniedziałek miesiąca, 16:00–17:00, urząd gminy, pok. 12'},
    glosy:[['Przystąpienie do zmiany planu „Pola Południowe” (03.2025)','za'],['Podwyżka opłaty za odpady do 39 zł (12.2025)','za'],['Nagrania posiedzeń komisji (09.2026, wniosek radnej spoza klubu wójta)','przeciw']]},
-  sesja:{tytul:'Sesja Rady Gminy',przyp:'26.11.2026, 9:45',kiedy:'26.11.2026, godz. 10:00',gdzie:'sala GOK, transmisja na BIP',porzadek:['Projekt budżetu na 2027 r. (pierwsze czytanie)','Stawki podatku od nieruchomości na 2027 r.','Sprzedaż działki 214/3 w trybie bezprzetargowym']},
+  sesja:{tytul:'Sesja Rady Gminy',przyp:'29.12.2026, 9:45',kiedy:'29.12.2026, godz. 10:00',gdzie:'sala GOK, transmisja na BIP',porzadek:['Projekt budżetu na 2027 r. (pierwsze czytanie)','Stawki podatku od nieruchomości na 2027 r.','Sprzedaż działki 214/3 w trybie bezprzetargowym']},
   uchwaly:[
    {re:/budzet\w* na 2027|projekt budzetu/,tytul:'Projekt budżetu na 2027 r.',nr:'projekt uchwały budżetowej, pierwsze czytanie',
     co:'Gmina chce wydać 57,3 mln zł przy dochodach 54,1 mln zł. Brakujące 3,2 mln zł pokryje kredyt.',
@@ -50,18 +50,18 @@ const GMINY={
    uzas:'ulica Szkolna prowadzi bezpośrednio obok szkoły podstawowej i domów jednorodzinnych; prognozowany ruch ok. 60 ciężarówek na dobę zagraża bezpieczeństwu dzieci i ogranicza możliwość korzystania z nieruchomości.',
    uwagaTyt:'Uwaga do projektu planu',adresat:'Wójt Gminy Lipowiec',kanal:'Do: Urząd Gminy Lipowiec, przez e-Doręczenia',wynik:'dostaniesz w skrzynce po rozpatrzeniu uwag',
    potem:'Gotowe. Dam Ci znać, jak wójt rozpatrzy uwagę i kiedy rada będzie głosować nad planem. Chcesz, żeby sąsiedzi też się dowiedzieli?',
-   spotkanieTyt:'Spotkanie z projektantem planu',spotkanieKiedy:'25.11.2026, godz. 17:00',spotkanieGdzie:'sala GOK, ul. Lubelska 2',spotkaniePrzyp:'25.11, 15:00',
-   przyp:['11.12.2026, 9:00','uwagi do planu do 18.12.2026'],sasiedzi:'Mieszkańcy sołectwa Lipowiec Kolonia z aplikacją dostali już powiadomienie, bo mieszkają w promieniu 1 km.',
-   wylozenie:'12.10–18.12.2026',spotkanie:'25.11.2026, godz. 17:00, sala GOK',uwagi:'18.12.2026',nr:'RPP.6721.4.2025',
+   spotkanieTyt:'Spotkanie z projektantem planu',spotkanieKiedy:'14.01.2027, godz. 17:00',spotkanieGdzie:'sala GOK, ul. Lubelska 2',spotkaniePrzyp:'14.01, 15:00',
+   przyp:['11.01.2027, 9:00','uwagi do planu do 18.01.2027'],sasiedzi:'Mieszkańcy sołectwa Lipowiec Kolonia z aplikacją dostali już powiadomienie, bo mieszkają w promieniu 1 km.',
+   wylozenie:'12.11.2026–18.01.2027',spotkanie:'14.01.2027, godz. 17:00, sala GOK',uwagi:'18.01.2027',nr:'RPP.6721.4.2025',
    za:['ok. 120 miejsc pracy według wnioskodawcy','ok. 1,1 mln zł rocznie z podatku od nieruchomości (ok. 4% dochodów gminy)','dojazd do drogi wojewódzkiej bez wjazdu do centrum'],
    przeciw:['prognoza: ok. 60 ciężarówek na dobę ulicą Szkolną','praca magazynów także nocą, hałas przy domach','utrata 42 ha gruntów rolnych III klasy']},
   /* kolejne sprawy przy domu: każda ma inną procedurę i inne działanie (uwagi, deklaracja) */
   inne:[
-   {nazwa:'Ferma drobiu w Woli Lipowieckiej',odl:'1,1 km od Twojego domu',nr:'OŚ.6220.3.2026',ikona:'info',krotko:'decyzja środowiskowa · uwagi do 27.11',q:'Co z fermą drobiu w Woli Lipowieckiej?',
-    teraz:'pole uprawne, 6 ha',projekt:'4 kurniki, 160 tys. kurcząt w cyklu',uwagi:'27.11.2026',re:/ferm|kurnik|drob|brojler|smrod|odor/,
+   {nazwa:'Ferma drobiu w Woli Lipowieckiej',odl:'1,1 km od Twojego domu',nr:'OŚ.6220.3.2026',ikona:'info',krotko:'decyzja środowiskowa · uwagi do 28.12',q:'Co z fermą drobiu w Woli Lipowieckiej?',
+    teraz:'pole uprawne, 6 ha',projekt:'4 kurniki, 160 tys. kurcząt w cyklu',uwagi:'28.12.2026',re:/ferm|kurnik|drob|brojler|smrod|odor/,
     mapa:{obiekt:'Ferma drobiu',opis:'4 kurniki',odl:'1,1 km',wiatr:1},
     intro:'Wójt prowadzi postępowanie w sprawie decyzji środowiskowej dla fermy drobiu, 1,1 km od Twojego domu. Wiatr wieje u Was najczęściej od strony fermy.',
-    rows:[['Gdzie','Wola Lipowiecka, dz. 88/2, 1,1 km na zachód od Ciebie'],['Teraz','pole uprawne, 6 ha'],['Projekt','4 kurniki, 160 tys. kurcząt w cyklu, ok. 7 cykli rocznie'],['Wnioskodawca','gospodarstwo rolne z sąsiedniej gminy'],['Raport','uciążliwość zapachowa do 600 m od kurników'],['Kto decyduje','wójt, po uzgodnieniu z RDOŚ i sanepidem'],['Uwagi do','<b>27.11.2026</b>']],
+    rows:[['Gdzie','Wola Lipowiecka, dz. 88/2, 1,1 km na zachód od Ciebie'],['Teraz','pole uprawne, 6 ha'],['Projekt','4 kurniki, 160 tys. kurcząt w cyklu, ok. 7 cykli rocznie'],['Wnioskodawca','gospodarstwo rolne z sąsiedniej gminy'],['Raport','uciążliwość zapachowa do 600 m od kurników'],['Kto decyduje','wójt, po uzgodnieniu z RDOŚ i sanepidem'],['Uwagi do','<b>28.12.2026</b>']],
     za:['podatek od budowli i kilka miejsc pracy','według raportu zapach nie dotrze do zabudowań (najbliższe 800 m)'],
     przeciw:['raport liczy średnie roczne, a latem przy wietrze zachodnim zapach może sięgać dalej','ciężarówki z paszą i drobiem przez Lipowiec Kolonię','płyta na pomiot 300 m od cieku i studni'],
     zrodla:'Wniosek, raport o oddziaływaniu na środowisko, obwieszczenie wójta',
@@ -74,12 +74,12 @@ const GMINY={
     uzas:'mieszkam w Lipowcu Kolonii, 1,1 km od planowanej fermy, w kierunku przeważających wiatrów; raport opiera się na średnich rocznych, które nie oddają uciążliwości latem.',
     uwagaTyt:'Uwagi do decyzji środowiskowej',adresat:'Wójt Gminy Lipowiec',kanal:'Do: Urząd Gminy Lipowiec, przez e-Doręczenia',wynik:'wójt odniesie się do nich w uzasadnieniu decyzji',
     potem:'Gotowe. Dam Ci znać, gdy wójt wyda decyzję. Odwołać się mogą strony, a mieszkańcy także przez organizację ekologiczną. Chcesz, żeby sąsiedzi też się dowiedzieli?',
-    przyp:['24.11.2026, 9:00','uwagi do fermy drobiu do 27.11.2026'],sasiedzi:'Mieszkańcy Lipowca Kolonii i Woli Lipowieckiej z aplikacją dostali powiadomienie, bo mieszkają w promieniu 2 km od fermy.'},
-   {nazwa:'Kanalizacja w ul. Szkolnej',odl:'przy Twoim domu',nr:'GK.7021.12.2026',ikona:'info',krotko:'deklaracja przyłączenia do 15.12',q:'Co z kanalizacją przy moim domu?',
-    teraz:'szambo, wywóz co ok. 6 tygodni',projekt:'kanał sanitarny w ulicy, studzienka na granicy działki',uwagi:'15.12.2026',re:/kanalizac|szamb|przylacz|sciek/,
+    przyp:['23.12.2026, 9:00','uwagi do fermy drobiu do 28.12.2026'],sasiedzi:'Mieszkańcy Lipowca Kolonii i Woli Lipowieckiej z aplikacją dostali powiadomienie, bo mieszkają w promieniu 2 km od fermy.'},
+   {nazwa:'Kanalizacja w ul. Szkolnej',odl:'przy Twoim domu',nr:'GK.7021.12.2026',ikona:'info',krotko:'deklaracja przyłączenia do 15.01',q:'Co z kanalizacją przy moim domu?',
+    teraz:'szambo, wywóz co ok. 6 tygodni',projekt:'kanał sanitarny w ulicy, studzienka na granicy działki',uwagi:'15.01.2027',re:/kanalizac|szamb|przylacz|sciek/,
     mapa:{obiekt:'kanał sanitarny',rura:1},
     intro:'Gmina buduje kanalizację w ul. Szkolnej. Kanał dojdzie do granicy Twojej działki, a odcinek do domu wykonujesz Ty. Gmina zbiera deklaracje, żeby zaprojektować przyłącza.',
-    rows:[['Budowa','04–10.2027, ul. Szkolna i Polna'],['Gmina buduje','kanał i studzienkę na granicy działki, bezpłatnie'],['Ty budujesz','przyłącze od studzienki do domu, ok. 18 m'],['Koszt przyłącza','ok. 4–6 tys. zł, dotacja gminy do 3 000 zł'],['Szambo','do likwidacji albo na zbiornik na deszczówkę'],['Obowiązek','przyłączyć trzeba się, gdy sieć będzie gotowa'],['Deklaracja do','<b>15.12.2026</b>']],
+    rows:[['Budowa','04–10.2027, ul. Szkolna i Polna'],['Gmina buduje','kanał i studzienkę na granicy działki, bezpłatnie'],['Ty budujesz','przyłącze od studzienki do domu, ok. 18 m'],['Koszt przyłącza','ok. 4–6 tys. zł, dotacja gminy do 3 000 zł'],['Szambo','do likwidacji albo na zbiornik na deszczówkę'],['Obowiązek','przyłączyć trzeba się, gdy sieć będzie gotowa'],['Deklaracja do','<b>15.01.2027</b>']],
     za:['koniec wywozu szamba, ok. 1 300 zł rocznie','ścieki przestaną trafiać do gruntu i studni'],
     przeciw:['koszt przyłącza po Twojej stronie','opłata za ścieki od zużycia wody, ok. 70 zł miesięcznie dla 2 osób','rozkopana ulica przez kilka miesięcy'],
     zrodla:'Projekt sieci, uchwała o dotacjach do przyłączy, taryfa Gminnego Zakładu Komunalnego',
@@ -92,12 +92,12 @@ const GMINY={
     uzas:'jestem właścicielką domu przy ul. Szkolnej 7 w Lipowcu Kolonii, w którym mieszkają 2 osoby; obecnie korzystamy ze zbiornika bezodpływowego.',
     uwagaTyt:'Deklaracja przyłączenia',adresat:'Gminny Zakład Komunalny w Lipowcu',kanal:'Do: Gminny Zakład Komunalny sp. z o.o., przez e-Doręczenia',wynik:'projektant uwzględni przyłącze, decyzja o dotacji przyjdzie do skrzynki',
     potem:'Gotowe. Dam Ci znać, gdy projekt przyłącza będzie do uzgodnienia. Chcesz, żeby sąsiedzi też się dowiedzieli?',
-    spotkanieTyt:'Zebranie wiejskie o kanalizacji',spotkanieKiedy:'03.12.2026, godz. 18:00',spotkanieGdzie:'świetlica w Lipowcu Kolonii',spotkaniePrzyp:'03.12, 16:00',spotkaniePyt:'możesz wysłać teraz, odpowie projektant sieci',
-    przyp:['08.12.2026, 9:00','deklaracja przyłączenia do 15.12.2026'],sasiedzi:'Sąsiedzi z ul. Szkolnej i Polnej z aplikacją dostali już powiadomienie o deklaracjach.'}],
+    spotkanieTyt:'Zebranie wiejskie o kanalizacji',spotkanieKiedy:'07.01.2027, godz. 18:00',spotkanieGdzie:'świetlica w Lipowcu Kolonii',spotkaniePrzyp:'07.01, 16:00',spotkaniePyt:'możesz wysłać teraz, odpowie projektant sieci',
+    przyp:['08.01.2027, 9:00','deklaracja przyłączenia do 15.01.2027'],sasiedzi:'Sąsiedzi z ul. Szkolnej i Polnej z aplikacją dostali już powiadomienie o deklaracjach.'}],
   liczby:[['Dochody na mieszkańca','5 820 zł','5 640 zł',103],['Zadłużenie (% dochodów)','31%','18%',172,1],['Promocja i biuletyn na mieszkańca','46 zł','19 zł',242,1],['Inwestycje (% wydatków)','14%','21%',67,1],['Oświata (% wydatków)','38%','36%',106]],
   umowy:[['Drogbud sp. z o.o.','4,82 mln zł','3 umowy na drogi, przetargi, po 1 ofercie'],['Eko-Wywóz sp. z o.o.','2,10 mln zł','odbiór odpadów, przetarg, 2 oferty'],['Lipa Media','186 tys. zł','biuletyn „Wieści Lipowieckie”, zamówienie z wolnej ręki'],['Kancelaria radcy prawnego','96 tys. zł','obsługa urzędu, zapytanie ofertowe']],
   darczyncy:{komitet:'KWW Razem dla Lipowca (wybory 2024)',suma:'48 600 zł od 21 osób',najwieksze:[['Członek zarządu Drogbud sp. z o.o.','12 000 zł'],['Właściciel Lipa Media','8 000 zł'],['Pozostałe 19 wpłat','28 600 zł']]},
-  nabory:[['Inspektor ds. zamówień publicznych','Urząd Gminy','do 14.11.2026'],['Nauczyciel matematyki','SP w Lipowcu','do 20.11.2026'],['Kierowca, operator koparki','Gminny Zakład Komunalny sp. z o.o.','do 30.11.2026']],
+  nabory:[['Inspektor ds. zamówień publicznych','Urząd Gminy','do 14.12.2026'],['Nauczyciel matematyki','SP w Lipowcu','do 21.12.2026'],['Kierowca, operator koparki','Gminny Zakład Komunalny sp. z o.o.','do 30.12.2026']],
   naborStat:'W 2026 r. 11 naborów, w 7 z nich zgłosiła się jedna osoba.',
   glos:{adresat:'Przewodniczący Rady Gminy Lipowiec',kandLabel:'Kandyduj na radną albo sołtyskę',
    pytania:[['Ile ciężarówek będzie jeździć obok szkoły?','Ile ciężarówek na dobę ma jeździć ulicą Szkolną po zmianie planu i czy gmina rozważała inny dojazd?'],['Dlaczego komisje nie są nagrywane?','Dlaczego rada odrzuciła nagrywanie posiedzeń komisji i czy wróci do tej sprawy?']],
@@ -117,8 +117,8 @@ const GMINY={
  jan:{
   nazwa:'Kraków',krotko:'Kraków',typ:'miasto na prawach powiatu, Dzielnica XIII Podgórze',mieszk:'806 tys.',solectwo:'Dzielnica XIII Podgórze',soltys:'',
   urzad:'Urząd Miasta Krakowa',bip:'BIP Miasta Krakowa',jednostka:'Dzielnicy XIII Podgórze',twojaJedn:'Twojej dzielnicy',wladza:'Prezydent miasta',
-  etykRada:'Prezydent i rady',radaTyt:'Władze miasta i dzielnicy',alert:'Konsultacje do 30.11',f:[['Dzielnica','XIII Podgórze'],['Uwagi do','30.11.2026']],uchwalaRadny:0,
-  wstep:'W Krakowie najważniejsza sprawa przy Tobie to konsultacje przebudowy ul. Wielickiej, tuż pod Twoim blokiem. Uwagi można składać do <b>30.11.2026</b>. Do tego samego dnia trwa głosowanie w budżecie obywatelskim.',
+  etykRada:'Prezydent i rady',radaTyt:'Władze miasta i dzielnicy',alert:'Konsultacje do 30.12',f:[['Dzielnica','XIII Podgórze'],['Uwagi do','30.12.2026']],uchwalaRadny:0,
+  wstep:'W Krakowie najważniejsza sprawa przy Tobie to konsultacje przebudowy ul. Wielickiej, tuż pod Twoim blokiem. Uwagi można składać do <b>30.12.2026</b>. Do tego samego dnia trwa głosowanie w budżecie obywatelskim.',
   liczbyPod:'budżet i dług na tle innych dużych miast',liczbyTyt:'Kraków na tle dużych miast',liczbyOpis:'Kreska to średnia pięciu innych największych miast w Polsce.',
   liczbyWniosek:'Najbardziej odstaje zadłużenie, a udział inwestycji jest niższy niż gdzie indziej. Więcej niż inne miasta Kraków wydaje na komunikację i budżet obywatelski. Chcesz zagłosować na projekty w swojej dzielnicy?',
   wojt:{kto:'Marek Zawada',od:2024,kad:'1. kadencja (od 2024)',wybory:'2024: II tura, 51,2% głosów',limit:'Prezydent przedstawia co roku raport o stanie miasta, a rada głosuje nad wotum zaufania.'},
@@ -139,7 +139,7 @@ const GMINY={
    dzielnica:{rada:'Rada Dzielnicy XIII Podgórze',okreg:'okręg nr 5 (rejon ul. Wielickiej i Płaszowa)',
     osoby:[{kto:'Agnieszka Rak',p:'k',dyzur:'każda środa, 18:00–19:00, siedziba Rady Dzielnicy XIII'},{kto:'Michał Zięba',p:'m',dyzur:'po umówieniu przez skrzynkę rady dzielnicy'}],
     note:'Rada dzielnicy opiniuje sprawy takie jak przebudowa ul. Wielickiej i dzieli pieniądze dzielnicy, np. na remonty chodników.'}},
-  sesja:{tytul:'Sesja Rady Miasta Krakowa',przyp:'25.11.2026, 8:45',kiedy:'25.11.2026, godz. 9:00',gdzie:'sala obrad magistratu, transmisja na BIP'},
+  sesja:{tytul:'Sesja Rady Miasta Krakowa',przyp:'17.12.2026, 8:45',kiedy:'17.12.2026, godz. 9:00',gdzie:'sala obrad magistratu, transmisja na BIP'},
   uchwaly:[
    {re:/parkow|strefa? platn|abonament/,tytul:'Strefa płatnego parkowania na Podgórzu',nr:'projekt uchwały nr 1840/2026',
     co:'Od 1 marca 2027 r. parkowanie na ulicach Podgórza, także przy ul. Wielickiej, będzie płatne w dni robocze od 10:00 do 20:00. Mieszkańcy mogą wykupić abonament.',
@@ -164,8 +164,8 @@ const GMINY={
     komisja:'Komisja Bezpieczeństwa: opinia pozytywna, 5 za, 2 przeciw',zrodla:'Projekt uchwały, dane policji, opinia Rady Dzielnicy XIII'}],
   plan:{nazwa:'Przebudowa ul. Wielickiej',odl:'pod Twoim blokiem',pow:'1,4 km',nr:'ZDMK.KS.17.2026',
    teraz:'po 2 pasy ruchu, parkowanie wzdłuż jezdni (ok. 120 miejsc)',projekt:'buspas i droga rowerowa, 70 miejsc postojowych mniej, 34 drzewa do wycinki',
-   uwagi:'30.11.2026',zrodlo:'Zarząd Dróg Miasta Krakowa, platforma konsultacji (dane fikcyjne)',re:/wielick|buspas|przebudow|konsultac|drzew|miejsc\w* postojow|droga rowerow/,
-   rows:[['Odcinek','1,4 km, od ul. Kamieńskiego do ul. Nowosądeckiej'],['Teraz','po 2 pasy ruchu, parkowanie wzdłuż jezdni (ok. 120 miejsc)'],['Projekt','buspas i droga rowerowa, 70 miejsc postojowych mniej'],['Zieleń','34 drzewa do wycinki, 61 nowych'],['Kto prowadzi','Zarząd Dróg Miasta Krakowa'],['Konsultacje','02.11–30.11.2026'],['Spotkanie','19.11.2026, godz. 18:00, SP nr 34'],['Budowa','2028–2029, ok. 14 miesięcy'],['Uwagi do','<b>30.11.2026</b>']],
+   uwagi:'30.12.2026',zrodlo:'Zarząd Dróg Miasta Krakowa, platforma konsultacji (dane fikcyjne)',re:/wielick|buspas|przebudow|konsultac|drzew|miejsc\w* postojow|droga rowerow/,
+   rows:[['Odcinek','1,4 km, od ul. Kamieńskiego do ul. Nowosądeckiej'],['Teraz','po 2 pasy ruchu, parkowanie wzdłuż jezdni (ok. 120 miejsc)'],['Projekt','buspas i droga rowerowa, 70 miejsc postojowych mniej'],['Zieleń','34 drzewa do wycinki, 61 nowych'],['Kto prowadzi','Zarząd Dróg Miasta Krakowa'],['Konsultacje','02.12–30.12.2026'],['Spotkanie','16.12.2026, godz. 18:00, SP nr 34'],['Budowa','2028–2029, ok. 14 miesięcy'],['Uwagi do','<b>30.12.2026</b>']],
    intro:'Miasto konsultuje projekt przebudowy ul. Wielickiej. Zmiana dotyczy odcinka pod Twoim blokiem: znika część miejsc postojowych, a w ich miejscu ma być buspas i droga rowerowa.',
    za:['autobusy w szczycie szybciej o 4–6 minut (prognoza ZDMK)','bezpieczna droga rowerowa do szkół przy Wielickiej','po budowie więcej drzew: 61 nowych za 34 wycięte'],
    przeciw:['70 miejsc postojowych mniej, a już dziś wieczorem brakuje miejsc','wycinka 34 dojrzałych lip; nowe drzewa urosną za kilkanaście lat','14 miesięcy utrudnień i objazdy przez osiedla'],
@@ -182,14 +182,14 @@ const GMINY={
    uzas:'mieszkam przy ul. Wielickiej 28 i prowadzę firmę instalacyjną z autem dostawczym. Likwidacja 70 miejsc postojowych bez rozwiązania zastępczego utrudni życie mieszkańcom i pracę firm usługowych, które obsługują okoliczne budynki.',
    uwagaTyt:'Uwaga w konsultacjach',adresat:'Zarząd Dróg Miasta Krakowa',kanal:'Do: Zarząd Dróg Miasta Krakowa, platforma konsultacji',wynik:'odpowiedź w raporcie z konsultacji, dam Ci znać',
    potem:'Gotowe. Dam Ci znać, gdy miasto opublikuje raport z konsultacji i odpowie na Twoją uwagę. Chcesz, żeby sąsiedzi też się dowiedzieli?',
-   spotkanieTyt:'Spotkanie konsultacyjne',spotkanieKiedy:'19.11.2026, godz. 18:00',spotkanieGdzie:'Szkoła Podstawowa nr 34, ul. Wielicka 40',spotkaniePrzyp:'19.11, 16:00',
-   przyp:['27.11.2026, 9:00','uwagi do przebudowy ul. Wielickiej do 30.11.2026'],sasiedzi:'Mieszkańcy ul. Wielickiej z aplikacją dostali już powiadomienie, bo mieszkają w promieniu 300 m od przebudowy.'},
+   spotkanieTyt:'Spotkanie konsultacyjne',spotkanieKiedy:'16.12.2026, godz. 18:00',spotkanieGdzie:'Szkoła Podstawowa nr 34, ul. Wielicka 40',spotkaniePrzyp:'16.12, 16:00',
+   przyp:['28.12.2026, 9:00','uwagi do przebudowy ul. Wielickiej do 30.12.2026'],sasiedzi:'Mieszkańcy ul. Wielickiej z aplikacją dostali już powiadomienie, bo mieszkają w promieniu 300 m od przebudowy.'},
   inne:[
-   {nazwa:'Blok 14-piętrowy przy ul. Wielickiej 30',odl:'120 m od Twojego domu',nr:'AU-2.6735.9.2026',ikona:'info',krotko:'tzw. lex deweloper · uwagi do 26.11',q:'Co z blokiem przy Wielickiej 30?',
-    teraz:'pawilon handlowy i parking',projekt:'do 45 m, 186 mieszkań, garaż na 150 aut',uwagi:'26.11.2026',re:/blok|wiezowiec|deweloper|14.pietr|inwestycj\w* mieszkan|lex/,
+   {nazwa:'Blok 14-piętrowy przy ul. Wielickiej 30',odl:'120 m od Twojego domu',nr:'AU-2.6735.9.2026',ikona:'info',krotko:'tzw. lex deweloper · uwagi do 28.12',q:'Co z blokiem przy Wielickiej 30?',
+    teraz:'pawilon handlowy i parking',projekt:'do 45 m, 186 mieszkań, garaż na 150 aut',uwagi:'28.12.2026',re:/blok|wiezowiec|deweloper|14.pietr|inwestycj\w* mieszkan|lex/,
     mapa:{obiekt:'Blok 14 pięter',opis:'186 mieszkań',odl:'120 m'},
     intro:'Deweloper chce postawić 14-piętrowy blok 120 m od Ciebie, choć plan miejscowy pozwala tam na budynki do 12 m. Korzysta ze specustawy mieszkaniowej (tzw. lex deweloper), więc o zgodzie zdecyduje Rada Miasta uchwałą.',
-    rows:[['Gdzie','ul. Wielicka 30, działka 1,2 ha, 120 m od Ciebie'],['Teraz','pawilon handlowy i parking'],['Plan miejscowy','usługi, budynki do 12 m'],['Projekt','do 45 m, 186 mieszkań, garaż na 150 aut'],['Tryb','specustawa mieszkaniowa, można odstąpić od planu'],['Inwestor deklaruje','park kieszonkowy 2 000 m² i przedszkole w parterze'],['Kto decyduje','Rada Miasta Krakowa, uchwała o lokalizacji'],['Uwagi do','<b>26.11.2026</b>']],
+    rows:[['Gdzie','ul. Wielicka 30, działka 1,2 ha, 120 m od Ciebie'],['Teraz','pawilon handlowy i parking'],['Plan miejscowy','usługi, budynki do 12 m'],['Projekt','do 45 m, 186 mieszkań, garaż na 150 aut'],['Tryb','specustawa mieszkaniowa, można odstąpić od planu'],['Inwestor deklaruje','park kieszonkowy 2 000 m² i przedszkole w parterze'],['Kto decyduje','Rada Miasta Krakowa, uchwała o lokalizacji'],['Uwagi do','<b>28.12.2026</b>']],
     za:['186 mieszkań przy linii tramwajowej','przedszkole i park kieszonkowy, których w okolicy brakuje'],
     przeciw:['prawie 4 razy wyżej, niż pozwala plan miejscowy','zimą cień na sąsiednich blokach przez część dnia','150 aut więcej na ulicy, która ma stracić 70 miejsc postojowych'],
     zrodla:'Wniosek inwestora, koncepcja urbanistyczna, analiza przesłaniania, opinia architekta miasta',
@@ -202,12 +202,12 @@ const GMINY={
     uzas:'mieszkam przy ul. Wielickiej 28, 120 m od planowanego budynku; inwestycja kilkukrotnie przekracza wysokość dopuszczoną w planie miejscowym i zwiększy ruch na ulicy, na której miasto planuje likwidację miejsc postojowych.',
     uwagaTyt:'Uwagi do lokalizacji inwestycji',adresat:'Prezydent Miasta Krakowa',kanal:'Do: Urząd Miasta Krakowa, wydział architektury, przez e-Doręczenia',wynik:'trafią do Rady Miasta razem z projektem uchwały',
     potem:'Gotowe. Dam Ci znać, kiedy Rada Miasta zajmie się uchwałą i jak zagłosują radni z Twojego okręgu. Chcesz, żeby sąsiedzi też się dowiedzieli?',
-    przyp:['23.11.2026, 9:00','uwagi do bloku przy Wielickiej 30 do 26.11.2026'],sasiedzi:'Mieszkańcy w promieniu 500 m z aplikacją dostali powiadomienie o wniosku.'},
-   {nazwa:'Połączenie szkoły Hani i Igora',odl:'SP nr 34, 600 m od domu',nr:'OK-3.4430.5.2026',ikona:'info',krotko:'Hania od 2027 r. 1,6 km dalej · opinie do 04.12',q:'Co się zmienia w szkole moich dzieci?',
-    teraz:'klasy 1–8 przy ul. Wielickiej 40',projekt:'zespół z SP nr 128, klasy 4–8 przy ul. Teligi',uwagi:'04.12.2026',re:/zmian\w* w szkole|szkol\w* (moich )?dzieci|polaczeni\w* szkol|sp (nr )?34|sp (nr )?128/,
+    przyp:['23.12.2026, 9:00','uwagi do bloku przy Wielickiej 30 do 28.12.2026'],sasiedzi:'Mieszkańcy w promieniu 500 m z aplikacją dostali powiadomienie o wniosku.'},
+   {nazwa:'Połączenie szkoły Hani i Igora',odl:'SP nr 34, 600 m od domu',nr:'OK-3.4430.5.2026',ikona:'info',krotko:'Hania od 2027 r. 1,6 km dalej · opinie do 04.01',q:'Co się zmienia w szkole moich dzieci?',
+    teraz:'klasy 1–8 przy ul. Wielickiej 40',projekt:'zespół z SP nr 128, klasy 4–8 przy ul. Teligi',uwagi:'04.01.2027',re:/zmian\w* w szkole|szkol\w* (moich )?dzieci|polaczeni\w* szkol|sp (nr )?34|sp (nr )?128/,
     mapa:{obiekt:'SP nr 128',opis:'klasy 4–8',odl:'1,6 km',szkola:1},
     intro:'Miasto chce połączyć szkołę Hani i Igora z SP nr 128. Igor zostałby w budynku przy Wielickiej, a Hania od września 2027 r. chodziłaby na lekcje przy ul. Teligi, 1,6 km dalej.',
-    rows:[['Szkoła','SP nr 34, ul. Wielicka 40: Hania (klasa 5), Igor (klasa 1)'],['Projekt','zespół szkół z SP nr 128'],['Klasy 1–3','zostają przy ul. Wielickiej 40'],['Klasy 4–8','od 09.2027 przy ul. Teligi, 1,6 km'],['Dojazd','autobusem ok. 15 minut, pieszo 22 minuty'],['Powód','uczniów jest o 38% mniej niż 10 lat temu'],['Kto decyduje','Rada Miasta, po opinii kuratora oświaty'],['Opinie do','<b>04.12.2026</b>']],
+    rows:[['Szkoła','SP nr 34, ul. Wielicka 40: Hania (klasa 5), Igor (klasa 1)'],['Projekt','zespół szkół z SP nr 128'],['Klasy 1–3','zostają przy ul. Wielickiej 40'],['Klasy 4–8','od 09.2027 przy ul. Teligi, 1,6 km'],['Dojazd','autobusem ok. 15 minut, pieszo 22 minuty'],['Powód','uczniów jest o 38% mniej niż 10 lat temu'],['Kto decyduje','Rada Miasta, po opinii kuratora oświaty'],['Opinie do','<b>04.01.2027</b>']],
     za:['więcej zajęć dodatkowych w SP nr 128 (basen, pracownie)','ok. 2,1 mln zł rocznie mniej na utrzymanie budynków'],
     przeciw:['dłuższa droga dla starszych dzieci, przez ruchliwe skrzyżowanie','rodzeństwo w dwóch budynkach','zwolniona część budynku może zostać sprzedana'],
     zrodla:'Projekt uchwały intencyjnej, analiza demograficzna wydziału edukacji, opinia rady szkoły',
@@ -221,14 +221,14 @@ const GMINY={
     uzas:'jestem rodzicem dwojga uczniów SP nr 34, z klasy 5 i 1; po zmianie dzieci uczyłyby się w dwóch budynkach oddalonych o 1,6 km.',
     uwagaTyt:'Opinia rodzica',adresat:'Wydział edukacji Urzędu Miasta Krakowa',kanal:'Do: Urząd Miasta Krakowa, wydział edukacji, przez e-Doręczenia',wynik:'trafi do raportu z konsultacji dla Rady Miasta',
     potem:'Gotowe. Dam Ci znać, gdy kurator wyda opinię i kiedy Rada Miasta będzie głosować. Chcesz, żeby inni rodzice też się dowiedzieli?',
-    spotkanieTyt:'Zebranie z rodzicami',spotkanieKiedy:'25.11.2026, godz. 17:30',spotkanieGdzie:'aula SP nr 34, ul. Wielicka 40',spotkaniePrzyp:'25.11, 16:30',spotkaniePyt:'możesz wysłać teraz, odpowie dyrekcja i wydział edukacji',
-    przyp:['01.12.2026, 9:00','opinia w sprawie SP nr 34 do 04.12.2026'],sasiedzi:'Rodzice uczniów SP nr 34 z aplikacją dostali powiadomienie od szkoły.'}],
+    spotkanieTyt:'Zebranie z rodzicami',spotkanieKiedy:'15.12.2026, godz. 17:30',spotkanieGdzie:'aula SP nr 34, ul. Wielicka 40',spotkaniePrzyp:'15.12, 16:30',spotkaniePyt:'możesz wysłać teraz, odpowie dyrekcja i wydział edukacji',
+    przyp:['30.12.2026, 9:00','opinia w sprawie SP nr 34 do 04.01.2027'],sasiedzi:'Rodzice uczniów SP nr 34 z aplikacją dostali powiadomienie od szkoły.'}],
   liczby:[['Dochody na mieszkańca','10 940 zł','11 380 zł',96],['Zadłużenie (% dochodów)','58%','41%',141,1],['Komunikacja miejska na mieszkańca','1 310 zł','1 120 zł',117],['Inwestycje (% wydatków)','12%','16%',75,1],['Budżet obywatelski na mieszkańca','50 zł','38 zł',132]],
-  bo:{edycja:'Budżet obywatelski Krakowa 2027',do:'30.11.2026',pula:'40 mln zł, w tym 2,1 mln zł na projekty w Dzielnicy XIII',ile:3,
+  bo:{edycja:'Budżet obywatelski Krakowa 2027',do:'30.12.2026',pula:'40 mln zł, w tym 2,1 mln zł na projekty w Dzielnicy XIII',ile:3,
    zasady:'Wybierasz do 3 projektów w swojej dzielnicy. Głosować może każdy mieszkaniec Krakowa, dzieci do 16 lat z rodzicem.',
    dzielnica:[['Plac zabaw i siłownia przy ul. Wielickiej 24','420 tys. zł','50 m od Ciebie'],['Zielone podwórko przy SP nr 34','380 tys. zł','600 m od Ciebie'],['Zajęcia sportowe dla seniorów','90 tys. zł','cała dzielnica'],['Oświetlenie alejek w parku Bednarskiego','150 tys. zł','1,2 km od Ciebie'],['Tor rowerowy (pumptrack) na Kurdwanowie','610 tys. zł','2,4 km od Ciebie']],
    zaproszenie:'Agnieszka, Michał, Hanna',rodzina:'Agnieszka, Michał (15 lat) i Hanna (11 lat) też mogą zagłosować, dzieci z Twoją zgodą.'},
-  zamowienia:[['Wymiana instalacji c.o. w SP nr 34','Zarząd Inwestycji Miejskich, przetarg','ok. 680 tys. zł','oferty do 24.11.2026'],['Przeglądy instalacji gazowych w 312 lokalach komunalnych','Zarząd Budynków Komunalnych, przetarg','ok. 140 tys. zł','oferty do 18.11.2026'],['Klimatyzacja w domu kultury na Podgórzu','zapytanie ofertowe','ok. 85 tys. zł','do 12.11.2026']],
+  zamowienia:[['Wymiana instalacji c.o. w SP nr 34','Zarząd Inwestycji Miejskich, przetarg','ok. 680 tys. zł','oferty do 23.12.2026'],['Przeglądy instalacji gazowych w 312 lokalach komunalnych','Zarząd Budynków Komunalnych, przetarg','ok. 140 tys. zł','oferty do 18.12.2026'],['Klimatyzacja w domu kultury na Podgórzu','zapytanie ofertowe','ok. 85 tys. zł','do 12.12.2026']],
   zamStat:'Dobrane do PKD 43.22.Z z CEIDG. W podobnych zamówieniach miasta w 2026 r. wpływały średnio 3 oferty.',
   glos:{adresat:'Przewodniczący Rady Miasta Krakowa',kandLabel:'Kandyduj do rady dzielnicy',
    pytania:[['Gdzie zaparkujemy po przebudowie Wielickiej?','Gdzie zaparkują mieszkańcy ul. Wielickiej po likwidacji 70 miejsc postojowych i czy miasto przewiduje miejsca zastępcze?'],['Czy małe firmy dostaną tańszy abonament?','Czy w strefie płatnego parkowania na Podgórzu przewidziano tańszą kartę dla małych firm usługowych z dzielnicy?']],
@@ -297,6 +297,12 @@ const radniPod=()=>{const R=GM.rada;return R.radni?'Twoi radni z okręgu nr '+R.
 const GLOS={za:['za','za'],przeciw:['przeciw','przeciw'],wstrz:['wstrzymał się','wstrzymała się']},glosH=(r,g)=>(GLOS[g]||[g,g])[r.p==='k'?1:0];
 const osobyH=a=>'<ul class="gos">'+a.map(r=>`<li><b>${r.kto}</b><small>${[r.komitet,'dyżur: '+r.dyzur].filter(Boolean).join(' · ')}</small></li>`).join('')+'</ul>';
 
+// uwagi złożone w tej sesji (prototyp: tylko w pamięci przeglądarki), klucz: osoba i numer sprawy
+const ZLOZ={},kluczU=Z=>OS.id+':'+Z.nr;
+const rozm=b=>b>=1e6?(b/1e6).toFixed(1).replace('.',',')+' MB':Math.max(1,Math.round(b/1e3))+' kB';
+const plikiH=(f,usun)=>f.length?'<ul class="gzal">'+f.map((x,j)=>`<li>${svg('doc')}<span>${esc(x.n)}</span><small>${x.r}</small>${usun?`<button type="button" data-x="${j}" aria-label="Usuń ${esc(x.n)}">×</button>`:''}</li>`).join('')+'</ul>':'';
+const pismoH=(P,st,kiedy)=>`<div class="gpismo"><small>${kiedy||today()} · ${P.adresat}</small><b>${P.uwagaTyt}, sprawa ${P.nr}</b><p>${esc(st.t).replace(/\n/g,'<br>')}</p><small>${OS.imie} ${OS.nazwisko}, ${OS.moje.adres}</small>${plikiH(st.f)}</div>`;
+
 // wszystkie sprawy „przy Tobie”: główna (plan) i pozostałe, każda zwinięta w karcie
 const ZMIANY=()=>[GM.plan,...(GM.inne||[])];
 
@@ -307,7 +313,7 @@ function openGmina(){
  det.innerHTML=`<div style="height:${top}px;flex:none"></div><div class="nav"><button class="back" id="dclose">${svg('back')}Wróć</button><b>Moja gmina</b><span></span></div>
   <div class="body"><div class="bigcard" style="background-image:url(${d.img})">${faceHTML(d)}</div>
   <div class="ui galert glist">${hd('dom','Zmienia się coś przy Tobie')}
-   ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}</small></span>${svg('chev')}</summary>
+   ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}${ZLOZ[kluczU(Z)]?' · <b class="gok">uwaga złożona</b>':''}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
     <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${dokumentyH(Z)}</div></details>`).join('')}</div>
   <div class="ui list glist">${hd('doc','Twoja gmina')}
@@ -339,7 +345,7 @@ function dokumentyH(Z){
  const nazwy=(Z.zrodla||DOMYSL_ZR).split(/,\s*/).filter(Boolean),dom='bip.'+slug(GM.krotko)+'.example',nr=slug(Z.nr||Z.tytul||'sprawa');
  return `<details class="gdok"><summary>${svg('doc')}<span>Dokumenty źródłowe · ${nazwy.length}</span>${svg('chev')}</summary><ul>${nazwy.map((n,i)=>{
   const u=`https://${dom}/sprawy/${nr}/${slug(n)}.pdf`,kb=180+(n.length*37+i*211)%2400,dzien=String(2+i*5).padStart(2,'0');
-  return `<li><a class="gdl" href="${u}" data-fikcja="1"><b>${n.replace(/^./,c=>c.toUpperCase())}</b><small>PDF · ${kb>1000?(kb/1000).toFixed(1).replace('.',',')+' MB':kb+' kB'} · ${dzien}.10.2026</small><small class="u">${u.replace('https://','')}</small></a></li>`}).join('')}</ul>
+  return `<li><a class="gdl" href="${u}" data-fikcja="1"><b>${n.replace(/^./,c=>c.toUpperCase())}</b><small>PDF · ${kb>1000?(kb/1000).toFixed(1).replace('.',',')+' MB':kb+' kB'} · ${dzien}.11.2026</small><small class="u">${u.replace('https://','')}</small></a></li>`}).join('')}</ul>
   <div class="note">Odnośniki są fikcyjne (prototyp). W prawdziwej aplikacji otwierałyby dokument z BIP.</div></details>`}
 // odnośniki fikcyjne: zamiast przejścia pod nieistniejący adres krótko podświetlamy uwagę pod listą
 document.addEventListener('click',e=>{const a=e.target.closest('a.gdl[data-fikcja]');if(!a)return;e.preventDefault();
@@ -364,27 +370,58 @@ function gminaInit(){
     body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
     note:(P.decyzja||'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.')+dokumentyH(P)});
    await say(P.kto);
-   chips([{label:P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy',P.przyp[0]],['O czym',P.przyp[1]]]})},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
+   chips([...(ZLOZ[kluczU(P)]?[{label:'Moja złożona uwaga',go:()=>S.mojaUwaga(i)}]:[]),{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy',P.przyp[0]],['O czym',P.przyp[1]]]})},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
   },
   async inneZmiany(i=0){
    await say('Przy Tobie zmienia się też:');
    chips(ZM.map((z,j)=>j===i?null:{label:z.nazwa,go:()=>S.plan(j)}).filter(Boolean));
   },
-  async uwaga(i=0){
+  // Uwaga własnymi słowami: puste pole, podpowiedzi tylko pomocnicze (zwinięte), załączniki, podgląd pisma przed podpisem.
+  async uwaga(i=0,szkic){
+   const P=ZM[i],st=szkic?{t:szkic.t,f:[...szkic.f]}:{t:'',f:[]};
+   await say(szkic?'Popraw, co chcesz. Nic jeszcze nie zostało wysłane.':'Napisz uwagę własnymi słowami. Urząd rozpatruje każdą uwagę osobno, a Twoje doświadczenie waży więcej niż powtórzony szablon. Podpowiedzi pod polem są tylko pomocą.');
+   const c=await card(`<div class="ui guw">${hd('mail',P.uwagaTyt)}<div class="body">
+    <label class="gl" for="uwT${i}">Twoja uwaga</label><textarea id="uwT${i}" rows="6" placeholder="Np. mieszkam przy… Najbardziej martwi mnie… Proponuję…">${esc(st.t)}</textarea><div class="gcnt"></div>
+    <details class="gdok"><summary>${svg('info')}<span>Podpowiedzi (opcjonalnie)</span>${svg('chev')}</summary>
+     <div class="gpod">${Object.entries(P.zg).map(([k,l])=>`<button type="button" data-k="${k}">+ ${l}</button>`).join('')}<button type="button" data-k="_uz">+ Jak mnie to dotyczy</button></div>
+     <div class="note">Podpowiedź dopisuje zdanie na końcu tekstu. Zmień je po swojemu.</div></details>
+    <div class="gzalw"><div class="gzl"></div><label class="btn ghost gadd">${svg('doc')}Dodaj załącznik<input type="file" accept="image/*,application/pdf" multiple hidden></label><small>zdjęcie, skan albo PDF, do 10 MB. Nic nie wysyłam, dopóki nie podpiszesz.</small></div>
+   </div><div class="actions"><button class="btn ghost gno">Anuluj</button><button class="btn primary">Podgląd pisma</button></div>${srcH(P.kanal)}</div>`);
+   const ta=c.querySelector('textarea'),cnt=c.querySelector('.gcnt'),ok=c.querySelector('.btn.primary'),fin=c.querySelector('input[type=file]'),zl=c.querySelector('.gzl');
+   const odsw=()=>{const n=ta.value.trim().length;cnt.textContent=n<15?(n?'Napisz jeszcze kilka słów':''):n+' znaków';ok.disabled=n<15};
+   const rysuj=()=>{zl.innerHTML=plikiH(st.f,1);zl.querySelectorAll('[data-x]').forEach(b=>b.onclick=()=>{st.f.splice(+b.dataset.x,1);rysuj()})};
+   const dopisz=t=>{ta.value=(ta.value.trim()?ta.value.trim()+' ':'')+t;odsw()};
+   ta.oninput=odsw;odsw();rysuj();
+   c.querySelectorAll('.gpod button').forEach(b=>b.onclick=()=>{const k=b.dataset.k;dopisz(k==='_uz'?P.uzas:'Wnioskuję o '+P.zgt[k]+'.');b.disabled=true});
+   fin.onchange=()=>{[...fin.files].forEach(f=>st.f.push({n:f.name,r:rozm(f.size)}));fin.value='';rysuj()};
+   pending=t=>{dopisz(t);say('Dopisałem to do uwagi. Możesz dalej poprawiać w polu powyżej.')};
+   const zamknij=()=>{pending=null;c.querySelector('.actions').remove();ta.readOnly=true;c.querySelector('.gdok').remove();c.querySelector('.gadd').remove();c.querySelector('.gzalw small').remove();zl.querySelectorAll('[data-x]').forEach(b=>b.remove())};
+   c.querySelector('.gno').onclick=()=>act(async()=>{zamknij();await say('Anulowałem. Nic nie zostało wysłane.');
+    chips([{label:'Wróć do pisania',go:()=>S.uwaga(i,{t:ta.value,f:st.f})},...(ZM.length>1?[{label:'Inna sprawa przy mnie',go:()=>S.inneZmiany(i)}]:[]),{label:'Wróć do sprawy',go:()=>S.plan(i)}])});
+   ok.onclick=()=>act(()=>{st.t=ta.value.trim();zamknij();S.uwagaPodglad(i,st)});
+  },
+  async uwagaPodglad(i,st){
    const P=ZM[i];
-   await say('Co chcesz zgłosić? Możesz wybrać kilka spraw, przygotuję z nich pismo.');
-   multi(Object.values(P.zg),async sel=>{
-    const k=Object.keys(P.zg).filter(x=>sel.includes(P.zg[x]));
-    const tresc=P.uwagaWstep+k.map(x=>P.zgt[x]).join('; ')+'. Uzasadnienie: '+P.uzas;
-    await info({icon:'doc',title:P.szkic||'Szkic uwagi',body:tresc,note:'Możesz poprawić treść, napisz po prostu, co zmienić.'});
-    await confirmCard({icon:'mail',title:P.uwagaTyt,source:P.kanal,
-     rows:[['Do',P.adresat],['Od',OS.imie+' '+OS.nazwisko+', '+OS.moje.adres],['Sprawa',P.nr],['Wnioski',String(k.length)],['Termin','do '+P.uwagi]],
-     label:'Podpisz i wyślij',then:async()=>{
-      await result({title:P.zlozono||'Uwaga złożona',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Sprawa','w Twoich sprawach'],['Wynik',P.wynik]]});
-      await say(P.potem);
-      chips([{label:P.sasiedziLabel||'Powiadom sąsiadów',go:()=>S.sasiedzi(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:'Na razie wystarczy',go:()=>say('Dobrze. Sprawę znajdziesz w zakładce Moja gmina.')}]);
-     }});
-   });
+   await say('Tak będzie wyglądać pismo. Sprawdź je, zanim podpiszesz.');
+   await confirmCard({icon:'mail',title:'Podgląd: '+P.uwagaTyt,source:P.kanal,body:pismoH(P,st),
+    rows:[['Do',P.adresat],['Od',OS.imie+' '+OS.nazwisko+', '+OS.moje.adres],['Sprawa',P.nr],['Załączniki',st.f.length?String(st.f.length):'brak'],['Termin','do '+P.uwagi]],
+    label:'Podpisz i wyślij',
+    onCancel:async()=>{await say('Nic nie zostało wysłane. Możesz wrócić do tekstu i go poprawić albo napisać inną uwagę.');
+     chips([{label:'Popraw uwagę',go:()=>S.uwaga(i,st)},{label:'Napisz od nowa',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}])},
+    then:async()=>{
+     const nr=P.nr.split('.')[0]+'/U/'+String(40+Object.keys(ZLOZ).length*7+i).padStart(3,'0');
+     ZLOZ[kluczU(P)]={...st,kiedy:'godz. '+now()+', '+today(),nr};
+     await result({title:P.zlozono||'Uwaga złożona',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer uwagi',nr],['Sprawa','w Twoich sprawach'],['Wynik',P.wynik]]});
+     await say(P.potem);
+     chips([{label:'Zobacz złożoną uwagę',go:()=>S.mojaUwaga(i)},{label:P.sasiedziLabel||'Powiadom sąsiadów',go:()=>S.sasiedzi(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:'Na razie wystarczy',go:()=>say('Dobrze. Sprawę i swoją uwagę znajdziesz w zakładce Moja gmina.')}]);
+    }});
+  },
+  async mojaUwaga(i=0){
+   const P=ZM[i],Z=ZLOZ[kluczU(P)];
+   if(!Z)return S.uwaga(i);
+   await info({icon:'mail',title:'Twoja uwaga: '+P.nazwa,source:'e-Doręczenia, dowód otrzymania',body:pismoH(P,Z,Z.kiedy),
+    rows:[['Złożona',Z.kiedy],['Numer uwagi',Z.nr],['Do',P.adresat],['Status','przyjęta, czeka na rozpatrzenie'],['Co dalej',P.wynik]]});
+   chips([{label:'Złóż kolejną uwagę',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}]);
   },
   async spotkanie(i=0){
    const P=ZM[i];
@@ -479,7 +516,7 @@ function gminaInit(){
     if(sel.length>B.ile){await say('Możesz wybrać najwyżej '+B.ile+' projekty. Zaznacz jeszcze raz.');return wybierz()}
     await confirmCard({icon:'check',title:'Głos w budżecie obywatelskim',source:'Tożsamość z mDowodu, '+B.edycja,rows:[['Projekty',sel.join(', ')],['Dzielnica',GM.solectwo],['Zmiana głosu','możliwa do '+B.do]],label:'Oddaj głos',
      then:async()=>{
-      await result({title:'Głos oddany',source:B.edycja,rows:[['Projektów',String(sel.length)],['Wyniki','w grudniu 2026, dostaniesz powiadomienie']]});
+      await result({title:'Głos oddany',source:B.edycja,rows:[['Projektów',String(sel.length)],['Wyniki','w styczniu 2027, dostaniesz powiadomienie']]});
       await say(B.rodzina+' Wysłać im zaproszenie?');
       chips([{label:'Wyślij zaproszenie rodzinie',go:()=>result({title:'Zaproszenia wysłane',rows:[['Do',B.zaproszenie],['Dzieci','zagłosują po Twojej zgodzie w swojej aplikacji']]})},{label:'Na razie wystarczy'}]);
      }});
@@ -521,7 +558,7 @@ function gminaInit(){
   async sledz(){
    const G=GM.glos;
    await result({title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]});
-   await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','grudzień 2026'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', '+rodz('pełnomocniczka','pełnomocnik')+' może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
+   await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','styczeń 2027'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', '+rodz('pełnomocniczka','pełnomocnik')+' może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
     note:'Powiadomię Ciebie i wszystkie osoby, które się podpisały, o każdym kroku.'});
    chips([{label:GM.rada.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
   },

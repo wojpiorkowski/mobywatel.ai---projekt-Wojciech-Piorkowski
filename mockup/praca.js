@@ -31,13 +31,13 @@ const PRACE={
  /* Jan: jednoosobowa firma instalacyjna z dwoma pracownikami; dane zgodne z serwer/persony.py (CEIDG, emerytura) */
  jan:{
   pracodawca:'Wiśniewski Instalacje',stanowisko:'własna firma, instalacje sanitarne i grzewcze',
-  alert:'Badania pracownika do 02.12',f:[['Forma','jednoosobowa działalność'],['Od','03.2012']],
+  alert:'Badania pracownika do 08.01',f:[['Forma','jednoosobowa działalność'],['Od','03.2012']],
   rows:[['Firma','Wiśniewski Instalacje Jan Wiśniewski'],['Forma','jednoosobowa działalność (CEIDG)'],['Działa od','03.2012'],['NIP','679 234 56 79'],['Podatek','liniowy od 01.2026'],['Pracownicy','2 osoby']],
   zrodlo:'CEIDG, ZUS, KSeF (dane fikcyjne)',
   menu:[['doc','E-teczka firmy',[
     ['pHistoria','clock','Historia zawodowa','etat, potem własna firma · z ZUS','Pokaż moją historię zawodową'],
     ['pKwalif','id','Kwalifikacje i uprawnienia','4 pozycje · jedna wygasa w styczniu','Jakie mam uprawnienia?'],
-    ['pPracownicy','check','Twoi pracownicy','2 osoby · badania okresowe do 02.12','Co muszę zrobić dla moich pracowników?'],
+    ['pPracownicy','check','Twoi pracownicy','2 osoby · badania okresowe do 08.01','Co muszę zrobić dla moich pracowników?'],
     ['pEmerytura','coin','Emerytura','prognoza przy składkach przedsiębiorcy','Ile będę miał emerytury?']]],
    ['shield','Zanim podpiszesz, gdy coś się zmienia',[
     ['pKontrahent','doc','Sprawdź kontrahenta','zlecenie podwykonawcze na 48 000 zł netto','Dostałem zlecenie, sprawdź kontrahenta'],
@@ -49,7 +49,7 @@ const PRACE={
   kwalifSrc:'Centralny rejestr świadectw kwalifikacyjnych, UDT, Izba Rzemieślnicza (dane fikcyjne)',
   kwalifFlag:'Świadectwo G3 wygasa 12.01.2027. Bez niego nie zrobisz przeglądów instalacji gazowych ani nie złożysz oferty w takim przetargu.',
   kwalifAkcja:['Zapisz mnie na egzamin G3','pEgzamin'],przekazLabel:'Przekaż zamawiającemu',przekazOdbiorca:'Zarząd Budynków Komunalnych w Krakowie (przykład)',
-  pracownicy:[['Paweł Mazur, monter','umowa o pracę od 04.2019; badania okresowe do <b>02.12.2026</b>; urlop: zostało 12 z 26 dni'],['Kamil Nowicki, pomocnik','umowa zlecenia od 09.2026; szkolenie BHP wstępne zrobione']],
+  pracownicy:[['Paweł Mazur, monter','umowa o pracę od 04.2019; badania okresowe do <b>08.01.2027</b>; urlop: zostało 12 z 26 dni'],['Kamil Nowicki, pomocnik','umowa zlecenia od 09.2026; szkolenie BHP wstępne zrobione']],
   oferta:{firma:'Budmax Inwestycje sp. z o.o.',co:'instalacje wodne i c.o. w budynku mieszkalnym na Prokocimiu, jako podwykonawca',kwota:'48 000 zł netto',termin:'płatność 90 dni od faktury',inwestor:'Prokocim Park sp. z o.o.',
    krs:[['KRS','aktywna od 2021 r., kapitał 5 000 zł, zarząd zmieniany 2 razy w 2026 r.'],['Biała lista VAT','czynny podatnik, rachunek jest na liście'],['Krajowy Rejestr Zadłużonych','<b>otwarte postępowanie restrukturyzacyjne</b> (09.2026)']]},
   emerytura:{rows:[['Wiek emerytalny','65 lat, 12.05.2048'],['Konto w ZUS','386 940 zł'],['Subkonto','72 410 zł'],['Składki od 2012 r.','od najniższej podstawy dla firm'],['W wieku 65 lat','ok. 4 380 zł brutto'],['W wieku 67 lat','ok. 5 200 zł brutto'],['W wieku 70 lat','ok. 6 740 zł brutto']],
@@ -100,8 +100,8 @@ function pracaInit(){
   async pEgzamin(){
    await say('Świadectwo przedłużysz, zdając egzamin przed komisją kwalifikacyjną. Najbliższe wolne terminy w Krakowie są przed 12 stycznia.');
    await confirmCard({icon:'id',title:'Egzamin kwalifikacyjny G3',source:'Komisja kwalifikacyjna, Kraków (dane fikcyjne)',
-    rows:[['Grupa','G3 (gazowe), eksploatacja i dozór'],['Termin','04.12.2026, 9:00'],['Miejsce','ul. Lubicz 25, Kraków'],['Opłata','ok. 280 zł, tutaj przez ePłatności'],['Dokumenty','dane z mDowodu i obecne świadectwo pobiorę z rejestru']],
-    label:'Zapisz i zapłać',then:()=>result({title:'Zapisano na egzamin',source:'Potwierdzenie wpłaty w Twoich sprawach',rows:[['Kiedy','04.12.2026, 9:00'],['Przypomnienie','03.12, 18:00'],['Nowe świadectwo','trafi tu po egzaminie, ważne 5 lat']]})});
+    rows:[['Grupa','G3 (gazowe), eksploatacja i dozór'],['Termin','04.01.2027, 9:00'],['Miejsce','ul. Lubicz 25, Kraków'],['Opłata','ok. 280 zł, tutaj przez ePłatności'],['Dokumenty','dane z mDowodu i obecne świadectwo pobiorę z rejestru']],
+    label:'Zapisz i zapłać',then:()=>result({title:'Zapisano na egzamin',source:'Potwierdzenie wpłaty w Twoich sprawach',rows:[['Kiedy','04.01.2027, 9:00'],['Przypomnienie','03.01, 18:00'],['Nowe świadectwo','trafi tu po egzaminie, ważne 5 lat']]})});
   },
   async pWolont(){
    await info({icon:'check',title:'Wolontariat',source:'Potwierdzenia organizacji (dane fikcyjne)',rows:PR.wolont,note:'Godziny potwierdziły organizacje. Możesz dołączyć je do CV albo e-teczki jako doświadczenie.'});
@@ -109,7 +109,7 @@ function pracaInit(){
   },
   async pPracownicy(){
    await info({icon:'check',title:'Twoi pracownicy',source:'ZUS (zgłoszenia do ubezpieczeń), e-Akta pracownicze (dane fikcyjne)',rows:PR.pracownicy,
-    flag:'Pawłowi kończą się badania okresowe 02.12.2026. Bez aktualnego orzeczenia nie możesz dopuścić go do pracy.'});
+    flag:'Pawłowi kończą się badania okresowe 08.01.2027. Bez aktualnego orzeczenia nie możesz dopuścić go do pracy.'});
    await say('Mogę wystawić skierowanie na badania. Paweł dostanie je w aplikacji, a przychodnia medycyny pracy elektronicznie.');
    chips([{label:'Wystaw skierowanie na badania',go:()=>confirmCard({icon:'doc',title:'Skierowanie na badania okresowe',source:'Pracodawca: '+PR.rows[0][1],
      rows:[['Pracownik','Paweł Mazur, monter instalacji'],['Rodzaj','badania okresowe'],['Warunki pracy','praca na wysokości do 3 m, lutowanie, kierowanie autem firmowym'],['Gdzie','przychodnia medycyny pracy, z którą masz umowę'],['Koszt','pokrywa pracodawca']],
@@ -119,7 +119,7 @@ function pracaInit(){
   async pEmerytura(){
    const E=PR.emerytura;
    await info({icon:'coin',title:'Prognoza emerytury',source:'ZUS, informacja o stanie konta (dane fikcyjne)',rows:E.rows,note:E.note});
-   chips([{label:E.przyp[0],go:()=>result({title:'Przypomnienie ustawione',rows:E.przyp[1]})},{label:'Umów e-wizytę w ZUS',go:()=>say('Najbliższy wolny termin e-wizyty w ZUS to 6 listopada o 10:30. Napisz „umów”, a zarezerwuję.')}]);
+   chips([{label:E.przyp[0],go:()=>result({title:'Przypomnienie ustawione',rows:E.przyp[1]})},{label:'Umów e-wizytę w ZUS',go:()=>say('Najbliższy wolny termin e-wizyty w ZUS to 7 grudnia o 10:30. Napisz „umów”, a zarezerwuję.')}]);
   },
   async pUmowa(){
    await say(`Sprawdzę ofertę z Twojej skrzynki: ${O.firma}, ${O.co}, ${O.umowa}, ${O.stawka}.`);
