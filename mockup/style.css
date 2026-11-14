@@ -707,3 +707,4 @@ html:not([lang="pl"]) .quick button{flex:1 1 0;width:auto;min-width:0;font-size:
 
 .gsel{display:block;width:100%;box-sizing:border-box;margin-bottom:12px;padding:10px 12px;border:1.5px solid var(--hair);border-radius:12px;font:inherit;font-size:15px;color:var(--ink);background:#fff}
 .gdo{font-size:14px;margin-bottom:12px;color:var(--ink2)}.gdo b{color:var(--ink);font-weight:600}
+.guw .body .rows{padding:0}
