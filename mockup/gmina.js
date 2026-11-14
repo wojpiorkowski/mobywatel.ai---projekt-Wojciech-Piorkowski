@@ -372,7 +372,7 @@ function openGmina(){
    ${ZMIANY().map((Z,i)=>`<details class="gz"><summary class="it"><span class="gi">${svg(Z.ikona||'info')}</span><span class="x"><b>${Z.nazwa}</b><small>${Z.odl} · ${Z.krotko||'uwagi do '+Z.uwagi}${ZLOZ[kluczU(Z)]?' · <b class="gok">uwaga złożona</b>':''}</small></span>${svg('chev')}</summary>
     <div class="gzb">${mapaZ(Z)}${rowsH([['Teraz',Z.teraz],['Projekt',Z.projekt],[Z.uwagaLabel?'Termin':'Uwagi do','<em>'+Z.uwagi+'</em>']])}
     <div class="actions"><button class="btn primary" data-k="z${i}">Zobacz i ${(Z.uwagaLabel||'zgłoś uwagę').replace(/^./,c=>c.toLowerCase())}</button></div>${etapyH(Z)}${dokumentyH(Z)}</div></details>`).join('')}</div>
-  ${(A=>A.length?`<div class="ui list glist">${hd('clock','Moja aktywność')}${A.slice(0,4).map((a,j)=>it('a'+j,a.ikona,a.h,a.kiedy+' · '+a.s)).join('')}${A.length>4?it('aWszystko','dots','Cała aktywność',A.length+' wpisów'):''}</div>`:'')(aktyw())}
+  ${(A=>A.length?`<div class="ui list glist gakt">${hd('clock','Moja aktywność')}${A.slice(0,4).map((a,j)=>it('a'+j,a.ikona,a.h,a.kiedy+' · '+a.s)).join('')}${A.length>4?it('aWszystko','dots','Cała aktywność',A.length+' wpisów'):''}</div>`:'')(aktyw())}
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · '+radniPod())}
    ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
