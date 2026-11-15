@@ -21,7 +21,7 @@ const OSOBY={
    {id:'dowod',name:'mDowód',img:'assets/card-mdowod-bez.png',strip:'assets/strip-mdowod.png',sub:'Dowód ważny do 05.12.2026',alert:'Ważny jeszcze 48 dni',photo:1,holder:'EWA NOWAK',line:'PESEL 69020312845',f:[['PESEL','69020312845'],['Data urodzenia','03.02.1969'],['Dowód osobisty','AXK 552190'],['Dowód ważny do','05.12.2026']],rows:[['Imię','Ewa'],['Nazwisko','Nowak'],['PESEL','69020312845'],['Data urodzenia','03.02.1969'],['Dowód osobisty','AXK 552190, ważny do 05.12.2026']]}
   ],
   tiles:[
-   {i:'alert',h:'Zmiana planu przy Twoim domu',d:'Uwagi do 18.12',k:'plan',u:1,s:'Magazyny 380 m od domu, dojazd ul. Szkolną obok szkoły',q:'Co się zmienia przy moim domu?'},
+   {i:'alert',h:'Zmiana planu przy Twoim domu',d:'Uwagi do 18.01',k:'plan',u:1,s:'Magazyny 380 m od domu, dojazd ul. Szkolną obok szkoły',q:'Co się zmienia przy moim domu?'},
    {i:'id',h:'Dowód traci ważność',d:'05.12.2026, za 48 dni',k:'renew',u:1,s:'Wniosek złożysz tutaj, potem odciski palców w urzędzie do 30 dni',q:'Mój dowód traci ważność, co mam zrobić?'},
    {i:'car',h:'Badanie techniczne Pandy',d:'Do 08.11, za 21 dni',k:'oc',u:1,s:'LU 5521P, stacja kontroli pojazdów',q:'Kiedy mam badanie techniczne auta?'},
    {i:'coin',h:'Podatek od nieruchomości',d:'164 zł do 16.11',k:'pay',s:'IV rata 2026, Urząd Gminy Lipowiec, BLIK',q:'Chcę zapłacić podatek od nieruchomości'},
