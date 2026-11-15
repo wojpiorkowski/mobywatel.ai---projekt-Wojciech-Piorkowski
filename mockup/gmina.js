@@ -26,7 +26,8 @@ const GMINY={
   rada:{nazwa:'Rada Gminy Lipowiec',n:15,wojta:13,komitet:'KWW Razem dla Lipowca',jeden:'w 9 z 15 okręgów był tylko jeden kandydat',frekw:'49%',
    radny:{kto:'Stanisław Wójcik',okreg:'okręg nr 4',komitet:'KWW Razem dla Lipowca',dyzur:'pierwszy poniedziałek miesiąca, 16:00–17:00, urząd gminy, pok. 12',
     tel:'+48 81 000 04 12',email:'stanislaw.wojcik@rada.lipowiec.pl',komisje:['Komisja Budżetu i Finansów','Komisja Rolnictwa i Ochrony Środowiska','doraźna komisja ds. zmian w Statucie Gminy'],
-    interp:[['Remont drogi gminnej w Lipowcu Kolonii','04.2026','odpowiedź udzielona'],['Odbiór odpadów wielkogabarytowych','09.2026','odpowiedź udzielona']]},
+    funkcje:{'Komisja Rolnictwa i Ochrony Środowiska':'Przewodniczący'},
+    interp:[['Z','odbioru odpadów wielkogabarytowych','2026-09-22',1],['I','remontu drogi gminnej w Lipowcu Kolonii','2026-04-14',1]]},
    glosy:[['Przystąpienie do zmiany planu „Pola Południowe” (03.2025)','za'],['Podwyżka opłaty za odpady do 39 zł (12.2025)','za'],['Nagrania posiedzeń komisji (09.2026, wniosek radnej spoza klubu wójta)','przeciw']]},
   sesja:{tytul:'Sesja Rady Gminy',przyp:'29.12.2026, 9:45',kiedy:'29.12.2026, godz. 10:00',gdzie:'sala GOK, transmisja na BIP',porzadek:['Projekt budżetu na 2027 r. (pierwsze czytanie)','Stawki podatku od nieruchomości na 2027 r.','Sprzedaż działki 214/3 w trybie bezprzetargowym']},
   uchwaly:[
@@ -323,15 +324,18 @@ const BIPR={
   komisje:['Rewizyjna','Skarg, Wniosków i Petycji','Budżetu i Finansów','Rolnictwa i Ochrony Środowiska','Oświaty, Kultury i Sportu','Bezpieczeństwa i Porządku Publicznego'],
   doraz:'doraźna komisja ds. zmian w Statucie Gminy',
   gdzie:{'urząd gminy':'Urząd Gminy Lipowiec, ul. Lubelska 12'},komisja:'Gminna Komisja Wyborcza w Lipowcu',bip:'BIP Gminy Lipowiec',
-  interp:['Dowóz dzieci do szkoły w Lipowcu','Remont drogi gminnej w Lipowcu Kolonii','Oświetlenie ul. Szkolnej','Koszt wydawania biuletynu gminy','Odbiór odpadów wielkogabarytowych','Ruch ciężarówek obok szkoły','Godziny otwarcia punktu PSZOK','Przystanek autobusowy przy ul. Lubelskiej']},
+  urz:'Wójta Gminy Lipowiec',www:'https://bip.lipowiec.pl',
+  interp:['dowozu dzieci do szkoły w Lipowcu','remontu drogi gminnej w Lipowcu Kolonii','oświetlenia ul. Szkolnej','kosztów wydawania biuletynu gminy','odbioru odpadów wielkogabarytowych','ruchu ciężarówek obok szkoły','godzin otwarcia punktu selektywnej zbiórki odpadów','przystanku autobusowego przy ul. Lubelskiej']},
  jan:{domena:'rada.krakow.pl',domenaDz:'rd13.krakow.pl',tel:'+48 12 000 ',listy:{'KWW Kraków Razem':3,'KWW Nowy Kraków':5,'KWW Wspólny Kraków':7,'KWW Kraków dla Ludzi':9},
   kluby:{'KWW Kraków Razem':'Klub Radnych Kraków Razem','KWW Nowy Kraków':'Klub Radnych Nowy Kraków','KWW Wspólny Kraków':'Klub Radnych Wspólny Kraków','KWW Kraków dla Ludzi':'Klub Radnych Kraków dla Ludzi'},
   komisje:['Budżetowa','Infrastruktury','Planowania Przestrzennego i Ochrony Środowiska','Edukacji','Kultury i Ochrony Zabytków','Rewizyjna','Skarg, Wniosków i Petycji','Mieszkalnictwa','Bezpieczeństwa Publicznego','Sportu i Turystyki','Zdrowia i Polityki Społecznej','Dialogu Obywatelskiego','Komunikacji'],
   doraz:'doraźna komisja ds. zmian w Statucie Miasta Krakowa',
   gdzie:{'magistrat':'Urząd Miasta Krakowa, pl. Wszystkich Świętych 3–4'},komisja:'Miejska Komisja Wyborcza w Krakowie',bip:'BIP Miasta Krakowa',
-  interp:['Remont chodnika przy ul. Wielickiej','Częstotliwość tramwajów na Prokocim','Miejsca w żłobkach na Bieżanowie','Hałas od torów w Płaszowie','Parking przy szpitalu w Prokocimiu','Wycinka drzew przy ul. Bieżanowskiej','Plac zabaw na os. Na Kozłówce','Przejście dla pieszych przy SP nr 34','Nocne kursy autobusów do Bieżanowa']}};
+  urz:'Prezydenta Miasta Krakowa',www:'https://www.bip.krakow.pl',
+  interp:['remontu chodnika przy ul. Wielickiej','częstotliwości kursowania tramwajów na Prokocim','brakujących miejsc w żłobkach na Bieżanowie','hałasu od torów kolejowych w Płaszowie','parkingu przy Szpitalu Uniwersyteckim w Prokocimiu','wycinki drzew przy ul. Bieżanowskiej','placu zabaw na os. Na Kozłówce','bezpieczeństwa przejścia dla pieszych przy SP nr 34','nocnych kursów autobusów do Bieżanowa']}};
+// adres na fikcyjnej stronie BIP: „Komisja Rewizyjna” → komisja-rewizyjna
+const slugB=t=>t.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'').replace(/ł/g,'l').replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
 const hashS=s=>[...s].reduce((a,c)=>(a*31+c.charCodeAt(0))>>>0,7);
-const MIES=['01','02','03','04','05','06','07','08','09','10'];
 function uzupelnijRadnego(r,K,dz){
  const h=hashS(r.kto),bierz=(a,n,o='')=>a.map(x=>[hashS(r.kto+o+x),x]).sort((p,q)=>p[0]-q[0]).slice(0,n).map(p=>p[1]);
  const [im,...nz]=r.kto.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g,'').replace(/ł/g,'l').split(' ');
@@ -344,9 +348,12 @@ function uzupelnijRadnego(r,K,dz){
   else{r.dyzurKiedy=cz.slice(0,2).join(', ');const m=cz[2]||'',reszta=cz.slice(3).join(', ');
    r.dyzurGdzie=K.gdzie[m]?K.gdzie[m]+', '+(reszta||'pok. '+(200+h%40)):cz.slice(2).join(', ').replace(/^./,c=>c.toUpperCase())}}
  if(!dz){
-  r.interp??=bierz(K.interp,1+h%4,'i').map(t=>[t,MIES[hashS(t+r.kto)%MIES.length]+'.2026']).sort((x,y)=>x[1]<y[1]?-1:1)
-   .map(([t,m],i,w)=>[t,m,i===w.length-1&&m==='10'+'.2026'?'czeka na odpowiedź':'odpowiedź udzielona']);
-  r.oswiad??=['za 2025, złożone 29.04.2026','na początek kadencji, złożone 06.05.2024','za 2024, złożone 28.04.2025'];
+  // [rodzaj I/Z, w sprawie, data otrzymania przez prezydenta/wójta, ile plików odpowiedzi (0 = czeka)]; najnowsza z ostatnich tygodni czeka
+  r.interp??=bierz(K.interp,1+h%5,'i').map(t=>{const x=hashS(t+r.kto);return [x%3?'I':'Z',t,'2026-'+String(1+x%10).padStart(2,'0')+'-'+String(1+(x>>>5)%28).padStart(2,'0'),x%7?1:2]})
+   .sort((a,b)=>a[2]<b[2]?1:-1).map((w,i)=>i===0&&w[2]>'2026-10-25'?[...w.slice(0,3),0]:w);
+  // [za rok, rodzaj, rozmiar pliku w kB], jak tabela oświadczeń w BIP
+  r.oswiad??=[['2025','roczne',300+h%400+(h%100)/100],['2024','roczne',700+(h>>>3)%300+(h%37)/100],['2024','na początek kadencji',650+(h>>>6)%300+(h%53)/100]];
+  r.funkcje??=(h%5===0?{[r.komisje[0]]:r.p==='k'?'Przewodnicząca':'Przewodniczący'}:h%5===1?{[r.komisje[0]]:r.p==='k'?'Wiceprzewodnicząca':'Wiceprzewodniczący'}:{});
   r.zaswiad??=[K.komisja,'12.04.2024'];
  }
  return r;
@@ -407,27 +414,37 @@ const GLOS={za:['za','za'],przeciw:['przeciw','przeciw'],wstrz:['wstrzymał się
 const osobyH=a=>'<ul class="gos">'+a.map(r=>`<li><b>${r.kto}</b><small>${[r.komitet,'dyżur: '+r.dyzur].filter(Boolean).join(' · ')}</small></li>`).join('')+'</ul>';
 
 /* Karta radnego w układzie BIP (kontakt, lista, okręg, klub, komisje, interpelacje, oświadczenia, dyżur, załączniki),
-   ale w stylu mObywatela. Linki otwierają w rozmowie fikcyjne dokumenty, żeby prototyp nie wychodził do prawdziwego BIP. */
+   ale w stylu mObywatela. Interpelacje, oświadczenia i zaświadczenie otwierają się w rozmowie; pliki PDF i komisje prowadzą
+   do fikcyjnych adresów BIP (nowa karta), jak linki na prawdziwej stronie radnego. */
 async function radnyKarta(r,{rada,okreg,glosy=[],note=''}){
  const k=r.p==='k',sek=t=>`<div class="gsek">${t}</div>`,it=(a,ic,t,sm)=>`<button class="it" data-a="${a}"><span class="gi">${svg(ic)}</span><span class="x"><b>${t}</b><small>${sm}</small></span>${svg('chev')}</button>`;
  const kontakt=[...(r.tel?[['tel.',`<a href="tel:${r.tel.replace(/ /g,'')}">${r.tel}</a>`]]:[]),['e-mail',`<a href="mailto:${r.email}">${r.email}</a>`]];
  const fakty=[...(r.lista?[[k?'Wybrana z listy':'Wybrany z listy','nr '+r.lista+', '+r.komitet]]:[]),['Okręg wyborczy',okreg],...(r.klub?[['Klub',r.klub]]:[])];
- const ostI=r.interp&&r.interp.length?r.interp[r.interp.length-1][1]:'';
+ const K=BIPR[OS.id]||{},www=K.www||'',lnk=(u,t)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+ const ostI=r.interp&&r.interp.length?r.interp[0][2]:'',fu=r.funkcje||{};
+ const kom=x=>{const u=www+'/rada/komisje/'+slugB(x);return lnk(u,x)+(fu[x]?' – '+lnk(u+'/sklad',fu[x]):'')};
  const c=await card(`<div class="ui list glist grd">${hd('id',`${r.kto}<small>${k?'Radna':'Radny'} · ${rada}</small>`)}
   ${sek('Kontakt')}<div class="rows">${rowsH(kontakt)}</div>
   <div class="rows grf">${rowsH(fakty)}</div>
-  ${sek(r.komisje.length>1?'Pracuje w komisjach':'Pracuje w komisji')}<ul class="grk">${r.komisje.map(x=>`<li>${x}</li>`).join('')}</ul>
+  ${sek(r.komisje.length>1?'Pracuje w komisjach':'Pracuje w komisji')}<ul class="grk">${r.komisje.map(x=>`<li>${kom(x)}</li>`).join('')}</ul>
   ${r.interp?it('interp','doc','Interpelacje i zapytania',r.interp.length+' w tej kadencji'+(ostI?', ostatnia '+ostI:'')):''}
-  ${r.oswiad?it('oswiad','coin','Oświadczenia majątkowe',r.oswiad[0]):''}
+  ${r.oswiad?it('oswiad','coin','Oświadczenia majątkowe',r.oswiad.length+' pliki PDF, ostatnie za '+r.oswiad[0][0]):''}
   ${sek('Dyżur')}<div class="rows">${rowsH([['Kiedy',r.dyzurKiedy],['Gdzie',r.dyzurGdzie]])}</div>
   ${r.zaswiad?sek('Załączniki')+it('zasw','doc','Zaświadczenie o wyborze','PDF, '+r.zaswiad[0]+', '+r.zaswiad[1]):''}
   ${glosy.length?`<details class="gdok grad"><summary>${svg('check')}<span>Jak ${k?'głosowała':'głosował'} w ważnych sprawach</span>${svg('chev')}</summary><ul>${glosy.map(([t,g])=>`<li class="os"><b>${t}</b><small><strong>${g}</strong></small></li>`).join('')}</ul></details>`:''}
   ${note?`<div class="note">${note}</div>`:''}${srcH((r.interp?'BIP, rejestr radnych i imienne wyniki głosowań':rada)+' (dane fikcyjne)')}</div>`);
  const A={
-  interp:()=>info({icon:'doc',title:'Interpelacje i zapytania: '+r.kto,source:(BIPR[OS.id]||{}).bip+', rejestr interpelacji (dane fikcyjne)',
-   rows:r.interp.map(([t,m,st])=>['<i class="gw">'+t+'</i>',m+'<br><small>'+st+'</small>']),note:'Odpowiedź na interpelację daje '+(GM.wladza==='Wójt'?'wójt':'prezydent miasta')+' w ciągu 14 dni. Treść pytań i odpowiedzi jest jawna.'}),
-  oswiad:()=>info({icon:'coin',title:'Oświadczenia majątkowe: '+r.kto,source:(BIPR[OS.id]||{}).bip+' (dane fikcyjne)',rows:r.oswiad.map(o=>{const [a,b]=o.split(', złożone ');return [a.replace(/^./,x=>x.toUpperCase()),'złożone '+b]}),
-   note:(k?'Radna składa':'Radny składa')+' oświadczenie co roku do 30 kwietnia. Oświadczenia są jawne, poza adresem i położeniem nieruchomości.'}),
+  // rejestr jak w BIP, ale zamiast tabeli (za wąska na telefon) jeden wpis pod drugim
+  interp:()=>{const sl=slugB(r.kto),pdf=(n,o)=>www+'/interpelacje/2026/'+sl+'-'+n+(o?'-odpowiedz-'+o:'')+'.pdf';
+   return card(`<div class="ui gin">${hd('doc',`Interpelacje i zapytania<small>${r.kto}</small>`)}
+    <div class="note"><b>I</b> – interpelacja, <b>Z</b> – zapytanie. Data to dzień otrzymania przez ${K.urz}.</div>
+    ${r.interp.map(([t,s,d,o],i)=>{const n=r.interp.length-i;return `<div class="gip"><div class="gip-h"><span class="gtag" title="${t==='I'?'interpelacja':'zapytanie'}">${t}</span><span>${d}</span></div>
+     <p>w sprawie ${s}</p><div class="gip-l"><span>Treść: ${lnk(pdf(n),'PDF')}</span><span>Odpowiedź: ${o?Array.from({length:o},(_,j)=>lnk(pdf(n,j+1),'PDF')).join(' '):'<i>czeka, do 14 dni</i>'}</span></div></div>`}).join('')}
+    ${srcH(K.bip+', rejestr interpelacji i zapytań (dane fikcyjne)')}</div>`)},
+  oswiad:()=>{const kb=x=>x.toFixed(2).replace('.',',')+' kB';
+   return info({icon:'coin',title:`Oświadczenia majątkowe<small class="gsub">${r.kto}</small>`,source:K.bip+' (dane fikcyjne)',
+    rows:[['Jednostka',rada],...r.oswiad.map(([rok,rodzaj,ile],i)=>['Za rok '+rok+'<small class="gsub">'+rodzaj+'</small>',lnk(www+'/oswiadczenie-majatkowe/'+slugB(r.kto)+'-'+rok+'-'+(i+1)+'.pdf','PDF ('+kb(ile)+')')])],
+    note:(k?'Radna składa':'Radny składa')+' oświadczenie co roku do 30 kwietnia. Oświadczenia są jawne, poza adresem i położeniem nieruchomości.'})},
   zasw:()=>info({icon:'doc',title:'Zaświadczenie o wyborze',source:r.zaswiad[0]+' (dane fikcyjne)',rows:[['Wydał',r.zaswiad[0]],['Data',r.zaswiad[1]],['Dla',r.kto],['Mandat',(k?'radna ':'radny ')+rada.replace(/^Rada/,'Rady')+', okręg '+okreg.replace(' (Twój okręg)','')],['Wybory','7 kwietnia 2024 r.']]})};
  c.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(()=>{addUser(b.querySelector('b').textContent);A[b.dataset.a]()}));
  return c;
