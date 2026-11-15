@@ -1,0 +1,39 @@
+# Sprawdzenia przy każdym PR-ze i pushu do main: lint Pythona (ruff), składnia JS (node --check) i test dymny serwera (bez kluczy API).
+name: Lint i testy
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Lint Pythona (ruff)
+        run: pip install ruff && ruff check .
+      - name: Składnia JS (node --check)
+        run: |
+          for f in mockup/*.js; do
+            echo "sprawdzam $f"
+            node --check "$f"
+          done
+
+  smoke:
+    name: Test dymny
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Test dymny (bez kluczy API)
+        run: python3 testy/smoke.py

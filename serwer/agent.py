@@ -3,7 +3,7 @@
 import json, os, re, time, copy, urllib.request, urllib.error, html
 import dane, akcje, persony, tlumacz, threading, daty
 _JEZ = threading.local()
-from narzedzia import WSZYSTKIE, NAZWY_ODCZYTOW, NAZWY_AKCJI, NAZWY_UI, NAZWY_KLIENT
+from narzedzia import WSZYSTKIE, NAZWY_ODCZYTOW, NAZWY_AKCJI, NAZWY_KLIENT
 
 MODELE = [m for m in [os.environ.get('MODEL'), 'claude-haiku-5-5', 'claude-haiku-4-5'] if m]  # dla PROVIDER=anthropic
 _model_ok = None
