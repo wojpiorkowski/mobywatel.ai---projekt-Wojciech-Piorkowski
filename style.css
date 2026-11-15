@@ -733,3 +733,18 @@ html:not([lang="pl"]) .quick button{flex:1 1 0;width:auto;min-width:0;font-size:
 .gtag{display:inline-grid;place-items:center;min-width:22px;height:20px;border-radius:6px;background:var(--red-wash);color:var(--red);font-weight:700;font-size:12px}
 .gip p{margin:4px 0 6px}
 .gip-l{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--ink2)}.gip-l i{color:var(--ink3)}
+/* Władze: organy jako rozwijane wiersze, zestawienie rady z sortowaniem */
+.gwl .gwo summary{list-style:none;cursor:pointer}.gwl .gwo summary::-webkit-details-marker{display:none}
+.gwl .gwo .it>svg{transition:transform .2s}.gwl .gwo[open] .it>svg{transform:rotate(90deg)}
+.gwl .gwo .it{align-items:flex-start}.gwl .gwo .it .gi{margin-top:2px}.gwl .gwo .it>svg{margin-top:8px}
+.gwl .gwo .x small{display:block;line-height:18px}.gwl .gtw{color:var(--ink)!important;font-weight:500;margin-top:2px}
+.gwl .gzb{padding:0 16px 12px}.gwl .gzb .rows{padding:0}.gwl .gzb .note{margin:8px 0 0}.gwl .gzb .actions{padding:10px 0 0}
+.gwl .gzb .gdok{margin-top:10px}.gwl .gbip{margin:10px 16px 12px}
+.gsort{display:flex;gap:6px;flex-wrap:wrap;padding:0 16px 10px}
+.gsort button{padding:6px 11px;border-radius:999px;border:1px solid var(--hair);background:#fff;font-size:13px;color:var(--ink2)}
+.gsort button.on{background:var(--red-wash);border-color:var(--red);color:var(--red);font-weight:600}
+.gzh,.gzr{display:grid;grid-template-columns:1fr 52px 70px;gap:6px;align-items:center;padding:8px 16px;text-align:left;width:100%}
+.gzh{font-size:12px;color:var(--ink3);border-top:1px solid var(--hair)}.gzh span+span{text-align:right}
+.gzl{max-height:360px;overflow:auto}
+.gzr{border-top:1px solid var(--hair);font-size:14px}.gzr .x b{display:block;font-weight:500}.gzr .x small{font-size:12px;color:var(--ink2)}
+.gzr .n{text-align:right;font-variant-numeric:tabular-nums}.gzr.twoj{background:#f3f8f5}
