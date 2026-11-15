@@ -3,8 +3,9 @@
 (dane_dla_modelu, karta_dla_aplikacji). Akcje mają podgląd (karta potwierdzenia) i wykonanie."""
 import hashlib, datetime, re
 from persony import P
+import daty
 
-DZIS = datetime.date(2026, 10, 18)
+DZIS = daty.BAZOWY  # dziś w kalendarzu danych (patrz daty.py)
 def d(s): return datetime.datetime.strptime(s, '%Y-%m-%d').date()
 def pl(dt): return dt.strftime('%d.%m.%Y')
 def pld(s):
@@ -198,7 +199,7 @@ def r_emerytura(a, s):
              note='Prognoza przy obecnych zarobkach. Według ZUS każdy rok pracy dłużej podnosi świadczenie o 8–12%.')
 
 def r_terminy_zus(a, s):
-    t = ['21.10.2026, 10:00', '21.10.2026, 13:30', '22.10.2026, 9:15']
+    t = [pl(DZIS + datetime.timedelta(days=n)) + g for n, g in ((3, ', 10:00'), (3, ', 13:30'), (4, ', 9:15'))]
     return dict(temat=a.get('temat'), terminy=t), dict(icon='clock', title='E-wizyta w ZUS: wolne terminy', source='ZUS', rows=[['Temat', a.get('temat', '')]] + [['Termin', x] for x in t])
 
 def krotka_nazwa(p): return p['model'].replace(' Combi', '') if p.get('model') else p['marka']
@@ -302,9 +303,9 @@ def r_uprawnienia_kierowcy(a, s):
 
 def r_bezpieczny_autobus(a, s):
     n = a.get('nr_rejestracyjny', '')
-    return dict(nr=n, pojazd='Mercedes-Benz Tourismo, 2017', badanie='ważne do 03.12.2026', oc='ważne', miejsca=49, kradziez='brak', uwaga='tylko pojazdy zarejestrowane w Polsce'), \
+    return dict(nr=n, pojazd='Mercedes-Benz Tourismo, 2017', badanie='ważne do 31.12.2026', oc='ważne', miejsca=49, kradziez='brak', uwaga='tylko pojazdy zarejestrowane w Polsce'), \
         dict(icon='car', tone='ok', title='Autokar ' + n, source='CEPiK, UFG',
-             rows=[['Pojazd', 'Mercedes-Benz Tourismo, 2017'], ['Badanie techniczne', 'ważne do 03.12.2026'], ['OC', 'ważne'], ['Miejsca', '49'], ['Kradzież, wyrejestrowanie', 'brak']],
+             rows=[['Pojazd', 'Mercedes-Benz Tourismo, 2017'], ['Badanie techniczne', 'ważne do 31.12.2026'], ['OC', 'ważne'], ['Miejsca', '49'], ['Kradzież, wyrejestrowanie', 'brak']],
              pojazd=dict(model='Mercedes-Benz Tourismo', kolor='biały', nr=n))
 
 ROLE_SLOWA = [('mam', 'mama'), ('matk', 'mama'), ('tat', 'tata'), ('ojc', 'tata'), ('mąż', 'mąż'), ('męż', 'mąż'), ('maz', 'mąż'), ('żon', 'żona'), ('zon', 'żona'),
@@ -515,7 +516,7 @@ POZA_APLIKACJA = [
      'najpierw badanie u lekarza uprawnionego, potem profil kandydata na kierowcę (PKK) w wydziale komunikacji właściwym dla Twojego adresu, osobiście. Potem kurs i egzaminy w WORD',
      'orzeczenie lekarskie, zdjęcie, dowód osobisty, a jeśli nie masz 18 lat, zgoda rodzica. Za wydanie prawa jazdy po zdanym egzaminie zapłacisz 100 zł, odbierzesz je w urzędzie albo pocztą', 'osobiście'),
     (r'rejestr(?!acyjn)\w*.*(aut|pojazd|samoch)|(aut|pojazd|samoch)\w*.*rejestr(?!acyjn)|zarejestr|przerejestr', 'Rejestracja pojazdu',
-     'wydział komunikacji starostwa lub urzędu miasta (w Warszawie: urząd dzielnicy), w 30 dni od zakupu. Wniosek wyślesz online tylko tam, gdzie urząd to umożliwia. Po tablice i dowód rejestracyjny idziesz osobiście. Wniosek w mObywatelu ma ruszyć 18.01.2027, odbiór nadal w urzędzie',
+     'wydział komunikacji starostwa lub urzędu miasta (w Warszawie: urząd dzielnicy), w 30 dni od zakupu. Wniosek wyślesz online tylko tam, gdzie urząd to umożliwia. Po tablice i dowód rejestracyjny idziesz osobiście. Wniosek w mObywatelu ma ruszyć @18.01.2027, odbiór nadal w urzędzie',
      'wniosek, umowa kupna lub faktura, dotychczasowy dowód rejestracyjny z ważnym badaniem i tablice (numer możesz zachować), potwierdzenie opłat. OC wykup przed rejestracją. PCC-3 (2%, 14 dni) złożysz tutaj', 'osobiście'),
     (r'badani\w* techniczn|przegl[aą]d(?!ar)', 'Badanie techniczne',
      'dowolna stacja kontroli pojazdów, osobiście, z dowodem rejestracyjnym',
@@ -540,7 +541,7 @@ POZA_APLIKACJA = [
      'jako pracownik nic nie składasz. Prowadzisz firmę: zasiłek dostaniesz, jeśli płacisz dobrowolną składkę chorobową i nie masz zaległości w ZUS', 'online'),
     (r'zeznani\w* (roczn|podatk)|rozlicz\w* (się )?(z )?(pit|podat|roczn)|\bpit\b(?!-?\d)|e-?pit\b', 'Roczne zeznanie PIT',
      'Twój e-PIT w e-Urzędzie Skarbowym (podatki.gov.pl lub aplikacja e-Urząd Skarbowy), zalogujesz się mObywatelem, profilem zaufanym albo przez bank',
-     'zeznanie za 2026 r. złożysz od 15.02 do 30.04.2027. PIT-37 i PIT-38 zaakceptują się same 30 kwietnia, PIT-36, PIT-36L i PIT-28 trzeba zaakceptować samodzielnie. Korektę złożysz tam w każdej chwili', 'online'),
+     'zeznanie za 2026 r. złożysz od @15.02 do @30.04.2027. PIT-37 i PIT-38 zaakceptują się same 30 kwietnia, PIT-36, PIT-36L i PIT-28 trzeba zaakceptować samodzielnie. Korektę złożysz tam w każdej chwili', 'online'),
     (r'skierowan|wizyt\w* (u|do) lekarz|zapis\w* (się )?do lekarz|umów\w* (mnie )?(do|na) (lekarz|wizyt|badani)|szczepien|e-?rejestracj', 'Wizyty, skierowania, szczepienia',
      'wizytę u lekarza rodzinnego umówisz w swojej przychodni. Przez centralną e-rejestrację w IKP umówisz mammografię, test HPV i pierwszą wizytę u kardiologa',
      'skierowania, recepty i szczepienia zobaczysz w IKP', 'online lub osobiście'),

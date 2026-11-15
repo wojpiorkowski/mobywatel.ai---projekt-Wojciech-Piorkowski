@@ -122,7 +122,7 @@ const S={
  async dz2(name){
   const nm=name.charAt(0).toUpperCase()+name.slice(1),fem=/a$/i.test(nm);
   await say('Sprawdź dane. Szpital przekazuje kartę urodzenia prosto do USC.');
-  await confirmCard({icon:'baby',title:'Zgłoszenie urodzenia dziecka',source:'Rejestr PESEL, USC',rows:[['Dziecko',nm+' '+(fem?'Kowalska':'Kowalski')],['Data urodzenia','16.10.2026'],['Miejsce','Szpital Bielański, Warszawa'],['Drugi rodzic','Tomasz Kowalski'],['Zameldowanie','ul. Kwiatowa 12, Warszawa'],['Odpis aktu','elektronicznie, do skrzynki'],['Termin','21 dni od wystawienia karty urodzenia'],['Opłata','bezpłatnie']],label:'Podpisz i wyślij',then:async()=>{
+  await confirmCard({icon:'baby',title:'Zgłoszenie urodzenia dziecka',source:'Rejestr PESEL, USC',rows:[['Dziecko',nm+' '+(fem?'Kowalska':'Kowalski')],['Data urodzenia','13.11.2026'],['Miejsce','Szpital Bielański, Warszawa'],['Drugi rodzic','Tomasz Kowalski'],['Zameldowanie','ul. Kwiatowa 12, Warszawa'],['Odpis aktu','elektronicznie, do skrzynki'],['Termin','21 dni od wystawienia karty urodzenia'],['Opłata','bezpłatnie']],label:'Podpisz i wyślij',then:async()=>{
    await result({title:'Zgłoszenie wysłane do USC',source:'Twoje sprawy',rows:[['Status','zgłoszenie wysłane do USC'],['PESEL i akt','zwykle następnego dnia roboczego'],['Odpis skrócony aktu','bezpłatnie, do Twojej skrzynki'],['Ubezpieczenie zdrowotne','zgłosi pracodawca (ZUS ZCNA), przekaż mu PESEL dziecka w ciągu 7 dni']]});
    await say('Mogę też złożyć wniosek o 800+ i o Kartę Dużej Rodziny dla '+(fem?'córki':'syna')+'.');
    chips([{label:'Złóż wniosek o 800+',go:()=>confirmCard({icon:'coin',title:'Wniosek o świadczenie 800+',source:'ZUS, rejestr PESEL',rows:[['Dziecko',nm],['Kwota','800 zł miesięcznie'],['Od kiedy','od dnia urodzenia, jeśli wyślesz w ciągu 3 miesięcy'],['Okres','do 31.05.2027, potem nowy wniosek od 1 lutego'],['Konto do wypłaty','PL •• 4412']],label:'Wyślij do ZUS',then:()=>result({title:'Wniosek wysłany do ZUS',rows:[['Odpowiedź','na Twoje konto w eZUS, zwykle w ciągu miesiąca'],['Wypłata','z wyrównaniem od dnia urodzenia']]})})},
@@ -132,26 +132,26 @@ const S={
  async todo(){
   await say('Oto, co czeka na Ciebie:');
   const c=await card(`<div class="ui list">${hd('bell','Do załatwienia')}
-   <button class="it" data-k="letter"><span class="pip"></span><span class="x"><b>Pismo z Urzędu Skarbowego</b><small>Odpowiedź do 26.10</small></span><span class="go">Otwórz</span></button>
-   <button class="it" data-k="oc"><span class="pip"></span><span class="x"><b>Koniec okresu OC Toyoty 29.10</b><small>Za 11 dni</small></span><span class="go">Sprawdź</span></button>
-   <button class="it" data-k="pay"><span class="pip"></span><span class="x"><b>Podatek od nieruchomości</b><small>210 zł do 16.11</small></span><span class="go">Zapłać</span></button>${srcH('Skrzynka, ePłatności, CEPiK')}</div>`);
+   <button class="it" data-k="letter"><span class="pip"></span><span class="x"><b>Pismo z Urzędu Skarbowego</b><small>Odpowiedź do 23.11</small></span><span class="go">Otwórz</span></button>
+   <button class="it" data-k="oc"><span class="pip"></span><span class="x"><b>Koniec okresu OC Toyoty 26.11</b><small>Za 11 dni</small></span><span class="go">Sprawdź</span></button>
+   <button class="it" data-k="pay"><span class="pip"></span><span class="x"><b>Podatek od nieruchomości</b><small>210 zł do ${DATY.rata().kr}</small></span><span class="go">Zapłać</span></button>${srcH('Skrzynka, ePłatności, CEPiK')}</div>`);
   c.querySelectorAll('.it').forEach(b=>b.onclick=()=>act(()=>{addUser(b.querySelector('b').textContent);S[b.dataset.k]()}));
  },
  async letter(){
-  await info({icon:'mail',title:'Wezwanie do złożenia wyjaśnień',source:'e-Doręczenia, Urząd Skarbowy Warszawa-Mokotów, odebrane 17.10',body:'Urząd prosi o udokumentowanie ulgi termomodernizacyjnej z zeznania PIT-37 za 2025 r. za dom jednorodzinny przy ul. Kwiatowej 12. Wymagane są faktury za materiały i usługi. Termin: <b>7 dni</b> od odebrania. 24.10 to sobota, więc masz czas do poniedziałku 26.10.'});
+  await info({icon:'mail',title:'Wezwanie do złożenia wyjaśnień',source:'e-Doręczenia, Urząd Skarbowy Warszawa-Mokotów, odebrane 14.11',body:'Urząd prosi o udokumentowanie ulgi termomodernizacyjnej z zeznania PIT-37 za 2025 r. za dom jednorodzinny przy ul. Kwiatowej 12. Wymagane są faktury za materiały i usługi. Termin: <b>7 dni</b> od odebrania. 21.11 to sobota, więc masz czas do poniedziałku 23.11.'});
   await say('W Twoich plikach są 3 faktury za docieplenie z 2025 r. Przygotować odpowiedź z załącznikami?');
   chips([{label:'Przygotuj odpowiedź',go:async()=>{
-   await info({icon:'doc',title:'Szkic odpowiedzi',body:'W odpowiedzi na wezwanie z dnia 16.10.2026 przekazuję faktury dokumentujące wydatki na termomodernizację domu jednorodzinnego przy ul. Kwiatowej 12, objęte ulgą w zeznaniu PIT-37 za 2025 r.<br><br>Załączniki: FV 2025/03/118, FV 2025/04/022, FV 2025/05/301.'});
+   await info({icon:'doc',title:'Szkic odpowiedzi',body:'W odpowiedzi na wezwanie z dnia 13.11.2026 przekazuję faktury dokumentujące wydatki na termomodernizację domu jednorodzinnego przy ul. Kwiatowej 12, objęte ulgą w zeznaniu PIT-37 za 2025 r.<br><br>Załączniki: FV 2025/03/118, FV 2025/04/022, FV 2025/05/301.'});
    await confirmCard({icon:'mail',title:'Wysyłka przez e-Doręczenia',source:'Do: US Warszawa-Mokotów',rows:[['Załączniki','3 faktury (PDF)'],['Podpis','podpis zaufany']],label:'Podpisz i wyślij',then:()=>result({title:'Pismo doręczone',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()],['Sprawa','w Twoich sprawach']]})});
   }},{label:'Później'}]);
  },
  async oc(){
-  await info({icon:'car',title:'OC: Toyota Corolla, WX 4521K',source:'UFG, CEPiK',rows:[['Ubezpieczyciel','Warta'],['Koniec okresu','29.10.2026']],note:'Umowa OC zwykle przedłuża się sama na kolejny rok, jeśli jej nie wypowiesz. Sprawdź to u ubezpieczyciela.'});
+  await info({icon:'car',title:'OC: Toyota Corolla, WX 4521K',source:'UFG, CEPiK',rows:[['Ubezpieczyciel','Warta'],['Koniec okresu','26.11.2026']],note:'Umowa OC zwykle przedłuża się sama na kolejny rok, jeśli jej nie wypowiesz. Sprawdź to u ubezpieczyciela.'});
   await say('Przypomnieć Ci kilka dni przed terminem?');
-  chips([{label:'Przypomnij 25.10',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','25.10.2026, 9:00']]})},{label:'Nie trzeba'}]);
+  chips([{label:'Przypomnij 22.11',go:()=>result({title:'Przypomnienie ustawione',rows:[['Kiedy','22.11.2026, 9:00']]})},{label:'Nie trzeba'}]);
  },
  async pay(){
-  await confirmCard({icon:'coin',title:'Podatek od nieruchomości',source:'ePłatności, Urząd m.st. Warszawy',rows:[['Rata','IV, 2026'],['Kwota','210,00 zł'],['Termin','16.11.2026'],['Płatność','Apple Pay']],label:'Zapłać 210 zł',then:()=>result({title:'Zapłacono',source:'ePłatności',rows:[['Kwota','210,00 zł'],['Potwierdzenie','EP/2026/7 214 088'],['Prowizja','brak']]})});
+  await confirmCard({icon:'coin',title:'Podatek od nieruchomości',source:'ePłatności, Urząd m.st. Warszawy',rows:[['Rata',DATY.rata().rataKr],['Kwota','210,00 zł'],['Termin',DATY.rata().pelna],['Płatność','Apple Pay']],label:'Zapłać 210 zł',then:()=>result({title:'Zapłacono',source:'ePłatności',rows:[['Kwota','210,00 zł'],['Potwierdzenie','EP/2026/7 214 088'],['Prowizja','brak']]})});
  },
  async sms(){
   await say('Wklej treść albo zrzut ekranu wiadomości.');

@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """Pętla agenta: Claude (Haiku) + narzędzia. Bezstanowa: klient przechowuje historię rozmowy i stan świata."""
 import json, os, re, time, copy, urllib.request, urllib.error, html
-import dane, akcje, persony, tlumacz, threading
+import dane, akcje, persony, tlumacz, threading, daty
 _JEZ = threading.local()
 from narzedzia import WSZYSTKIE, NAZWY_ODCZYTOW, NAZWY_AKCJI, NAZWY_UI, NAZWY_KLIENT
 
@@ -55,7 +55,7 @@ def system_prompt():
         okolica=p['okolica'], dop=p['dop'], zalogowana='zalogowaną użytkowniczką' if k else 'zalogowanym użytkownikiem',
         forma='żeńskiej (np. „zgubiłaś”)' if k else 'męskiej (np. „zgubiłeś”)',
         meski='' if k else '\nUWAGA: rozmawiasz z mężczyzną. Gdzie poniższe zasady i opisy narzędzi mówią „użytkowniczka”, „ona”, „jej”, chodzi o niego. Zawsze używaj form męskich.')
-    return s
+    return daty.przesun(s)  # dane są w kalendarzu bazowym, model widzi prawdziwe daty
 
 def klucz(nazwa, env):
     if os.environ.get(env): return os.environ[env]
@@ -394,7 +394,7 @@ def _run(messages, stan, confirm, keys, log, osoba):
             messages.append({'role': 'user', 'content': [{'type': 'tool_result', 'tool_use_id': tu['id'], 'content': res}]})
         elif tu and tu['name'] in NAZWY_AKCJI:
             if confirm.get('ok'):
-                d, karta = akcje.A[tu['name']]['wykonaj'](tu['input'], stan)
+                d, karta = daty.naprzod(akcje.A[tu['name']]['wykonaj'](daty.wstecz(tu['input']), stan))
                 events.append(dict(t='card', **karta))
                 res = json.dumps(dict(wykonano=True, potwierdzono_face_id=True, wynik=d), ensure_ascii=False)
                 log(dict(t='akcja', name=tu['name'], input=tu['input'], ok=True))
@@ -422,7 +422,7 @@ def _run(messages, stan, confirm, keys, log, osoba):
             n, a = b['name'], b['input']
             log(dict(t='tool', name=n, input=a))
             if n in NAZWY_ODCZYTOW:
-                d, karta = wykonaj_odczyt(n, a, stan)
+                d, karta = daty.naprzod(wykonaj_odczyt(n, daty.wstecz(a), stan))
                 if karta and a.get('pokaz_karte', True) is not False:
                     if karta.get('t') == 'qr':
                         events.append(dict(karta, t='qr'))
@@ -448,9 +448,9 @@ def _run(messages, stan, confirm, keys, log, osoba):
                                'content': 'NIE wykonano. Przed chwilą zakończyła się inna czynność. Najpierw krótko powiedz jej wynik i zapytaj, czy użytkowniczka chce tego kroku (zaproponuj_odpowiedzi). Kolejną czynność wywołaj dopiero po jej odpowiedzi.'})
             elif n in NAZWY_AKCJI:
                 try:
-                    karta = akcje.A[n]['podglad'](a, stan)
+                    karta = daty.naprzod(akcje.A[n]['podglad'](daty.wstecz(a), stan))
                 except Exception as e:
-                    wyniki.append({'type': 'tool_result', 'tool_use_id': b['id'], 'content': 'Błąd danych: %s' % e, 'is_error': True}); continue
+                    wyniki.append({'type': 'tool_result', 'tool_use_id': b['id'], 'content': 'Błąd danych: %s' % daty.przesun(str(e)), 'is_error': True}); continue
                 events.append(dict(t='confirm', id=b['id'], **karta))
                 czeka = 'potwierdzenie'
             else:
