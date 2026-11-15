@@ -150,7 +150,6 @@ const GMINY={
   liczbyPod:'budżet i dług na tle innych dużych miast',liczbyTyt:'Kraków na tle dużych miast',liczbyOpis:'Kreska to średnia pięciu innych największych miast w Polsce.',
   liczbyWniosek:'Najbardziej odstaje zadłużenie, a udział inwestycji jest niższy niż gdzie indziej. Więcej niż inne miasta Kraków wydaje na komunikację i budżet obywatelski. Chcesz zagłosować na projekty w swojej dzielnicy?',
   wojt:{kto:'Marek Zawada',od:2024,kad:'1. kadencja (od 2024)',wybory:'2024: II tura, 51,2% głosów',limit:'Prezydent przedstawia co roku raport o stanie miasta, a rada głosuje nad wotum zaufania.'},
-  wladzaRows:[['Prezydent miasta','Marek Zawada, 1. kadencja (od 2024)'],['Ostatnie wybory','2024: II tura, 51,2% głosów, frekwencja 41%'],['Rada Miasta Krakowa','43 radnych, koalicja 24 radnych'],['Rada Dzielnicy XIII Podgórze','21 radnych, dzieli pieniądze dzielnicy i opiniuje sprawy miasta'],['Twój okręg do Rady Miasta','nr 3: Podgórze, Prokocim, Bieżanów, 8 radnych']],
   rada:{nazwa:'Rada Miasta Krakowa',n:43,wojta:24,komitet:'koalicja KWW Kraków Razem i KWW Nowy Kraków',jeden:'',frekw:'47%',
    // miasto powyżej 20 tys.: okręg wielomandatowy, więc mieszkaniec ma kilku równorzędnych radnych
    okregNr:'3',okregOpis:'Podgórze, Prokocim, Bieżanów',
@@ -323,14 +322,14 @@ const BIPR={
   kluby:{'KWW Razem dla Lipowca':'Klub Radnych Razem dla Lipowca'},
   komisje:['Rewizyjna','Skarg, Wniosków i Petycji','Budżetu i Finansów','Rolnictwa i Ochrony Środowiska','Oświaty, Kultury i Sportu','Bezpieczeństwa i Porządku Publicznego'],
   doraz:'doraźna komisja ds. zmian w Statucie Gminy',
-  gdzie:{'urząd gminy':'Urząd Gminy Lipowiec, ul. Lubelska 12'},komisja:'Gminna Komisja Wyborcza w Lipowcu',bip:'BIP Gminy Lipowiec',
+  gdzie:{'urząd gminy':'Urząd Gminy Lipowiec, ul. Lubelska 12'},komisja:'Gminna Komisja Wyborcza w Lipowcu',bip:'BIP Gminy Lipowiec',sesje:26,
   urz:'Wójta Gminy Lipowiec',www:'https://bip.lipowiec.pl',
   interp:['dowozu dzieci do szkoły w Lipowcu','remontu drogi gminnej w Lipowcu Kolonii','oświetlenia ul. Szkolnej','kosztów wydawania biuletynu gminy','odbioru odpadów wielkogabarytowych','ruchu ciężarówek obok szkoły','godzin otwarcia punktu selektywnej zbiórki odpadów','przystanku autobusowego przy ul. Lubelskiej']},
  jan:{domena:'rada.krakow.pl',domenaDz:'rd13.krakow.pl',tel:'+48 12 000 ',listy:{'KWW Kraków Razem':3,'KWW Nowy Kraków':5,'KWW Wspólny Kraków':7,'KWW Kraków dla Ludzi':9},
   kluby:{'KWW Kraków Razem':'Klub Radnych Kraków Razem','KWW Nowy Kraków':'Klub Radnych Nowy Kraków','KWW Wspólny Kraków':'Klub Radnych Wspólny Kraków','KWW Kraków dla Ludzi':'Klub Radnych Kraków dla Ludzi'},
   komisje:['Budżetowa','Infrastruktury','Planowania Przestrzennego i Ochrony Środowiska','Edukacji','Kultury i Ochrony Zabytków','Rewizyjna','Skarg, Wniosków i Petycji','Mieszkalnictwa','Bezpieczeństwa Publicznego','Sportu i Turystyki','Zdrowia i Polityki Społecznej','Dialogu Obywatelskiego','Komunikacji'],
   doraz:'doraźna komisja ds. zmian w Statucie Miasta Krakowa',
-  gdzie:{'magistrat':'Urząd Miasta Krakowa, pl. Wszystkich Świętych 3–4'},komisja:'Miejska Komisja Wyborcza w Krakowie',bip:'BIP Miasta Krakowa',
+  gdzie:{'magistrat':'Urząd Miasta Krakowa, pl. Wszystkich Świętych 3–4'},komisja:'Miejska Komisja Wyborcza w Krakowie',bip:'BIP Miasta Krakowa',sesje:52,
   urz:'Prezydenta Miasta Krakowa',www:'https://www.bip.krakow.pl',
   interp:['remontu chodnika przy ul. Wielickiej','częstotliwości kursowania tramwajów na Prokocim','brakujących miejsc w żłobkach na Bieżanowie','hałasu od torów kolejowych w Płaszowie','parkingu przy Szpitalu Uniwersyteckim w Prokocimiu','wycinki drzew przy ul. Bieżanowskiej','placu zabaw na os. Na Kozłówce','bezpieczeństwa przejścia dla pieszych przy SP nr 34','nocnych kursów autobusów do Bieżanowa']}};
 // adres na fikcyjnej stronie BIP: „Komisja Rewizyjna” → komisja-rewizyjna
@@ -355,10 +354,40 @@ function uzupelnijRadnego(r,K,dz){
   r.oswiad??=[['2025','roczne',300+h%400+(h%100)/100],['2024','roczne',700+(h>>>3)%300+(h%37)/100],['2024','na początek kadencji',650+(h>>>6)%300+(h%53)/100]];
   r.funkcje??=(h%5===0?{[r.komisje[0]]:r.p==='k'?'Przewodnicząca':'Przewodniczący'}:h%5===1?{[r.komisje[0]]:r.p==='k'?'Wiceprzewodnicząca':'Wiceprzewodniczący'}:{});
   r.zaswiad??=[K.komisja,'12.04.2024'];
+  // [obecny na sesjach, wszystkich sesji w tej kadencji], z list obecności w BIP
+  r.obec??=[K.sesje-(h>>>9)%(K.sesje>30?7:4),K.sesje];
  }
  return r;
 }
 Object.entries(GMINY).forEach(([id,G])=>{const K=BIPR[id];if(!K)return;G.rada.wszyscy.forEach(r=>uzupelnijRadnego(r,K));(G.rada.dzielnica?.osoby||[]).forEach(r=>uzupelnijRadnego(r,K,1))});
+/* Władze jak w BIP („Władze i miasto”): najpierw kto i za co odpowiada, szczegóły (kadencja, wybory, zastępcy) po rozwinięciu,
+   reszta tylko odnośnikiem do BIP. Kraków linkuje do prawdziwych działów BIP (spisy treści, bez osób), Lipowiec do fikcyjnego.
+   Osoby poza radnymi z danych są fikcyjne. */
+const WLADZE={
+ ewa:{bip:'https://bip.lipowiec.pl',
+  organy:[
+   {rola:'Wójt',kto:'Zbigniew Kordas',za:'kieruje urzędem, wykonuje budżet i uchwały rady, wydaje decyzje',
+    wiecej:[['Kadencja','5. kadencja (od 2006), obecna do 2029'],['Wybory 2024','jedyny kandydat, 68% głosów „tak”'],['Zastępca wójta','Ryszard Pawlak: inwestycje i drogi gminne'],['Sekretarz i skarbnik','Iwona Kubik, Teresa Wrzos'],['Raport o stanie gminy','co roku do 31 maja, potem wotum zaufania']],
+    uwaga:'Obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.).',bip:['Wójt, zastępca, sekretarz, skarbnik','/wojt']},
+   {rola:'Rada Gminy Lipowiec',rada:1,za:'uchwala budżet, plan miejscowy, podatki i opłaty, kontroluje wójta',
+    wiecej:[['Kadencja','IX, 2024–2029'],['Przewodniczący rady','Leszek Górny'],['Wybory 2024','w 9 z 15 okręgów był tylko jeden kandydat, frekwencja 49%']],bip:['Rada Gminy: radni, komisje, sesje','/rada']},
+   {rola:'Sołectwo Lipowiec Kolonia',kto:'sołtys Halina Mazur',za:'zebranie wiejskie decyduje, na co pójdzie fundusz sołecki',
+    wiecej:[['Fundusz sołecki 2027','38 tys. zł'],['Rada sołecka','5 osób, wybrana na zebraniu wiejskim w 2024 r.'],['Zebranie wiejskie','marzec 2027, głos ma każdy pełnoletni mieszkaniec']],bip:['Sołectwa i fundusz sołecki','/solectwa']}],
+  linki:[['Lista radnych i dyżury','/rada/radni'],['Interpelacje i zapytania','/rada/interpelacje'],['Głosowania radnych','/rada/glosowania'],['Uchwały','/rada/uchwaly'],['Komisje rady','/rada/komisje'],['Oświadczenia majątkowe','/oswiadczenia-majatkowe']]},
+ jan:{bip:'https://www.bip.krakow.pl',
+  organy:[
+   {rola:'Prezydent Miasta Krakowa',kto:'Marek Zawada',za:'kieruje urzędem, wykonuje budżet i uchwały rady, wydaje decyzje',
+    wiecej:[['Kadencja','1. kadencja, 2024–2029'],['Wybory 2024','II tura, 51,2% głosów, frekwencja 41%'],['Zastępcy','Beata Szostak: rozwój i inwestycje<br>Michał Leśniak: komunikacja i drogi<br>Karolina Jurek: edukacja i sprawy społeczne'],['Raport o stanie miasta','co roku do 31 maja, potem wotum zaufania']],
+    bip:['Prezydent, Zastępcy, Pełnomocnicy','/?bip_id=1&mmi=35305']},
+   {rola:'Rada Miasta Krakowa',rada:1,za:'uchwala budżet, plany miejscowe, podatki i opłaty, kontroluje prezydenta',
+    wiecej:[['Kadencja','IX, 2024–2029'],['Przewodnicząca rady','Jolanta Wierzba'],['Wybory 2024','frekwencja 47%']],bip:['Rada Miasta Krakowa','/?bip_id=1&mmi=26458']},
+   {rola:'Rada Dzielnicy XIII Podgórze',dz:1,za:'opiniuje sprawy dzielnicy, np. przebudowę ul. Wielickiej, i dzieli jej pieniądze',
+    wiecej:[['Skład','21 radnych'],['Przewodniczący zarządu','Wiesław Nowina'],['Budżet dzielnicy 2027','4,1 mln zł, m.in. chodniki i zieleń']],bip:['Dzielnice Krakowa','/?bip_id=1&mmi=453']}],
+  linki:[['Lista radnych','/?bip_id=1&mmi=26464'],['Dyżury radnych','/?bip_id=1&mmi=26476'],['Interpelacje','/?bip_id=1&mmi=26479'],['Głosowania radnych','/?bip_id=1&mmi=26527'],['Uchwały','/?bip_id=1&mmi=26530'],['Harmonogram sesji','/?bip_id=1&mmi=26509']]}};
+const PKW='https://wybory.gov.pl/samorzad2024/';
+const procH=([o,n])=>Math.round(100*o/n)+'%';
+// skład rady: kluby od największego, liczone z listy radnych
+const skladH=R=>{const c={};R.wszyscy.forEach(r=>{const k=/niezrzesz/.test(r.klub)?'niezrzeszeni':r.klub;c[k]=(c[k]||0)+1});return Object.entries(c).sort((a,b)=>b[1]-a[1]).map(([k,n])=>k.replace(/^Klub Radnych /,'')+' '+n).join(', ')};
 const GM=GMINY[OS.id]||null;
 if(GM)OS.docs.push({id:'gmina',name:'Moja gmina',img:'assets/card-gmina.svg',sub:GM.nazwa,alert:GM.alert,holder:GM.nazwa.toUpperCase(),line:GM.typ,
  f:GM.f,rows:[]});
@@ -531,7 +560,7 @@ function gminaInit(){
     body:`<div class="gzp"><div><h4>Za</h4>${lista(P.za)}</div><div><h4>Przeciw</h4>${lista(P.przeciw)}</div></div>`,
     note:(P.decyzja||'Streszczam dokumenty, nie oceniam. O planie zdecyduje rada gminy po rozpatrzeniu uwag przez wójta.')+dokumentyH(P)});
    await say(P.kto);
-   chips([...(ZLOZ[kluczU(P)]?[{label:'Moja złożona uwaga',go:()=>S.mojaUwaga(i)}]:[]),{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:S.gRada},{label:'Przypomnij przed terminem',go:()=>S.przypomnij(i)},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
+   chips([...(ZLOZ[kluczU(P)]?[{label:'Moja złożona uwaga',go:()=>S.mojaUwaga(i)}]:[]),{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:P.ktoGlos||'Kto zagłosuje nad planem?',go:()=>S.radniLista(1)},{label:'Przypomnij przed terminem',go:()=>S.przypomnij(i)},...(ZM.length>1?[{label:'Co jeszcze się zmienia przy mnie?',go:()=>S.inneZmiany(i)}]:[])]);
   },
   async inneZmiany(i=0){
    await say('Przy Tobie zmienia się też:');
@@ -647,10 +676,70 @@ function gminaInit(){
    });
   },
   async gRada(){
-   await info({icon:'id',title:GM.radaTyt,source:'PKW, '+GM.bip+' (dane fikcyjne)',
-    rows:GM.wladzaRows||[['Wójt',GM.wojt.kto],['Urzęduje',GM.wojt.kad],['Ostatnie wybory',GM.wojt.wybory],['Rada gminy',R.n+' radnych, '+R.wojta+' z komitetu wójta'],['Wybory do rady 2024',R.jeden],['Frekwencja 2024',R.frekw]],
-    note:GM.wojt.limit});
-   await S.radniLista(1);
+   const W=WLADZE[OS.id],moj=+R.okregNr,swoi=R.wszyscy.filter(r=>r.okreg===moj),jeden=swoi.length===1,D=R.dzielnica;
+   const lnk=(u,t,sm)=>`<a href="${u}" target="_blank" rel="noopener"><b>${t}</b>${sm?`<small class="u">${sm}</small>`:''}</a>`;
+   const it=(a,ic,t,sm)=>`<button class="it" data-a="${a}"><span class="gi">${svg(ic)}</span><span class="x"><b>${t}</b><small>${sm}</small></span>${svg('chev')}</button>`;
+   const twoi=o=>o.rada?(jeden?'Twój radny: '+swoi[0].kto:'Twoi radni z okręgu nr '+moj+': '+swoi.length):o.dz&&D?'Twoi radni z okręgu: '+D.osoby.map(r=>r.kto).join(', '):'';
+   const organ=(o,i)=>{const wiecej=o.rada?[['Skład',R.wszyscy.length+' radnych: '+skladH(R)],...o.wiecej]:o.wiecej;
+    return `<details class="gz gwo"><summary class="it"><span class="gi">${svg(o.rada||o.dz?'id':'dom')}</span><span class="x"><b>${o.kto?o.rola+': '+o.kto:o.rola}</b><small>${o.za}</small>${twoi(o)?`<small class="gtw">${twoi(o)}</small>`:''}</span>${svg('chev')}</summary>
+     <div class="gzb"><div class="rows">${rowsH(wiecej)}</div>${o.uwaga?`<div class="note">${o.uwaga}</div>`:''}
+     ${o.rada||o.dz?`<div class="actions"><button class="btn ghost" data-a="${o.rada?'lista':'dz'}">${o.rada?(jeden?'Zobacz swojego radnego':'Zobacz swoich radnych'):'Zobacz radnych dzielnicy'}</button></div>`:''}
+     <div class="gdok"><ul><li>${lnk(W.bip+o.bip[1],o.bip[0],'BIP')}</li></ul></div></div></details>`};
+   const interp=swoi.flatMap(r=>r.interp||[]),czeka=interp.filter(x=>!x[3]).length,ob=swoi.map(r=>r.obec[0]/r.obec[1]);
+   const obH=jeden?swoi[0].obec[0]+' z '+swoi[0].obec[1]+' sesji ('+procH(swoi[0].obec)+')':'od '+Math.round(100*Math.min(...ob))+'% do '+Math.round(100*Math.max(...ob))+'% sesji';
+   const nd=swoi.filter(r=>r.dyzurKiedy!=='po umówieniu').length;
+   const c=await card(`<div class="ui list glist gwl">${hd('id',GM.radaTyt)}
+    <div class="gsek">Kto i za co odpowiada</div>${W.organy.map(organ).join('')}
+    <div class="gsek">${jeden?'Co robi Twój radny':'Co robią Twoi radni'} w tej kadencji</div>
+    ${it('interp','doc','Interpelacje i zapytania',interp.length+' w tej kadencji'+(czeka?', '+czeka+' czeka na odpowiedź':''))}
+    ${it('glosy','check','Głosowania i obecność','obecność: '+obH)}
+    ${it('sesja','clock','Najbliższa sesja rady',GM.sesja.kiedy)}
+    ${it('zestaw','db','Cała rada: aktywność radnych',R.wszyscy.length+' radnych, do posortowania')}
+    <div class="gsek">Kontakt i współdecydowanie</div>
+    ${it('pisz','mail',jeden?'Napisz do radnego':'Napisz do radnych','odpowiedź do 14 dni, przyjdzie do skrzynki')}
+    ${it('dyzury','clock','Dyżury',jeden?swoi[0].dyzurKiedy:nd+' z '+swoi.length+' radnych ma stały dyżur, reszta po umówieniu')}
+    ${it('glos','mail','Zabierz głos','projekt uchwały, pytanie do rady, debata o raporcie')}
+    <details class="gdok gbip"><summary>${svg('db')}<span>Więcej w ${GM.bip}</span>${svg('chev')}</summary><ul>
+     ${W.linki.map(([t,u])=>`<li>${lnk(W.bip+u,t,(W.bip+u).replace(/^https:\/\//,''))}</li>`).join('')}
+     <li>${lnk(PKW,'Pełne wyniki wyborów 2024','PKW, wybory.gov.pl')}</li></ul></details>
+    ${srcH(GM.bip+', PKW (dane fikcyjne)')}</div>`);
+   const A={lista:()=>S.radniLista(1),dz:S.radniDz,interp:S.radniInterp,glosy:S.radniGlosy,sesja:S.gSesja,zestaw:()=>S.radaZestaw(),pisz:()=>S.doRadnego(0),dyzury:S.dyzury,glos:S.glos};
+   c.querySelectorAll('[data-a]').forEach(b=>b.onclick=e=>{e.preventDefault();act(()=>{addUser((b.querySelector('b')||b).textContent);A[b.dataset.a]()})});
+   chips([{label:jeden?'Kim jest mój radny?':'Kim są moi radni?',go:()=>S.radniLista(1)},{label:jeden?'Napisz do radnego':'Napisz do radnych',go:()=>S.doRadnego(0)},{label:'Co się zmienia przy moim domu?',go:S.plan}]);
+  },
+  // interpelacje radnych z Twojego okręgu, najnowsze na górze, jak rejestr w BIP
+  async radniInterp(){
+   const swoi=R.wszyscy.filter(r=>r.okreg===+R.okregNr),K=BIPR[OS.id],lnk=(u,t)=>`<a href="${u}" target="_blank" rel="noopener">${t}</a>`;
+   const w=swoi.flatMap(r=>(r.interp||[]).map((x,i)=>[...x,r,r.interp.length-i])).sort((a,b)=>a[2]<b[2]?1:-1);
+   const pdf=(r,n,o)=>K.www+'/interpelacje/2026/'+slugB(r.kto)+'-'+n+(o?'-odpowiedz-'+o:'')+'.pdf';
+   await card(`<div class="ui gin">${hd('doc',`Interpelacje i zapytania<small>${swoi.length===1?swoi[0].kto:'radni z okręgu nr '+R.okregNr}</small>`)}
+    <div class="note"><b>I</b> – interpelacja, <b>Z</b> – zapytanie. Odpowiedź przychodzi w ciągu 14 dni.</div>
+    ${w.map(([t,s,d,o,r,n])=>`<div class="gip"><div class="gip-h"><span class="gtag">${t}</span><span>${d}</span>${swoi.length>1?`<span>· ${r.kto}</span>`:''}</div><p>w sprawie ${s}</p>
+     <div class="gip-l"><span>Treść: ${lnk(pdf(r,n),'PDF')}</span><span>Odpowiedź: ${o?Array.from({length:o},(_,j)=>lnk(pdf(r,n,j+1),'PDF')).join(' '):'<i>czeka, do 14 dni</i>'}</span></div></div>`).join('')}
+    ${srcH(K.bip+', rejestr interpelacji i zapytań (dane fikcyjne)')}</div>`);
+   chips([{label:'Cała rada: aktywność radnych',go:()=>S.radaZestaw()},{label:'Wróć do władz',go:S.gRada}]);
+  },
+  async dyzury(){
+   const swoi=R.wszyscy.filter(r=>r.okreg===+R.okregNr);
+   await info({icon:'clock',title:swoi.length===1?'Dyżur radnego':'Dyżury Twoich radnych',source:GM.bip+', dyżury radnych (dane fikcyjne)',
+    rows:swoi.map(r=>[r.kto,r.dyzurKiedy+'<small class="gsub">'+r.dyzurGdzie+'</small>']),
+    note:'Na dyżur nie trzeba się zapisywać. Jeśli wolisz porozmawiać o konkretnej godzinie, napisz do radnego.'});
+   chips([{label:swoi.length===1?'Napisz do radnego':'Napisz do radnych',go:()=>S.doRadnego(0)},{label:'Wróć do władz',go:S.gRada}]);
+  },
+  /* Zestawienie całej rady: same liczby z BIP (interpelacje, obecność), sortowane przez użytkownika, bez ocen i rankingów. */
+  async radaZestaw(po='interp'){
+   const W=R.wszyscy,moj=+R.okregNr,KL={interp:r=>-(r.interp||[]).length,obec:r=>-r.obec[0]/r.obec[1],okreg:r=>r.okreg,kto:r=>r.kto.split(' ').pop()};
+   const SORT=[['interp','Interpelacje'],['obec','Obecność'],['okreg','Okręg'],['kto','Nazwisko']];
+   const lista=k=>[...W].sort((a,b)=>{const x=KL[k](a),y=KL[k](b);return x<y?-1:x>y?1:a.kto.split(' ').pop().localeCompare(b.kto.split(' ').pop(),'pl')})
+    .map(r=>`<button class="gzr${r.okreg===moj?' twoj':''}" data-r="${W.indexOf(r)}"><span class="x"><b>${r.kto}</b><small>okręg ${r.okreg}${r.okreg===moj?' (Twój)':''} · ${(r.klub||'').replace(/^Klub Radnych /,'')}</small></span><span class="n">${(r.interp||[]).length}</span><span class="n">${procH(r.obec)}</span></button>`).join('');
+   const c=await card(`<div class="ui gzest">${hd('db',`Aktywność radnych<small>${R.nazwa}, kadencja 2024–2029</small>`)}
+    <div class="gsort" role="group" aria-label="Sortuj">${SORT.map(([k,t])=>`<button data-s="${k}"${k===po?' class="on"':''}>${t}</button>`).join('')}</div>
+    <div class="gzh"><span>Radny</span><span>Interp.</span><span>Obecność</span></div><div class="gzl">${lista(po)}</div>
+    <div class="note">Liczby pochodzą z rejestru interpelacji i list obecności na sesjach. Nie mówią wszystkiego o pracy radnego: część spraw załatwia się na komisjach i dyżurach.</div>
+    ${srcH(GM.bip+' (dane fikcyjne)')}</div>`);
+   const pod=()=>c.querySelectorAll('[data-r]').forEach(b=>b.onclick=()=>act(()=>{addUser(W[+b.dataset.r].kto);S.radny(+b.dataset.r)}));pod();
+   c.querySelectorAll('[data-s]').forEach(b=>b.onclick=()=>{c.querySelectorAll('[data-s]').forEach(x=>x.classList.toggle('on',x===b));c.querySelector('.gzl').innerHTML=lista(b.dataset.s);pod()});
+   chips([{label:'Wróć do władz',go:S.gRada}]);
   },
   async radniLista(zChipami){
    const W=R.wszyscy,moj=+R.okregNr,swoi=W.filter(r=>r.okreg===moj),inni=W.filter(r=>r.okreg!==moj),jeden=swoi.length===1;
@@ -672,7 +761,7 @@ function gminaInit(){
    const swoi=R.wszyscy.filter(r=>r.okreg===+R.okregNr);
    const ile=k=>{if(swoi.length===1)return glosH(swoi[0],swoi[0].glosy[k]);const c={};swoi.forEach(r=>c[r.glosy[k]]=(c[r.glosy[k]]||0)+1);return ['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>(g==='wstrz'?'wstrz.':g)+' '+c[g]).join(' · ')};
    await info({icon:'doc',title:swoi.length===1?'Jak głosował '+swoi[0].kto:'Jak głosowali radni z Twojego okręgu',source:'Imienne wyniki głosowań, '+GM.bip,
-    rows:R.glosyTyt.map((t,k)=>['<i class="gw">'+t+'</i>',ile(k)]),
+    rows:[...R.glosyTyt.map((t,k)=>['<i class="gw">'+t+'</i>',ile(k)]),...swoi.map(r=>['Obecność: '+r.kto,r.obec[0]+' z '+r.obec[1]+' sesji ('+procH(r.obec)+')'])],
     note:swoi.length>1?`<details class="gdok"><summary>${svg('id')}<span>Głosy imiennie</span>${svg('chev')}</summary><ul>${swoi.map(r=>`<li class="os"><b>${r.kto}</b><small>${r.glosy.map((g,k)=>R.glosyTyt[k].split(' (')[0].split(':')[0]+': <strong>'+glosH(r,g)+'</strong>').join('<br>')}</small></li>`).join('')}</ul></details>`:''});
    chips([{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
   },
@@ -816,7 +905,7 @@ function gminaInit(){
     {typ:'Obywatelski projekt uchwały',status:'złożony, weryfikacja podpisów',do:GM.rada.nazwa,nr:'BRG.0006.1.2026',przebieg:[['Złożony',now()+', '+today(),'done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','styczeń 2027'],['Sesja rady','najpóźniej 3 miesiące po złożeniu']],zrodla:'Projekt uchwały, uzasadnienie, lista podpisów'});
    await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','styczeń 2027'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', '+rodz('pełnomocniczka','pełnomocnik')+' może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
     note:'Powiadomię Ciebie i wszystkie osoby, które się podpisały, o każdym kroku.'});
-   chips([{label:GM.rada.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
+   chips([{label:GM.rada.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny w podobnych sprawach?',go:S.radniGlosy},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
   },
   async pytanie(){
    await say('Napisz pytanie do rady. Rada i urząd zobaczą tylko, że pyta zweryfikowany mieszkaniec '+GM.twojaJedn+', a nie kto.');
