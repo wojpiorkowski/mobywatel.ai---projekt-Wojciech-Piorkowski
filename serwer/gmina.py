@@ -14,9 +14,10 @@ GMINY = {
                                   # szczegóły jak w BIP, te same co w mockup/gmina.js (telefon z nieprzydzielonej puli 000)
                                   kontakt=dict(tel='+48 81 000 04 12', email='stanislaw.wojcik@rada.lipowiec.pl'), wybrany_z_listy='nr 1, KWW Razem dla Lipowca',
                                   klub='Klub Radnych Razem dla Lipowca', dyzur_gdzie='Urząd Gminy Lipowiec, ul. Lubelska 12, pok. 12',
-                                  komisje=['Komisja Budżetu i Finansów', 'Komisja Rolnictwa i Ochrony Środowiska', 'doraźna komisja ds. zmian w Statucie Gminy'],
-                                  interpelacje=[['Remont drogi gminnej w Lipowcu Kolonii', '04.2026', 'odpowiedź udzielona'], ['Odbiór odpadów wielkogabarytowych', '09.2026', 'odpowiedź udzielona']],
-                                  oswiadczenia_majatkowe=['za 2025, złożone 29.04.2026', 'na początek kadencji, złożone 06.05.2024', 'za 2024, złożone 28.04.2025'],
+                                  komisje=['Komisja Budżetu i Finansów', 'Komisja Rolnictwa i Ochrony Środowiska (przewodniczący)', 'doraźna komisja ds. zmian w Statucie Gminy'],
+                                  interpelacje=[dict(rodzaj='zapytanie', w_sprawie='odbioru odpadów wielkogabarytowych', otrzymana='2026-09-22', odpowiedz='udzielona'),
+                                                dict(rodzaj='interpelacja', w_sprawie='remontu drogi gminnej w Lipowcu Kolonii', otrzymana='2026-04-14', odpowiedz='udzielona')],
+                                  oswiadczenia_majatkowe=['za 2025 (roczne)', 'za 2024 (roczne)', 'za 2024 (na początek kadencji)'], bip='https://bip.lipowiec.pl (fikcyjny)',
                                   zalaczniki=['Zaświadczenie o wyborze (Gminna Komisja Wyborcza w Lipowcu, 12.04.2024)'],
                                   glosowania=[['Przystąpienie do zmiany planu „Pola Południowe” (03.2025)', 'za'], ['Podwyżka opłaty za odpady do 39 zł (12.2025)', 'za'],
                                               ['Nagrania posiedzeń komisji (09.2026, wniosek radnej spoza klubu wójta)', 'przeciw']])),
