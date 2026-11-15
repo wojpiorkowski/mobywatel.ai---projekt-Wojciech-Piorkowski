@@ -11,6 +11,13 @@ GMINY = {
                   limit='obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.), chyba że Sejm zniesie limit'),
         rada=dict(radnych=15, z_komitetu_wojta=13, komitet='KWW Razem dla Lipowca', okregi_z_jednym_kandydatem='9 z 15 (2024)', frekwencja_2024='49%',
                   twoj_radny=dict(kto='Stanisław Wójcik', okreg='okręg nr 4', komitet='KWW Razem dla Lipowca', dyzur='pierwszy poniedziałek miesiąca, 16:00–17:00, urząd gminy, pok. 12',
+                                  # szczegóły jak w BIP, te same co w mockup/gmina.js (telefon z nieprzydzielonej puli 000)
+                                  kontakt=dict(tel='+48 81 000 04 12', email='stanislaw.wojcik@rada.lipowiec.pl'), wybrany_z_listy='nr 1, KWW Razem dla Lipowca',
+                                  klub='Klub Radnych Razem dla Lipowca', dyzur_gdzie='Urząd Gminy Lipowiec, ul. Lubelska 12, pok. 12',
+                                  komisje=['Komisja Budżetu i Finansów', 'Komisja Rolnictwa i Ochrony Środowiska', 'doraźna komisja ds. zmian w Statucie Gminy'],
+                                  interpelacje=[['Remont drogi gminnej w Lipowcu Kolonii', '04.2026', 'odpowiedź udzielona'], ['Odbiór odpadów wielkogabarytowych', '09.2026', 'odpowiedź udzielona']],
+                                  oswiadczenia_majatkowe=['za 2025, złożone 29.04.2026', 'na początek kadencji, złożone 06.05.2024', 'za 2024, złożone 28.04.2025'],
+                                  zalaczniki=['Zaświadczenie o wyborze (Gminna Komisja Wyborcza w Lipowcu, 12.04.2024)'],
                                   glosowania=[['Przystąpienie do zmiany planu „Pola Południowe” (03.2025)', 'za'], ['Podwyżka opłaty za odpady do 39 zł (12.2025)', 'za'],
                                               ['Nagrania posiedzeń komisji (09.2026, wniosek radnej spoza klubu wójta)', 'przeciw']])),
         plan=dict(nazwa='Zmiana planu miejscowego „Pola Południowe”', nr='RPP.6721.4.2025', odleglosc='380 m od domu', powierzchnia='42 ha',
