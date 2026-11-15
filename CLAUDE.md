@@ -42,7 +42,7 @@ Narzędzia (`narzedzia.py`, JSON Schema) dzielą się na trzy grupy:
 Nowe narzędzie = definicja w `narzedzia.py` + implementacja w `dane.py` lub `akcje.py` + ewentualnie obsługa zdarzenia w `mockup/agent.js`.
 
 `persony.py`: dwie fikcyjne osoby (`jan` domyślny, `ewa`) z dokumentami, rodziną, pojazdami, należnościami, skrzynką.
-`P()` zwraca dane osoby bieżącego wątku. `dane.py` ma stałą datę świata `DZIS = 2026-10-18`. Odpowiedniki osób po stronie frontu: `mockup/osoby.js`.
+`P()` zwraca dane osoby bieżącego wątku. `dane.py` ma datę świata `DZIS`, która jest „dziś” z kalendarza danych (zob. `daty.py`: ruchome „dziś”, dane pisane od 15.11.2026, przesuwane o pełne tygodnie do 28.02.2027; `@` przed datą = termin ustawowy bez przesunięcia; front: `mockup/daty.js`, `?dzis=RRRR-MM-DD` do testów). Odpowiedniki osób po stronie frontu: `mockup/osoby.js`.
 
 `wiedza.py`: wyszukiwanie BM25 (bez zależności) po kartach usług gov.pl i biznes.gov.pl w `serwer/wiedza/*.jsonl` (ok. 62 MB, nie edytować ręcznie).
 `tlumacz.py`: 15 języków poza polskim. Interfejs tłumaczą słowniki `serwer/i18n/*.json` (teksty jako szablony z `{0}` w miejscu liczb);

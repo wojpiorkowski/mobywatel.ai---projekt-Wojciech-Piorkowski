@@ -55,7 +55,7 @@ ODCZYTY = [
     T('partnerzy_kdr', 'Ulgi ustawowe i partnerzy Karty Dużej Rodziny (wyszukiwarka partnerów na empatia.gov.pl).', {'kategoria': S()}),
     T('analizuj_wiadomosc', 'Analizuje podejrzanego SMS-a lub e-mail: sprawdza domeny na Liście Ostrzeżeń CERT Polska i osobno ocenia typowe cechy oszustwa.', {'tresc': S()}, ['tresc']),
     T('bilety', 'Bilety kolejowe z połączonego konta Bilkom. Bilet kupisz w Bilkomie lub u przewoźnika, nie tutaj.'),
-    T('ustaw_przypomnienie', 'Ustawia przypomnienie w aplikacji (bez potwierdzania).', {'kiedy': S(d='np. 25.10.2026, 9:00'), 'tresc': S()}, ['kiedy', 'tresc']),
+    T('ustaw_przypomnienie', 'Ustawia przypomnienie w aplikacji (bez potwierdzania).', {'kiedy': S(d='np. 22.11.2026, 9:00'), 'tresc': S()}, ['kiedy', 'tresc']),
 ]
 
 AKCJE = [

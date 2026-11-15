@@ -54,7 +54,7 @@ const PRACE={
    krs:[['KRS','aktywna od 2021 r., kapitał 5 000 zł, zarząd zmieniany 2 razy w 2026 r.'],['Biała lista VAT','czynny podatnik, rachunek jest na liście'],['Krajowy Rejestr Zadłużonych','<b>otwarte postępowanie restrukturyzacyjne</b> (09.2026)']]},
   emerytura:{rows:[['Wiek emerytalny','65 lat, 12.05.2048'],['Konto w ZUS','386 940 zł'],['Subkonto','72 410 zł'],['Składki od 2012 r.','od najniższej podstawy dla firm'],['W wieku 65 lat','ok. 4 380 zł brutto'],['W wieku 67 lat','ok. 5 200 zł brutto'],['W wieku 70 lat','ok. 6 740 zł brutto']],
    note:'Prognoza zakłada, że do końca płacisz składki od najniższej podstawy. Wyższa podstawa to wyższa emerytura, ale też wyższe składki teraz. Wpłaty na IKZE odliczysz od dochodu także przy podatku liniowym, a przedsiębiorca ma wyższy limit.',
-   przyp:['Przypomnij o wpłacie na IKZE',[['Kiedy','01.12.2026, 9:00'],['O czym','wpłata na IKZE do 31.12, odliczysz ją w PIT za 2026 r.']]]}
+   przyp:['Przypomnij o wpłacie na IKZE',[['Kiedy',DATY.ikze().przyp+', 9:00'],['O czym','wpłata na IKZE do @31.12, odliczysz ją w PIT za '+DATY.ikze().rok+' r.']]]}
  }
 };
 const PR=PRACE[OS.id]||null;
