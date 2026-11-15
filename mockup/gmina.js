@@ -4,8 +4,18 @@
 const GMINY={
  ewa:{
   aktywnosc:[
-   {ikona:'check',h:'Podpis pod pytaniem do rady',kiedy:'09.09.2026',s:'rada odrzuciła wniosek',o:{title:'Pytanie o nagrywanie posiedzeń komisji',rows:[['Podpisów','64 mieszkańców'],['Odpowiedź rady','wniosek odrzucony, 8 głosów do 7 (09.2026)']]}},
-   {ikona:'mail',h:'Uwaga do studium gminy',kiedy:'14.03.2025',s:'uwzględniona częściowo',o:{title:'Uwaga do studium gminy',rows:[['Co','pas zieleni między Polami Południowymi a szkołą'],['Rozstrzygnięcie','uwzględniona częściowo: pas 30 m zamiast 50 m'],['Uzasadnienie','raport wójta, s. 12 (BIP)']]}}],
+   {ikona:'check',h:'Podpis pod wnioskiem o nagrywanie komisji',kiedy:'09.09.2026',s:'rada odrzuciła wniosek 8 do 7',
+    typ:'Podpis pod wnioskiem mieszkańców',nr:'RG.0003.12.2026',do:'Rada Gminy Lipowiec',status:'zakończone: wniosek odrzucony',
+    tresc:['Wniosek, który podpisałaś','Wnosimy o nagrywanie i publikowanie na BIP posiedzeń wszystkich komisji Rady Gminy, tak jak sesji. Dziś protokoły komisji są krótkie, a mieszkańcy nie wiedzą, jak radni uzasadniają opinie. Inicjatorka: radna Barbara Kos, poparcie 64 mieszkańców.'],
+    odp:{kto:'Przewodniczący Rady Gminy, po sesji 24.09.2026',kiedy:'28.09.2026',tekst:'Rada Gminy na sesji 24.09.2026 nie przyjęła uchwały o nagrywaniu posiedzeń komisji (7 za, 8 przeciw). Większość radnych uznała, że protokoły komisji są wystarczające, a koszt sprzętu i obsługi (ok. 18 tys. zł rocznie) nie jest uzasadniony. Wniosek można ponowić w formie obywatelskiego projektu uchwały.'},
+    przebieg:[['Złożony podpis','09.09.2026, 64. podpis','done'],['Wniosek trafił do rady','12.09.2026','done'],['Komisja rewizyjna','bez opinii, sprawa nie weszła na posiedzenie','done'],['Głosowanie na sesji','24.09.2026: 7 za, 8 przeciw','done'],['Odpowiedź przewodniczącego','28.09.2026','done']],
+    zrodla:'Treść wniosku, protokół sesji z 24.09.2026, imienne wyniki głosowania',dalej:[['Jak głosował mój radny?','radniGlosy'],['Złóż projekt uchwały obywatelskiej','glos']]},
+   {ikona:'mail',h:'Uwaga do studium gminy',kiedy:'14.03.2025',s:'uwzględniona częściowo',
+    typ:'Uwaga w procedurze planistycznej',nr:'RPP.6720.2.2024/U/017',do:'Wójt Gminy Lipowiec',status:'rozpatrzona: uwzględniona częściowo',
+    tresc:['Twoja uwaga','Wnoszę o pozostawienie pasa zieleni o szerokości 50 m między terenem „Pola Południowe” a Szkołą Podstawową w Lipowcu. Szkoła i boisko sąsiadują z polami, a w studium przewidziano tam tereny produkcyjne. Pas zieleni ograniczy hałas i pył z przyszłych zakładów.'],
+    odp:{kto:'Wójt Gminy Lipowiec, rozstrzygnięcie o sposobie rozpatrzenia uwag',kiedy:'22.05.2025',tekst:'Uwaga uwzględniona częściowo. W projekcie studium wyznaczono pas zieleni izolacyjnej o szerokości 30 m. Szerszy pas ograniczyłby możliwość zagospodarowania działek objętych wnioskiem właściciela. Rozstrzygnięcie jest załącznikiem do uchwały w sprawie studium.'},
+    przebieg:[['Uwaga złożona','14.03.2025','done'],['Rozpatrzenie przez wójta','22.05.2025','done'],['Rada przyjęła studium','26.06.2025, z pasem zieleni 30 m','done'],['Zmiana planu „Pola Południowe”','wyłożenie do 18.01.2027, możesz złożyć nową uwagę','now']],
+    zrodla:'Twoja uwaga, rozstrzygnięcie wójta, uchwała w sprawie studium, rysunek studium',dalej:[['Zobacz obecną zmianę planu','plan']]}],
   nazwa:'Gmina Lipowiec',krotko:'Lipowiec',typ:'gmina wiejska, powiat lubelski',mieszk:'8 940',solectwo:'Lipowiec Kolonia',soltys:'Halina Mazur',
   urzad:'Urząd Gminy Lipowiec',bip:'BIP Gminy Lipowiec',jednostka:'sołectwa Lipowiec Kolonia',twojaJedn:'Twojego sołectwa',wladza:'Wójt',
   etykRada:'Rada i wójt',radaTyt:'Wójt i rada gminy',alert:'Zmiana planu przy Tobie',f:[['Sołectwo','Lipowiec Kolonia'],['Uwagi do planu','do 18.01.2027']],uchwalaRadny:1,
@@ -119,8 +129,17 @@ const GMINY={
     budżet obywatelski i zlecenia miasta dla jego firmy. Miasto prawdziwe, ludzie, liczby i projekty fikcyjne. */
  jan:{
   aktywnosc:[
-   {ikona:'mail',h:'Pytanie do Rady Dzielnicy XIII',kiedy:'02.10.2026',s:'odpowiedź 14.10.2026',o:{title:'Pytanie do Rady Dzielnicy XIII',rows:[['Pytanie','kiedy naprawa chodnika przy ul. Wielickiej 24–30'],['Odpowiedź','ZDMK: w ramach przebudowy ulicy, do tego czasu łatanie ubytków do 15.12.2026']]}},
-   {ikona:'check',h:'Głos w budżecie obywatelskim 2026',kiedy:'17.06.2025',s:'2 z 3 projektów wygrały',o:{title:'Budżet obywatelski 2026',rows:[['Wygrały','Oświetlenie przejścia przy SP 34, Zielone podwórko przy Wielickiej'],['Nie wygrał','Siłownia plenerowa w Płaszowie'],['Realizacja','oświetlenie gotowe (09.2026), podwórko w budowie']]}}],
+   {ikona:'mail',h:'Pytanie do Rady Dzielnicy XIII',kiedy:'02.10.2026',s:'odpowiedź 14.10.2026 · łatanie do 15.12',
+    typ:'Pytanie do rady dzielnicy',nr:'RDXIII.0003.41.2026',do:'Rada Dzielnicy XIII Podgórze',status:'odpowiedź udzielona, naprawa w toku',
+    tresc:['Twoje pytanie','Dzień dobry, chodnik przy ul. Wielickiej 24–30 od zimy ma zapadnięte płyty i dziury, a codziennie chodzę tamtędy z dziećmi do SP nr 34. Kiedy planowana jest naprawa? Czy do czasu przebudowy ulicy da się chociaż załatać ubytki?'],
+    odp:{kto:'Agnieszka Rak, radna Dzielnicy XIII, na podstawie informacji z ZDMK',kiedy:'14.10.2026',tekst:'Dziękuję za zgłoszenie. Według Zarządu Dróg Miasta Krakowa pełna wymiana chodnika jest w zakresie przebudowy ul. Wielickiej (budowa od 2029 r.). Do tego czasu ZDMK załata ubytki na odcinku 24–30: zlecenie jest w planie napraw, termin do 15.12.2026. Rada Dzielnicy wystąpiła też o oznakowanie najbardziej zniszczonego fragmentu.'},
+    przebieg:[['Pytanie wysłane','02.10.2026','done'],['Przekazane do ZDMK','05.10.2026','done'],['Odpowiedź radnej','14.10.2026','done'],['Łatanie ubytków','zlecone, do 15.12.2026','now'],['Wymiana chodnika','w ramach przebudowy, od 2029']],
+    zrodla:'Twoje pytanie, odpowiedź radnej, pismo ZDMK o planie napraw',dalej:[['Dopytaj radę','pytanie'],['Przebudowa ul. Wielickiej','plan']]},
+   {ikona:'check',h:'Głos w budżecie obywatelskim 2026',kiedy:'17.06.2025',s:'2 z 3 projektów wygrały',
+    typ:'Głosowanie w budżecie obywatelskim',nr:'BO 2026, Dzielnica XIII',do:'Urząd Miasta Krakowa',status:'zakończone, projekty w realizacji',
+    tabela:[['Oświetlenie przejścia przy SP nr 34','wygrał, 1 912 głosów','gotowe, 09.2026'],['Zielone podwórko przy Wielickiej','wygrał, 1 604 głosy','w budowie, odbiór 12.2026'],['Siłownia plenerowa w Płaszowie','nie wygrał, 988 głosów','zabrakło 212 głosów']],
+    przebieg:[['Głos oddany','17.06.2025, 3 projekty','done'],['Wyniki głosowania','09.2025: frekwencja w dzielnicy 9,8%','done'],['Oświetlenie przejścia','gotowe 09.2026, koszt 186 tys. zł','done'],['Zielone podwórko','w budowie, odbiór 12.2026','now']],
+    zrodla:'Wyniki głosowania BO 2026, harmonogram realizacji projektów, protokół odbioru oświetlenia',dalej:[['Zagłosuj w tegorocznej edycji','gBO']]}],
   nazwa:'Kraków',krotko:'Kraków',typ:'miasto na prawach powiatu, Dzielnica XIII Podgórze',mieszk:'806 tys.',solectwo:'Dzielnica XIII Podgórze',soltys:'',
   urzad:'Urząd Miasta Krakowa',bip:'BIP Miasta Krakowa',jednostka:'Dzielnicy XIII Podgórze',twojaJedn:'Twojej dzielnicy',wladza:'Prezydent miasta',
   etykRada:'Prezydent i rady',radaTyt:'Władze miasta i dzielnicy',alert:'Konsultacje do 30.12',f:[['Dzielnica','XIII Podgórze'],['Uwagi do','30.12.2026']],uchwalaRadny:0,
@@ -352,7 +371,7 @@ const etapyH=(Z,otw)=>Z.etapy?`<details class="gdok getap"${otw?' open':''}><sum
 // Moja aktywność: nowe wpisy z tej sesji na górze, potem wcześniejsze (fikcyjne) z danych gminy
 const AKT={},aktyw=()=>[...(AKT[OS.id]||[]),...(GM.aktywnosc||[])];
 const dodajAkt=a=>{(AKT[OS.id]=AKT[OS.id]||[]).unshift({kiedy:today(),...a})};
-const rez=(ikona,h,s,o)=>{dodajAkt({ikona,h,s,o});return result(o)};
+const rez=(ikona,h,s,o,x={})=>{dodajAkt({ikona,h,s,o,...x});return result(o)};
 // uwagi złożone w tej sesji (prototyp: tylko w pamięci przeglądarki), klucz: osoba i numer sprawy
 const ZLOZ={},kluczU=Z=>OS.id+':'+Z.nr;
 const rozm=b=>b>=1e6?(b/1e6).toFixed(1).replace('.',',')+' MB':Math.max(1,Math.round(b/1e3))+' kB';
@@ -475,10 +494,19 @@ function gminaInit(){
      chips([{label:'Zobacz złożoną uwagę',go:()=>S.mojaUwaga(i)},...(P.spotkanieKiedy?[{label:'Zapisz mnie na spotkanie '+P.spotkanieKiedy.slice(0,5),go:()=>S.spotkanie(i)}]:[]),{label:'Na razie wystarczy',go:()=>say('Dobrze. Sprawę i swoją uwagę znajdziesz w zakładce Moja gmina.')}]);
     }});
   },
+  // Szczegóły aktywności: co wysłałem, odpowiedź, przebieg krok po kroku, dokumenty i co mogę zrobić dalej.
   async akt(j){
    const a=aktyw()[j];if(!a)return;
    if(a.go)return a.go();
-   await info({icon:a.ikona,title:a.o.title||a.h,source:a.o.source||'Twoje sprawy w mObywatelu',rows:[['Kiedy',a.kiedy],...(a.o.rows||[])]});
+   const o=a.o||{},teraz=(a.przebieg||[]).find(e=>e[2]==='now');
+   const tab=a.tabela?`<table class="gtab"><tr><th>Projekt</th><th>Wynik</th><th>Realizacja</th></tr>${a.tabela.map(r=>`<tr>${r.map(x=>`<td>${x}</td>`).join('')}</tr>`).join('')}</table>`:'';
+   const tr=a.tresc?`<div class="gpismo"><small>${a.kiedy} · do: ${a.do}</small><b>${a.tresc[0]}</b><p>${a.tresc[1]}</p></div>`:'';
+   const od=a.odp?`<div class="gpismo godp"><small>${a.odp.kiedy} · ${a.odp.kto}</small><b>Odpowiedź</b><p>${a.odp.tekst}</p></div>`:'';
+   await info({icon:a.ikona,title:a.h,source:o.source||'Twoje sprawy w mObywatelu',body:tr+od+tab||'',
+    rows:[...(a.typ?[['Rodzaj',a.typ]]:[]),[(o.rows||[]).some(r=>r[0]==='Kiedy')?'Dodano':'Kiedy',a.kiedy],...(a.do?[[a.doL||'Do',a.do]]:[]),...(a.nr?[['Numer',a.nr]]:[]),...(a.status?[['Status','<b>'+a.status+'</b>']]:[]),...(o.rows||[])],
+    note:a.zrodla?dokumentyH({zrodla:a.zrodla,nr:a.nr}):''});
+   if(a.przebieg)await info({icon:'clock',title:'Przebieg',body:kroki(a.przebieg),note:teraz?'Teraz: '+teraz[0].toLowerCase()+', '+teraz[1]+'.':''});
+   chips([...(a.dalej||[]).filter(([,f])=>typeof f==='function'||S[f]).map(([l,f])=>({label:l,go:typeof f==='function'?f:()=>S[f]()})),{label:'Cała moja aktywność',go:S.aktWszystko}]);
   },
   async aktWszystko(){
    const A=aktyw();
@@ -489,8 +517,10 @@ function gminaInit(){
    const P=ZM[i],Z=ZLOZ[kluczU(P)];
    if(!Z)return S.uwaga(i);
    await info({icon:'mail',title:'Twoja uwaga: '+P.nazwa,source:'e-Doręczenia, dowód otrzymania',body:pismoH(P,Z,Z.kiedy),
-    rows:[['Złożona',Z.kiedy],['Numer uwagi',Z.nr],['Do',P.adresat],['Status','przyjęta, czeka na rozpatrzenie'],['Co dalej',P.wynik]]});
-   chips([{label:'Złóż kolejną uwagę',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}]);
+    rows:[['Złożona',Z.kiedy],['Numer uwagi',Z.nr],['Do',P.adresat],['Status','<b>przyjęta, czeka na rozpatrzenie</b>'],['Co dalej',P.wynik]],note:dokumentyH({zrodla:'Twoja uwaga, dowód doręczenia (e-Doręczenia)'+(Z.f.length?', załączniki ('+Z.f.length+')':''),nr:Z.nr})});
+   const E=P.etapy||[],dalej=E.slice(E.findIndex(e=>e[2]==='now')+1).slice(0,2);
+   await info({icon:'clock',title:'Przebieg',body:kroki([['Uwaga złożona',Z.kiedy,'done'],['Doręczona do urzędu','e-Doręczenia, ten sam dzień','done'],['Rozpatrzenie',P.wynik,'now'],...dalej.map(e=>[e[0],e[1]])])});
+   chips([{label:'Złóż kolejną uwagę',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)},{label:'Cała moja aktywność',go:S.aktWszystko}]);
   },
   // Zapis na spotkanie: najpierw o co chodzi i kto prowadzi, potem opcjonalne pytanie (to nie jest formalna uwaga).
   async przypomnij(i=0){
@@ -506,7 +536,7 @@ function gminaInit(){
    const zamknij=()=>{c.querySelector('.actions').remove();c.querySelectorAll('.gopt button').forEach(b=>b.disabled=true)};
    c.querySelector('.gno').onclick=()=>act(async()=>{zamknij();await say('Dobrze, nie ustawiłem przypomnienia.');chips([{label:'Jednak przypomnij',go:()=>S.przypomnij(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}])});
    c.querySelector('.btn.primary').onclick=()=>act(()=>{zamknij();c.classList.add('done');
-    rez('bell','Przypomnienie: '+P.nazwa,kiedy(n)+' · '+n+' '+(n===1?'dzień':'dni')+' przed terminem',{title:'Przypomnienie ustawione',rows:[['Kiedy',kiedy(n)],['O czym',P.przyp[1]],['Gdzie','powiadomienie w aplikacji']]}).then(()=>chips([{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}]))});
+    rez('bell','Przypomnienie: '+P.nazwa,kiedy(n)+' · '+n+' '+(n===1?'dzień':'dni')+' przed terminem',{title:'Przypomnienie ustawione',rows:[['Kiedy',kiedy(n)],['O czym',P.przyp[1]],['Gdzie','powiadomienie w aplikacji']]},{typ:'Przypomnienie',status:'aktywne',do:P.nazwa,doL:'Sprawa',przebieg:[['Ustawione',now()+', '+today(),'done'],['Przypomnienie w aplikacji',kiedy(n),'now'],['Termin w sprawie',P.uwagi]],dalej:[['Wróć do sprawy',()=>S.plan(i)]]}).then(()=>chips([{label:ZLOZ[kluczU(P)]?'Złóż kolejną uwagę':P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},{label:'Wróć do sprawy',go:()=>S.plan(i)}]))});
   },
   async spotkanie(i=0,szkic){
    const P=ZM[i],O=P.spot||{},st=szkic||{pyt:'',forma:'na miejscu'};
@@ -527,7 +557,8 @@ function gminaInit(){
    c.querySelector('.btn.primary').onclick=()=>act(async()=>{zamknij();await faceid();c.classList.add('done');
     const forma=O.online?st.forma:(O.forma||'na miejscu');
     await rez('clock','Zapis na spotkanie: '+P.nazwa,P.spotkanieKiedy+' · '+forma+(st.pyt?' · z pytaniem':''),{title:'Zapisano na spotkanie',source:GM.urzad,
-     rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',forma==='online'?'link przyjdzie w dniu spotkania':P.spotkanieGdzie],['Kalendarz','dodane do kalendarza'],['Przypomnienie',P.spotkaniePrzyp],...(st.pyt?[['Twoje pytanie','„'+esc(st.pyt)+'”, wysłane bez nazwiska']]:[])]});
+     rows:[['Kiedy',P.spotkanieKiedy],['Gdzie',forma==='online'?'link przyjdzie w dniu spotkania':P.spotkanieGdzie],['Kalendarz','dodane do kalendarza'],['Przypomnienie',P.spotkaniePrzyp],...(st.pyt?[['Twoje pytanie','„'+esc(st.pyt)+'”, wysłane bez nazwiska']]:[])]},
+     {typ:'Zapis na spotkanie',status:'zapisany, '+forma,do:GM.urzad,tresc:st.pyt?['Twoje pytanie do prowadzących (bez nazwiska)',esc(st.pyt)]:null,przebieg:[['Zapis potwierdzony',now()+', '+today(),'done'],['Przypomnienie',P.spotkaniePrzyp,'now'],['Spotkanie',P.spotkanieKiedy],['Notatka ze spotkania z odpowiedziami','do 14 dni po spotkaniu']],dalej:[['Wróć do sprawy',()=>S.plan(i)]]});
     chips([{label:P.uwagaLabel||'Złóż uwagę',go:()=>S.uwaga(i)},{label:'Na razie wystarczy',go:()=>say('Dobrze. Zapis znajdziesz w Mojej aktywności.')}]);
    });
   },
@@ -618,7 +649,8 @@ function gminaInit(){
      body:`<div class="gpismo"><small>${today()} · do: ${R.kto}</small><b>${sprawa}</b><p>${esc(st.t).replace(/\n/g,'<br>')}</p><small>${OS.imie} ${OS.nazwisko}, ${rodz('mieszkanka','mieszkaniec')} ${R.okreg.replace('okręg','okręgu')}</small></div>`,
      rows:[['Sprawa',sprawa],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
      onCancel:async()=>{await say('Nic nie zostało wysłane.');chips([{label:'Popraw wiadomość',go:()=>S.pisz(i,R,st)},{label:'Napisz od nowa',go:()=>S.pisz(i,R)},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}])},
-     then:async()=>{await rez('mail','Wiadomość: '+sprawa,'do: '+R.kto,{title:'Wiadomość wysłana',rows:[['Do',R.kto],['Sprawa',sprawa],['Treść','„'+esc(st.t)+'”'],['Przypomnienie','jeśli nie odpowie w 14 dni']]});
+     then:async()=>{await rez('mail','Wiadomość: '+sprawa,'do: '+R.kto,{title:'Wiadomość wysłana',rows:[['Do',R.kto],['Sprawa',sprawa],['Przypomnienie','jeśli nie odpowie w 14 dni']]},
+      {typ:R.wielu?'Wiadomość do radnych':'Wiadomość do radnego',status:'wysłana, czeka na odpowiedź',do:R.kto,tresc:['Twoja wiadomość: '+sprawa,esc(st.t)],przebieg:[['Wysłana',now()+', '+today(),'done'],['Doręczona do skrzynki rady','ten sam dzień','done'],['Odpowiedź','do 14 dni, przyjdzie do skrzynki','now'],...(st.u<0?[]:[['Sesja rady',GM.sesja.kiedy]])],dalej:[['Lista radnych',()=>S.radniLista(1)]]});
       await say(st.u<0?'Odpowiedź przyjdzie do Twojej skrzynki.':R.wielu?'Po sesji pokażę Ci, jak głosował każdy z nich w tej sprawie.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}});
    });
   },
@@ -651,7 +683,8 @@ function gminaInit(){
     if(sel.length>B.ile){await say('Możesz wybrać najwyżej '+B.ile+' projekty. Zaznacz jeszcze raz.');return wybierz()}
     await confirmCard({icon:'check',title:'Głos w budżecie obywatelskim',source:'Tożsamość z mDowodu, '+B.edycja,rows:[['Projekty',sel.join(', ')],['Dzielnica',GM.solectwo],['Zmiana głosu','możliwa do '+B.do]],label:'Oddaj głos',
      then:async()=>{
-      await rez('check','Głos w budżecie obywatelskim','projektów: '+sel.length+' · wyniki w styczniu 2027',{title:'Głos oddany',source:B.edycja,rows:[['Projektów',String(sel.length)],['Wyniki','w styczniu 2027, dostaniesz powiadomienie']]});
+      await rez('check','Głos w budżecie obywatelskim','projektów: '+sel.length+' · wyniki w styczniu 2027',{title:'Głos oddany',source:B.edycja,rows:[['Projektów',String(sel.length)],['Wyniki','w styczniu 2027, dostaniesz powiadomienie']]},
+       {typ:'Głosowanie w budżecie obywatelskim',status:'głos oddany',do:B.edycja,tabela:sel.map(n=>[n,'głosowanie trwa','—']),przebieg:[['Głos oddany',now()+', '+today(),'done'],['Zmiana głosu możliwa','do '+B.do,'now'],['Koniec głosowania',B.do],['Wyniki','styczeń 2027']],dalej:[['Zmień głos','gBO']]});
       await say(B.rodzina+' Wysłać im zaproszenie?');
       chips([{label:'Wyślij zaproszenie rodzinie',go:()=>rez('mail','Zaproszenie rodziny do głosowania',B.zaproszenie,{title:'Zaproszenia wysłane',rows:[['Do',B.zaproszenie],['Dzieci','zagłosują po Twojej zgodzie w swojej aplikacji']]})},{label:'Na razie wystarczy'}]);
      }});
@@ -692,7 +725,8 @@ function gminaInit(){
   },
   async sledz(){
    const G=GM.glos;
-   await rez('doc','Projekt uchwały obywatelskiej złożony','BRG.0006.1.2026 · weryfikacja podpisów',{title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]});
+   await rez('doc','Projekt uchwały obywatelskiej złożony','BRG.0006.1.2026 · weryfikacja podpisów',{title:'Projekt złożony',source:'e-Doręczenia, dowód otrzymania',rows:[['Dowód otrzymania','godz. '+now()+', '+today()],['Numer','BRG.0006.1.2026']]},
+    {typ:'Obywatelski projekt uchwały',status:'złożony, weryfikacja podpisów',do:GM.rada.nazwa,nr:'BRG.0006.1.2026',przebieg:[['Złożony',now()+', '+today(),'done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','styczeń 2027'],['Sesja rady','najpóźniej 3 miesiące po złożeniu']],zrodla:'Projekt uchwały, uzasadnienie, lista podpisów'});
    await info({icon:'clock',title:'Co dalej z projektem',body:kroki([['Złożony','dziś, '+(G.prog+17)+' podpisów','done'],['Weryfikacja podpisów','urząd, do 14 dni','now'],['Opinia komisji rady','styczeń 2027'],['Sesja rady','najpóźniej '+G.sesjaProjektu+', '+rodz('pełnomocniczka','pełnomocnik')+' może przedstawić projekt'],['Wynik głosowania','imiennie, każdy radny osobno']]),
     note:'Powiadomię Ciebie i wszystkie osoby, które się podpisały, o każdym kroku.'});
    chips([{label:GM.rada.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny w podobnych sprawach?',go:S.gRada},{label:'Na razie wystarczy',go:()=>say('Gotowe. Projekt znajdziesz w zakładce Moja gmina.')}]);
@@ -707,7 +741,7 @@ function gminaInit(){
    await confirmCard({icon:'mail',title:'Pytanie do '+GM.rada.nazwa.replace('Rada','Rady'),source:GM.rada.nazwa+', publiczna lista pytań mieszkańców',body:'„'+esc(q)+'”',
     rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.jednostka+', '+rodz('zweryfikowana','zweryfikowany')+' mObywatelem'],['Twoje dane','nie trafiają do urzędu ani rady'],['Odpowiedź','publicznie, termin 14 dni']],
     note:'Tak mogłoby działać. Wymaga zmiany regulaminu rady albo przepisów; dziś pytania zadaje się z imienia i nazwiska.',label:'Wyślij pod pseudonimem',
-    then:()=>rez('mail','Pytanie do rady','czeka na odpowiedź',{title:'Pytanie opublikowane',rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.jednostka],['Podpisało się pod pytaniem','powiadomię, gdy inni dołączą'],['Odpowiedź','do 14 dni, dostaniesz powiadomienie']]})});
+    then:()=>rez('mail','Pytanie do rady','czeka na odpowiedź',{title:'Pytanie opublikowane',rows:[['Podpis',rodz('Mieszkanka','Mieszkaniec')+' '+GM.jednostka],['Podpisało się pod pytaniem','powiadomię, gdy inni dołączą'],['Odpowiedź','do 14 dni, dostaniesz powiadomienie']]},{typ:'Pytanie do rady (pod pseudonimem)',status:'opublikowane, czeka na odpowiedź',do:GM.rada.nazwa,tresc:['Twoje pytanie',esc(q)],przebieg:[['Opublikowane',now()+', '+today(),'done'],['Inni mieszkańcy mogą się podpisać','do odpowiedzi','now'],['Odpowiedź rady','do 14 dni, publicznie']]})});
   },
   async debata(){
    const D=GM.glos.debata;
