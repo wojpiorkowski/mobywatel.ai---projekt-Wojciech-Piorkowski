@@ -591,7 +591,7 @@ def r_moja_gmina(a, s):
                 zmiana_przy_domu=dict(nazwa=p['nazwa'], odleglosc=p['odleglosc'], uwagi_do=p['uwagi_do'])), \
         dict(icon='id', title=g['nazwa'], source='PKW, ' + g['bip'] + ' (dane fikcyjne)',
              rows=[['Wójt', '%s, %s' % (w['kto'], w['kadencja'])], ['Wybory wójta 2024', w['wybory_2024']], ['Rada gminy', '%d radnych, %d z komitetu wójta' % (r['radnych'], r['z_komitetu_wojta'])],
-                   ['Okręgi z jednym kandydatem', r['okregi_z_jednym_kandydatem']], ['Twój radny', '%s, %s' % (r['twoj_radny']['kto'], r['twoj_radny']['okreg'])],
+                   ['Okręgi z jednym kandydatem', r['okregi_z_jednym_kandydatem']], ['Twój radny', '%s, %s' % (r['twoj_radny']['kto'], r['twoj_radny']['okreg'])], ['Kontakt do radnego', ', '.join(r['twoj_radny']['kontakt'].values())],
                    ['Najbliższa sesja', g['sesja']['kiedy']], ['Zmiana przy Twoim domu', '%s, uwagi do %s' % (p['nazwa'].replace('Zmiana planu miejscowego ', ''), p['uwagi_do'])]],
              note='Limit kadencji: ' + w['limit'] + '.')
 
