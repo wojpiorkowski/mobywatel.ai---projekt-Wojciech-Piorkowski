@@ -2,8 +2,7 @@
 """Wersje językowe: słowniki interfejsu (tłumaczone przez Claude, patrz ../tlumaczenia/README.md) i tłumaczenie rozmowy z asystentem w locie (tańszy model OpenAI).
 Teksty są szablonami: liczby, daty i godziny zamieniamy na {0}, {1}…, więc „Za 11 dni, 29.10” i „Za 12 dni, 30.10” to jeden wpis.
 Interfejsu nie tłumaczymy maszynowo: tekst bez tłumaczenia zostaje po polsku i trafia do rejestru _zrodla.json."""
-import json, os, re, threading, time, urllib.request, sys
-from concurrent.futures import ThreadPoolExecutor
+import json, os, re, threading, time, urllib.request
 
 # kod: (nazwa po angielsku dla modelu, nazwa własna do wyboru, kod mowy dla STT lub None)
 JEZYKI = {

@@ -1,0 +1,8 @@
+# Lint celowo łagodny: łapie błędy (składnia, niezdefiniowane nazwy, nieużywane importy), nie styl bazowego kodu.
+target-version = "py39"
+extend-exclude = ["serwer/wiedza"]
+
+[lint]
+select = ["E9", "F"]
+# F811: akcje w akcje.py to funkcje podglad/wykonaj o tych samych nazwach, rejestrowane dekoratorem @akcja
+ignore = ["F811"]
