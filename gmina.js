@@ -360,28 +360,28 @@ function uzupelnijRadnego(r,K,dz){
  return r;
 }
 Object.entries(GMINY).forEach(([id,G])=>{const K=BIPR[id];if(!K)return;G.rada.wszyscy.forEach(r=>uzupelnijRadnego(r,K));(G.rada.dzielnica?.osoby||[]).forEach(r=>uzupelnijRadnego(r,K,1))});
-/* Władze jak w BIP („Władze i miasto”): najpierw kto i za co odpowiada, szczegóły (kadencja, wybory, zastępcy) po rozwinięciu,
+/* Władze jak w BIP („Władze i miasto”): najpierw kto odpowiada, szczegóły (kadencja, wybory, zastępcy) po rozwinięciu,
    reszta tylko odnośnikiem do BIP. Kraków linkuje do prawdziwych działów BIP (spisy treści, bez osób), Lipowiec do fikcyjnego.
    Osoby poza radnymi z danych są fikcyjne. */
 const WLADZE={
  ewa:{bip:'https://bip.lipowiec.pl',
   organy:[
-   {rola:'Wójt',kto:'Zbigniew Kordas',za:'kieruje urzędem, wykonuje budżet i uchwały rady, wydaje decyzje',
+   {rola:'Wójt',kto:'Zbigniew Kordas',
     wiecej:[['Kadencja','5. kadencja (od 2006), obecna do 2029'],['Wybory 2024','jedyny kandydat, 68% głosów „tak”'],['Zastępca wójta','Ryszard Pawlak: inwestycje i drogi gminne'],['Sekretarz i skarbnik','Iwona Kubik, Teresa Wrzos'],['Raport o stanie gminy','co roku do 31 maja, potem wotum zaufania']],
     uwaga:'Obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.).',bip:['Wójt, zastępca, sekretarz, skarbnik','/wojt']},
-   {rola:'Rada Gminy Lipowiec',rada:1,za:'uchwala budżet, plan miejscowy, podatki i opłaty, kontroluje wójta',
+   {rola:'Rada Gminy Lipowiec',rada:1,
     wiecej:[['Kadencja','IX, 2024–2029'],['Przewodniczący rady','Leszek Górny'],['Wybory 2024','w 9 z 15 okręgów był tylko jeden kandydat, frekwencja 49%']],bip:['Rada Gminy: radni, komisje, sesje','/rada']},
-   {rola:'Sołectwo Lipowiec Kolonia',kto:'sołtys Halina Mazur',za:'zebranie wiejskie decyduje, na co pójdzie fundusz sołecki',
+   {rola:'Sołectwo Lipowiec Kolonia',kto:'sołtys Halina Mazur',
     wiecej:[['Fundusz sołecki 2027','38 tys. zł'],['Rada sołecka','5 osób, wybrana na zebraniu wiejskim w 2024 r.'],['Zebranie wiejskie','marzec 2027, głos ma każdy pełnoletni mieszkaniec']],bip:['Sołectwa i fundusz sołecki','/solectwa']}],
   linki:[['Lista radnych i dyżury','/rada/radni'],['Interpelacje i zapytania','/rada/interpelacje'],['Głosowania radnych','/rada/glosowania'],['Uchwały','/rada/uchwaly'],['Komisje rady','/rada/komisje'],['Oświadczenia majątkowe','/oswiadczenia-majatkowe']]},
  jan:{bip:'https://www.bip.krakow.pl',
   organy:[
-   {rola:'Prezydent Miasta Krakowa',kto:'Marek Zawada',za:'kieruje urzędem, wykonuje budżet i uchwały rady, wydaje decyzje',
+   {rola:'Prezydent Miasta Krakowa',kto:'Marek Zawada',
     wiecej:[['Kadencja','1. kadencja, 2024–2029'],['Wybory 2024','II tura, 51,2% głosów, frekwencja 41%'],['Zastępcy','Beata Szostak: rozwój i inwestycje<br>Michał Leśniak: komunikacja i drogi<br>Karolina Jurek: edukacja i sprawy społeczne'],['Raport o stanie miasta','co roku do 31 maja, potem wotum zaufania']],
     bip:['Prezydent, Zastępcy, Pełnomocnicy','/?bip_id=1&mmi=35305']},
-   {rola:'Rada Miasta Krakowa',rada:1,za:'uchwala budżet, plany miejscowe, podatki i opłaty, kontroluje prezydenta',
+   {rola:'Rada Miasta Krakowa',rada:1,
     wiecej:[['Kadencja','IX, 2024–2029'],['Przewodnicząca rady','Jolanta Wierzba'],['Wybory 2024','frekwencja 47%']],bip:['Rada Miasta Krakowa','/?bip_id=1&mmi=26458']},
-   {rola:'Rada Dzielnicy XIII Podgórze',dz:1,za:'opiniuje sprawy dzielnicy, np. przebudowę ul. Wielickiej, i dzieli jej pieniądze',
+   {rola:'Rada Dzielnicy XIII Podgórze',dz:1,
     wiecej:[['Skład','21 radnych'],['Przewodniczący zarządu','Wiesław Nowina'],['Budżet dzielnicy 2027','4,1 mln zł, m.in. chodniki i zieleń']],bip:['Dzielnice Krakowa','/?bip_id=1&mmi=453']}],
   linki:[['Lista radnych','/?bip_id=1&mmi=26464'],['Dyżury radnych','/?bip_id=1&mmi=26476'],['Interpelacje','/?bip_id=1&mmi=26479'],['Głosowania radnych','/?bip_id=1&mmi=26527'],['Uchwały','/?bip_id=1&mmi=26530'],['Harmonogram sesji','/?bip_id=1&mmi=26509']]}};
 const PKW='https://wybory.gov.pl/samorzad2024/';
@@ -681,7 +681,7 @@ function gminaInit(){
    const it=(a,ic,t,sm)=>`<button class="it" data-a="${a}"><span class="gi">${svg(ic)}</span><span class="x"><b>${t}</b><small>${sm}</small></span>${svg('chev')}</button>`;
    const twoi=o=>o.rada?(jeden?'Twój radny: '+swoi[0].kto:'Twoi radni z okręgu nr '+moj+': '+swoi.length):o.dz&&D?'Twoi radni z okręgu: '+D.osoby.map(r=>r.kto).join(', '):'';
    const organ=(o,i)=>{const wiecej=o.rada?[['Skład',R.wszyscy.length+' radnych: '+skladH(R)],...o.wiecej]:o.wiecej;
-    return `<details class="gz gwo"><summary class="it"><span class="gi">${svg(o.rada||o.dz?'id':'dom')}</span><span class="x"><b>${o.kto?o.rola+': '+o.kto:o.rola}</b><small>${o.za}</small>${twoi(o)?`<small class="gtw">${twoi(o)}</small>`:''}</span>${svg('chev')}</summary>
+    return `<details class="gz gwo"><summary class="it"><span class="gi">${svg(o.rada||o.dz?'id':'dom')}</span><span class="x"><b>${o.kto?o.rola+': '+o.kto:o.rola}</b>${twoi(o)?`<small class="gtw">${twoi(o)}</small>`:''}</span>${svg('chev')}</summary>
      <div class="gzb"><div class="rows">${rowsH(wiecej)}</div>${o.uwaga?`<div class="note">${o.uwaga}</div>`:''}
      ${o.rada||o.dz?`<div class="actions"><button class="btn ghost" data-a="${o.rada?'lista':'dz'}">${o.rada?(jeden?'Zobacz swojego radnego':'Zobacz swoich radnych'):'Zobacz radnych dzielnicy'}</button></div>`:''}
      <div class="gdok"><ul><li>${lnk(W.bip+o.bip[1],o.bip[0],'BIP')}</li></ul></div></div></details>`};
@@ -689,7 +689,7 @@ function gminaInit(){
    const obH=jeden?swoi[0].obec[0]+' z '+swoi[0].obec[1]+' sesji ('+procH(swoi[0].obec)+')':'od '+Math.round(100*Math.min(...ob))+'% do '+Math.round(100*Math.max(...ob))+'% sesji';
    const nd=swoi.filter(r=>r.dyzurKiedy!=='po umówieniu').length;
    const c=await card(`<div class="ui list glist gwl">${hd('id',GM.radaTyt)}
-    <div class="gsek">Kto i za co odpowiada</div>${W.organy.map(organ).join('')}
+    <div class="gsek">Kto rządzi</div>${W.organy.map(organ).join('')}
     <div class="gsek">${jeden?'Co robi Twój radny':'Co robią Twoi radni'} w tej kadencji</div>
     ${it('interp','doc','Interpelacje i zapytania',interp.length+' w tej kadencji'+(czeka?', '+czeka+' czeka na odpowiedź':''))}
     ${it('glosy','check','Głosowania i obecność','obecność: '+obH)}
