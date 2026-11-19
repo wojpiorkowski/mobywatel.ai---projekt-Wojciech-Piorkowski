@@ -41,8 +41,10 @@ const PRACE={
     ['pEmerytura','coin','Emerytura','prognoza przy składkach przedsiębiorcy','Ile będę miał emerytury?']]],
    ['shield','Zanim podpiszesz, gdy coś się zmienia',[
     ['pKontrahent','doc','Sprawdź kontrahenta','zlecenie podwykonawcze na 48 000 zł netto','Dostałem zlecenie, sprawdź kontrahenta'],
-    ['pChoroba','alert','Gdy zachorujesz','zasiłek, składki, kto poprowadzi firmę','Co, jeśli zachoruję i nie będę mógł pracować?'],
-    ['gZam','bell','Zlecenia od miasta','3 zamówienia z Twojej branży','Jakie zlecenia od miasta są dla mojej firmy?']]]],
+    ['pChoroba','alert','Gdy zachorujesz','zasiłek, składki, kto poprowadzi firmę','Co, jeśli zachoruję i nie będę mógł pracować?']]],
+   // zlecenia od miasta przeniesione z „Mojej gminy”: to sprawa firmy, nie mieszkańca
+   ['bell','Zlecenia dla Twojej firmy',[
+    ['gZam','bell','Zlecenia od miasta','3 zamówienia z Twojej branży · najbliższy termin ofert 12.12','Jakie zlecenia od miasta są dla mojej firmy?']]]],
   historia:[['09.2002–06.2005','Instal-Bud sp. z o.o., monter instalacji, umowa o pracę'],['07.2005–02.2012','Ciepło-Serwis s.c., monter, od 2009 r. brygadzista'],['03.2012–obecnie','własna firma: Wiśniewski Instalacje']],
   historiaNote:'Świadectwa pracy z obu firm są w Twoich plikach. Okres prowadzenia firmy ZUS liczy z Twoich deklaracji.',
   kwalif:[['Świadectwo kwalifikacyjne G1 (elektryczne), eksploatacja','ważne do 14.06.2029'],['Świadectwo kwalifikacyjne G3 (gazowe), eksploatacja i dozór','ważne do 12.01.2027'],['Certyfikat F-gazowy (klimatyzacje)','UDT, bezterminowy'],['Mistrz w zawodzie monter instalacji','Izba Rzemieślnicza w Krakowie, 2014']],

@@ -42,6 +42,7 @@ async function renderEvents(evs,voice){
  for(const e of evs){
   const before=msgs.lastChild;
   if(e.t==='text'){await sleep(140);botText(e.html,e.plain);speak.push(e.plain)}
+  else if(e.t==='card'&&e.budzet&&typeof budzetKarta==='function'){try{await budzetKarta()}catch(x){await info(e)}}   // przegląd budżetu: pełna karta z analizą z tego samego pliku
   else if(e.t==='card'){if(e.mapa&&typeof mapaPlanu==='function')e.body=mapaPlanu()+(e.body||'');await info(e)}
   else if(e.t==='qr'){await card(`<div class="ui">${hd('qr',e.title)}<div class="qr">${qrSVG(11)}<div class="code">${e.code}</div></div></div>`);if(e.after){await sleep(1400);await info(e.after)}}
   else if(e.t==='doc'){await S.docShow(e.id)}
