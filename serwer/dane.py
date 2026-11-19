@@ -612,8 +612,24 @@ def r_uchwaly_sesji(a, s):
                                            rows=[['Co się zmienia', u['co']], ['Kogo dotyczy', u['kogo']]] + u['rows'] + [['Opinia komisji', u['komisja']]],
                                            note='Streszczenie dokumentów, bez oceny. Pełny tekst projektu jest na BIP.')
 
+import budzet as _bud
+def r_budzet_gminy(a, s):
+    b = _bud.wczytaj(); q = (a.get('pytanie') or '').strip(); j = b['jednostka']
+    dane = dict(plik=b['nazwa'] + ' na ' + str(b['rok']) + ' r.', uchwala=b['uchwala'], stan_planu=b['stan_planu'], wykonanie_na=b['wykonanie_na'], jednostka_kwot=j,
+                razem=_bud.podsumowanie(b), dochody=_bud.bez_slow(b['dochody']), wydatki=_bud.bez_slow(b['wydatki']), finansowanie=b['finansowanie'],
+                historia=b['historia'], inwestycje=_bud.bez_slow(b['inwestycje']),
+                zasady='Odpowiadaj tylko z tych danych, podawaj kwoty z jednostką i nazwę pozycji. Nie porównuj z innymi gminami. Gdy czegoś nie ma w pliku, powiedz to.')
+    if not q:
+        return dane, dict(icon='coin', title=b['nazwa'] + ' na ' + str(b['rok']) + ' r.', budzet=1, source=b['uchwala'] + ' (dane fikcyjne)')
+    tr = _bud.szukaj(b, q); dane['pasujace_pozycje'] = [dict(rodzaj=r, **{k: v for k, v in x.items() if k != 'slowa'}) for _, r, x in tr]
+    return dane, (dict(icon='coin', title='Z pliku budżetu', source=b['uchwala'].split(' w sprawie')[0] + ', ' + b['stan_planu'] + ' (dane fikcyjne)',
+                       rows=[[x['nazwa'], '%s, wykonano %d%%' % (_bud.kw(b, x['plan']), round(100 * x['wyk'] / x['plan']) if x['plan'] else 0)] for _, r, x in tr[:4]])
+                  if tr else None)
+
 def r_finanse_gminy(a, s):
-    g = G(); z = a.get('zakres') or 'budzet'
+    z = a.get('zakres') or 'budzet'
+    if z == 'budzet': return r_budzet_gminy({}, s)
+    g = G()
     if z == 'umowy':
         return dict(umowy=g['umowy'], uwaga='w 2 z 3 przetargów drogowych wpłynęła jedna oferta'), \
             dict(icon='db', title='Najwięksi wykonawcy w 2026 r.', source='Centralny Rejestr Umów jednostek sektora finansów publicznych (dane fikcyjne)', rows=[[k + ' (' + o + ')', v] for k, v, o in g['umowy']])
@@ -622,8 +638,6 @@ def r_finanse_gminy(a, s):
         return dict(d_, uwaga='to jawne dane, nie dowód nieprawidłowości; nie sugeruj związku między wpłatami a umowami'), \
             dict(icon='doc', title='Wpłaty na komitet wójta', source='Sprawozdanie finansowe komitetu, PKW (dane fikcyjne)', rows=[['Komitet', d_['komitet']], ['Razem', d_['suma']]] + d_['najwieksze'],
                  note='To nie jest dowód nieprawidłowości. Jawne dane pokazane obok siebie.')
-    return dict(wskazniki=[dict(nazwa=n, gmina=v, podobne_gminy=p) for n, v, p in g['liczby']], porownanie='średnia 5 gmin wiejskich z województwa o podobnej liczbie mieszkańców'), \
-        dict(icon='coin', title=g['nazwa'] + ' na tle podobnych gmin', source='Sprawozdania budżetowe 2025 (RIO, MF), GUS (dane fikcyjne)', rows=[[n, '%s (podobne: %s)' % (v, p)] for n, v, p in g['liczby']])
 
 def r_nabory_w_gminie(a, s):
     g = G()

@@ -20,8 +20,7 @@ const GMINY={
   urzad:'Urząd Gminy Lipowiec',bip:'BIP Gminy Lipowiec',jednostka:'sołectwa Lipowiec Kolonia',twojaJedn:'Twojego sołectwa',wladza:'Wójt',
   etykRada:'Rada i wójt',radaTyt:'Wójt i rada gminy',alert:'Zmiana planu przy Tobie',f:[['Sołectwo','Lipowiec Kolonia'],['Uwagi do planu','do 18.01.2027']],uchwalaRadny:1,
   wstep:'W gminie Lipowiec najważniejsza sprawa przy Tobie to projekt zmiany planu miejscowego, 380 m od Twojego domu. Uwagi można składać do <b>18.01.2027</b>.',
-  liczbyPod:'budżet i dług na tle podobnych gmin',liczbyTyt:'Gmina Lipowiec na tle podobnych gmin',liczbyOpis:'Kreska to średnia 5 gmin wiejskich z województwa o podobnej liczbie mieszkańców.',
-  liczbyWniosek:'Najbardziej odstają zadłużenie i wydatki na promocję, w tym biuletyn gminy. Chcesz zobaczyć, komu gmina płaci najwięcej?',
+  budzetPyt:['Ile gmina wydaje na promocję i biuletyn?','Kiedy będzie kanalizacja w ul. Szkolnej?','Jak rośnie dług gminy?'],
   wojt:{kto:'Zbigniew Kordas',od:2006,kad:'5. kadencja (od 2006)',wybory:'2024: jedyny kandydat, 68% głosów „tak”',limit:'Obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.), chyba że Sejm zniesie limit.'},
   rada:{nazwa:'Rada Gminy Lipowiec',n:15,wojta:13,komitet:'KWW Razem dla Lipowca',jeden:'w 9 z 15 okręgów był tylko jeden kandydat',frekw:'49%',
    radny:{kto:'Stanisław Wójcik',okreg:'okręg nr 4',komitet:'KWW Razem dla Lipowca',dyzur:'pierwszy poniedziałek miesiąca, 16:00–17:00, urząd gminy, pok. 12',
@@ -38,14 +37,14 @@ const GMINY={
     za:['droga przy Twoim sołectwie, o którą mieszkańcy prosili od 2019 r.','termomodernizacja szkoły obniży rachunki o ok. 90 tys. zł rocznie'],
     przeciw:['dług wzrośnie do ok. 34% dochodów, podobne gminy mają 18%','wydatki na promocję rosną, a na pomoc społeczną bez zmian'],
     komisja:'Komisja budżetowa: opinia pozytywna, 4 za, 1 przeciw',zrodla:'Projekt uchwały budżetowej, opinia RIO, protokół komisji budżetowej'},
-   {re:/podatek od nieruchomosci.*(2027|stawk|wzro|rosnie)|stawk\w* podatk/,tytul:'Stawki podatku od nieruchomości na 2027 r.',nr:'projekt uchwały nr XXVII/2026',
+   {re:/podatek od nieruchomosci.*(2027|stawk|wzro|rosnie)|stawk\w* podatk/,tytul:'Stawki podatku od nieruchomości na 2027 r.',nr:'projekt uchwały, druk nr 141',
     co:'Stawki rosną średnio o 9%. Domy mieszkalne: z 1,05 do 1,15 zł za m², grunty pod domami: z 0,58 do 0,63 zł za m².',
     kogo:'właścicieli domów, mieszkań, działek i firm',
     rows:[['Twój dom','128 m², +12,80 zł rocznie'],['Twoja działka','1 150 m², +57,50 zł rocznie'],['Razem dla Ciebie','<b>+70,30 zł rocznie</b> (z 656 zł do 726 zł)'],['Do budżetu gminy','ok. +410 tys. zł rocznie']],
     za:['inflacja i wyższe koszty utrzymania dróg i szkół','stawki nadal niższe niż maksymalne ustawowe'],
     przeciw:['drugi wzrost z rzędu (w 2026 r. +7%)','dla firm ponad dwa razy więcej niż dla domów, co może odstraszać inwestorów'],
     komisja:'Komisja budżetowa: opinia pozytywna, 3 za, 2 przeciw',zrodla:'Projekt uchwały, uzasadnienie, obwieszczenie MF o maksymalnych stawkach, Twoja decyzja podatkowa'},
-   {re:/dzialk\w* 214|bez przetargu|sprzedaz dzialki/,tytul:'Sprzedaż działki 214/3 bez przetargu',nr:'projekt uchwały nr XXVIII/2026',
+   {re:/dzialk\w* 214|bez przetargu|sprzedaz dzialki/,tytul:'Sprzedaż działki 214/3 bez przetargu',nr:'projekt uchwały, druk nr 142',
     co:'Gmina chce sprzedać działkę 0,21 ha przy ul. Polnej właścicielowi przyległej działki, bez przetargu, za 86 tys. zł według wyceny rzeczoznawcy.',
     kogo:'nikogo bezpośrednio; dotyczy majątku gminy',
     rows:[['Działka','214/3, 0,21 ha, ul. Polna'],['Cena','86 tys. zł (wycena rzeczoznawcy z 08.2026)'],['Nabywca','właściciel przyległej działki (firma usługowa)'],['Tryb','bezprzetargowy, poprawa zagospodarowania sąsiedniej nieruchomości']],
@@ -110,7 +109,6 @@ const GMINY={
     potem:'Gotowe. Dam Ci znać, gdy projekt przyłącza będzie do uzgodnienia.',
     spotkanieTyt:'Zebranie wiejskie o kanalizacji',spotkanieKiedy:'07.01.2027, godz. 18:00',spotkanieGdzie:'świetlica w Lipowcu Kolonii',spotkaniePrzyp:'07.01, 16:00',spotkaniePyt:'możesz wysłać teraz, odpowie projektant sieci',
     przyp:['08.01.2027, 9:00','deklaracja przyłączenia do 15.01.2027']}],
-  liczby:[['Dochody na mieszkańca','5 820 zł','5 640 zł',103],['Zadłużenie (% dochodów)','31%','18%',172,1],['Promocja i biuletyn na mieszkańca','46 zł','19 zł',242,1],['Inwestycje (% wydatków)','14%','21%',67,1],['Oświata (% wydatków)','38%','36%',106]],
   umowy:[['Drogbud sp. z o.o.','4,82 mln zł','3 umowy na drogi, przetargi, po 1 ofercie'],['Eko-Wywóz sp. z o.o.','2,10 mln zł','odbiór odpadów, przetarg, 2 oferty'],['Lipa Media','186 tys. zł','biuletyn „Wieści Lipowieckie”, zamówienie z wolnej ręki'],['Kancelaria radcy prawnego','96 tys. zł','obsługa urzędu, zapytanie ofertowe']],
   darczyncy:{komitet:'KWW Razem dla Lipowca (wybory 2024)',suma:'48 600 zł od 21 osób',najwieksze:[['Członek zarządu Drogbud sp. z o.o.','12 000 zł'],['Właściciel Lipa Media','8 000 zł'],['Pozostałe 19 wpłat','28 600 zł']]},
   nabory:[['Inspektor ds. zamówień publicznych','Urząd Gminy','do 14.12.2026'],['Nauczyciel matematyki','SP w Lipowcu','do 21.12.2026'],['Kierowca, operator koparki','Gminny Zakład Komunalny sp. z o.o.','do 30.12.2026']],
@@ -147,13 +145,12 @@ const GMINY={
   urzad:'Urząd Miasta Krakowa',bip:'BIP Miasta Krakowa',jednostka:'Dzielnicy XIII Podgórze',twojaJedn:'Twojej dzielnicy',wladza:'Prezydent miasta',
   etykRada:'Prezydent i rady',radaTyt:'Władze miasta i dzielnicy',alert:'Konsultacje do 30.12',f:[['Dzielnica','XIII Podgórze'],['Uwagi do','30.12.2026']],uchwalaRadny:0,
   wstep:'W Krakowie najważniejsza sprawa przy Tobie to konsultacje przebudowy ul. Wielickiej, tuż pod Twoim blokiem. Uwagi można składać do <b>30.12.2026</b>. Do tego samego dnia trwa głosowanie w budżecie obywatelskim.',
-  liczbyPod:'budżet i dług na tle innych dużych miast',liczbyTyt:'Kraków na tle dużych miast',liczbyOpis:'Kreska to średnia pięciu innych największych miast w Polsce.',
-  liczbyWniosek:'Najbardziej odstaje zadłużenie, a udział inwestycji jest niższy niż gdzie indziej. Więcej niż inne miasta Kraków wydaje na komunikację i budżet obywatelski. Chcesz zagłosować na projekty w swojej dzielnicy?',
+  budzetPyt:['Ile miasto wydaje na oświatę?','Ile kosztuje przebudowa ul. Wielickiej?','Jak rośnie dług miasta?'],
   wojt:{kto:'Marek Zawada',od:2024,kad:'1. kadencja (od 2024)',wybory:'2024: II tura, 51,2% głosów',limit:'Prezydent przedstawia co roku raport o stanie miasta, a rada głosuje nad wotum zaufania.'},
   rada:{nazwa:'Rada Miasta Krakowa',n:43,wojta:24,komitet:'koalicja KWW Kraków Razem i KWW Nowy Kraków',jeden:'',frekw:'47%',
    // miasto powyżej 20 tys.: okręg wielomandatowy, więc mieszkaniec ma kilku równorzędnych radnych
    okregNr:'3',okregOpis:'Podgórze, Prokocim, Bieżanów',
-   glosyTyt:['Wniosek o strefę płatnego parkowania na Podgórzu (06.2026)','Budżet obywatelski 2027: 40 mln zł (03.2026)','Nocny zakaz sprzedaży alkoholu w całym mieście (09.2026)'],
+   glosyTyt:['Wniosek o strefę płatnego parkowania na Podgórzu (06.2026)','Budżet obywatelski 2027: 40 mln zł (03.2026)','Nocny zakaz sprzedaży alkoholu w centrum miasta (09.2026)'],
    radni:[
     {kto:'Tomasz Gil',p:'m',komitet:'KWW Kraków Razem',dyzur:'drugi wtorek miesiąca, 17:00–18:00, siedziba Rady Dzielnicy XIII',glosy:['za','za','wstrz']},
     {kto:'Anna Sowa',p:'k',komitet:'KWW Nowy Kraków',dyzur:'pierwszy czwartek miesiąca, 16:00–17:00, biuro radnej przy ul. Kalwaryjskiej',glosy:['za','za','za']},
@@ -250,7 +247,6 @@ const GMINY={
     potem:'Gotowe. Dam Ci znać, gdy kurator wyda opinię i kiedy Rada Miasta będzie głosować.',
     spotkanieTyt:'Zebranie z rodzicami',spotkanieKiedy:'15.12.2026, godz. 17:30',spotkanieGdzie:'aula SP nr 34, ul. Wielicka 40',spotkaniePrzyp:'15.12, 16:30',spotkaniePyt:'możesz wysłać teraz, odpowie dyrekcja i wydział edukacji',
     przyp:['30.12.2026, 9:00','opinia w sprawie SP nr 34 do 04.01.2027']}],
-  liczby:[['Dochody na mieszkańca','10 940 zł','11 380 zł',96],['Zadłużenie (% dochodów)','58%','41%',141,1],['Komunikacja miejska na mieszkańca','1 310 zł','1 120 zł',117],['Inwestycje (% wydatków)','12%','16%',75,1],['Budżet obywatelski na mieszkańca','50 zł','38 zł',132]],
   bo:{edycja:'Budżet obywatelski Krakowa 2027',do:'30.12.2026',pula:'40 mln zł, w tym 2,1 mln zł na projekty w Dzielnicy XIII',ile:3,
    zasady:'Wybierasz do 3 projektów w swojej dzielnicy. Głosować może każdy mieszkaniec Krakowa, dzieci do 16 lat z rodzicem.',
    dzielnica:[['Plac zabaw i siłownia przy ul. Wielickiej 24','420 tys. zł','50 m od Ciebie'],['Zielone podwórko przy SP nr 34','380 tys. zł','600 m od Ciebie'],['Zajęcia sportowe dla seniorów','90 tys. zł','cała dzielnica'],['Oświetlenie alejek w parku Bednarskiego','150 tys. zł','1,2 km od Ciebie'],['Tor rowerowy (pumptrack) na Kurdwanowie','610 tys. zł','2,4 km od Ciebie']],
@@ -385,6 +381,46 @@ const WLADZE={
    {rola:'Rada Dzielnicy XIII Podgórze',dz:1,
     wiecej:[['Skład','21 radnych'],['Przewodniczący zarządu','Wiesław Nowina']],bip:['Dzielnice Krakowa','/?bip_id=1&mmi=453']}],
   linki:[['Lista radnych','/?bip_id=1&mmi=26464'],['Dyżury radnych','/?bip_id=1&mmi=26476'],['Interpelacje','/?bip_id=1&mmi=26479'],['Głosowania radnych','/?bip_id=1&mmi=26527'],['Uchwały','/?bip_id=1&mmi=26530'],['Harmonogram sesji','/?bip_id=1&mmi=26509']]}};
+/* Sesje rady jak harmonogram sesji w BIP: data, numer, a pod spodem odnośniki (zwołanie, porządek obrad, protokół…).
+   Najbliższa sesja bierze porządek z projektów uchwał (GM.uchwaly). Punkt: [tytuł, wynik], gdzie wynik to
+   [za, przeciw, wstrzymali się, rozstrzygnięcie, nr uchwały], 'g<k>' (głosowanie imienne z rada.glosyTyt[k], liczone z listy radnych)
+   albo tekst, gdy nie było głosowania. bip: które dokumenty już są (protokół i stenogram pojawiają się kilka tygodni po sesji). */
+const SESJE={
+ ewa:{tyt:'Sesje Rady Gminy',etyk:'Sesje rady gminy',nr:'XXX',bip:['zwolanie','porzadek','protokol','wyniki','nagranie'],
+  lista:[
+   {nr:'XXIX',kiedy:'29.10.2026',godz:'10:00',bip:['zwolanie','porzadek','wyniki','nagranie'],
+    pkt:[['Zmiana budżetu 2026: 120 tys. zł więcej na dowóz dzieci do szkoły',[15,0,0,'przyjęta','XXIX/176/2026']],
+     ['Program współpracy z organizacjami pozarządowymi na 2027 r.',[14,0,1,'przyjęta','XXIX/177/2026']],
+     ['Informacja o unieważnionym przetargu na oświetlenie ul. Szkolnej','informacja wójta, bez głosowania']]},
+   {nr:'XXVIII',kiedy:'24.09.2026',godz:'10:00',
+    pkt:[['Nagrywanie posiedzeń komisji (wniosek mieszkańców)','g2'],
+     ['Dotacje do przyłączy kanalizacyjnych: 3 000 zł na dom',[15,0,0,'przyjęta','XXVIII/170/2026']],
+     ['Informacja o wykonaniu budżetu za I półrocze 2026 r.','informacja, bez głosowania']]},
+   {nr:'XXVII',rodzaj:'nadzwyczajna',kiedy:'27.08.2026',godz:'15:00',
+    pkt:[['Zmiana budżetu 2026: zakup autobusu szkolnego za 460 tys. zł',[13,1,1,'przyjęta','XXVII/165/2026']]]},
+   {nr:'XXVI',kiedy:'25.06.2026',godz:'10:00',
+    pkt:[['Debata o raporcie o stanie gminy za 2025 r.','debata, głos zabrało 3 mieszkańców'],
+     ['Wotum zaufania dla wójta',[11,4,0,'przyjęta','XXVI/158/2026']],
+     ['Absolutorium dla wójta za 2025 r.',[11,3,1,'przyjęta','XXVI/159/2026']]]}]},
+ jan:{tyt:'Sesje Rady Miasta Krakowa',etyk:'Sesje rady miejskiej',nr:'LXVI',bip:['zwolanie','porzadek','podsumowanie','stenogram','protokol','wyniki','video'],
+  dodatkowe:[['Uchwała budżetowa Miasta Krakowa na 2027 r.','b'],['Wieloletnia prognoza finansowa na lata 2027–2040','']],
+  lista:[
+   {nr:'LXV',rodzaj:'uroczysta',kiedy:'10.11.2026',godz:'18:30',bip:['zwolanie','stenogram','video'],
+    pkt:[['Uroczysta sesja z okazji Święta Niepodległości','bez głosowań']]},
+   {nr:'LXIV',kiedy:'04.11.2026',godz:'9:00',bip:['zwolanie','porzadek','podsumowanie','wyniki','video'],
+    pkt:[['Projekt budżetu Miasta Krakowa na 2027 r., pierwsze czytanie','bez głosowania, projekt trafił do komisji'],
+     ['Program ochrony powietrza: dopłaty do wymiany pieców w 2027 r.',[34,6,3,'przyjęta','LXIV/4012/26']],
+     ['Zmiana budżetu 2026: 48 mln zł więcej na autobusy elektryczne',[27,14,2,'przyjęta','LXIV/4013/26']],
+     ['Petycja mieszkańców o strefy Tempo 30 przy szkołach',[19,22,2,'nieuwzględniona','LXIV/4014/26']]]},
+   {nr:'LXIII',kiedy:'21.10.2026',godz:'9:00',
+    pkt:[['Zmiany w budżecie 2026 i wieloletniej prognozie finansowej',[26,15,2,'przyjęta','LXIII/3961/26']],
+     ['Miejski program mieszkaniowy na lata 2027–2032',[29,11,3,'przyjęta','LXIII/3962/26']],
+     ['Skarga na Zarząd Dróg Miasta Krakowa w sprawie chodnika przy ul. Wielickiej',[30,8,5,'uznana za bezzasadną','LXIII/3963/26']],
+     ['Informacja o realizacji budżetu obywatelskiego 2026','informacja, bez głosowania']]},
+   {nr:'LXII',kiedy:'23.09.2026',godz:'9:00',
+    pkt:[['Nocny zakaz sprzedaży alkoholu w centrum miasta','g2'],
+     ['Sieć publicznych przedszkoli od 2027 r.',[33,7,3,'przyjęta','LXII/3902/26']],
+     ['Raport z konsultacji strefy płatnego parkowania na Podgórzu','informacja, bez głosowania']]}]}};
 const PKW='https://wybory.gov.pl/samorzad2024/';
 const procH=([o,n])=>Math.round(100*o/n)+'%';
 // skład rady: kluby od największego, liczone z listy radnych
@@ -517,17 +553,16 @@ function openGmina(){
   ${(A=>A.length?`<div class="ui list glist gakt">${hd('clock','Moja aktywność')}${A.slice(0,4).map((a,j)=>it('a'+j,a.ikona,a.h,a.kiedy+' · '+a.s)).join('')}${A.length>4?it('aWszystko','dots','Cała aktywność',A.length+' wpisów'):''}</div>`:'')(aktyw())}
   <div class="ui list glist">${hd('doc','Twoja gmina')}
    ${it('gRada','id',GM.etykRada,GM.wojt.kto+', '+GM.wojt.kad.split(' (')[0]+' · '+radniPod())}
-   ${it('gSesja','clock','Najbliższa sesja rady',GM.sesja.kiedy+' · '+GM.uchwaly.length+' projekty uchwał')}
-   ${it('gLiczby','coin',(GM.wladza==='Wójt'?'Gmina':'Miasto')+' w liczbach',GM.liczbyPod)}
+   ${it('gSesja','clock',SESJE[OS.id].etyk,'najbliższa '+GM.sesja.kiedy.split(',')[0]+' · wyniki '+SESJE[OS.id].lista.length+' poprzednich')}
+   ${it('gLiczby','coin','Budżet '+(GM.wladza==='Wójt'?'gminy':'miasta'),'na co idą pieniądze, wykonanie, dług · zapytaj o budżet')}
    ${GM.bo?it('gBO','check','Budżet obywatelski','głosowanie do '+GM.bo.do+' · '+GM.bo.dzielnica.length+' projektów w dzielnicy'):''}
    ${GM.umowy?it('gUmowy','db','Kto dostaje pieniądze gminy','umowy z Centralnego Rejestru Umów'):''}
    ${GM.nabory?it('gNabory','bell','Praca w gminie',GM.nabory.length+' otwarte nabory'):''}
-   ${GM.zamowienia?it('gZam','bell','Zlecenia od miasta dla Twojej firmy',GM.zamowienia.length+' zamówienia z Twojej branży'):''}
    ${it('glos','mail','Zabierz głos','projekt uchwały, pytanie do rady, kandydowanie')}
    ${srcH(GM.typ+', '+GM.mieszk+' mieszkańców')}</div></div>`;
  tick();det.classList.add('on');
  $('#dclose').onclick=()=>det.classList.remove('on');
- const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmie się najbliższa sesja rady?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?',gBO:'Jak zagłosować w budżecie obywatelskim?',gZam:'Jakie zlecenia od miasta są dla mojej firmy?',glos:'Jak mogę zabrać głos w sprawach gminy?'};
+ const Q={plan:'Co się zmienia przy moim domu?',gRada:'Kto rządzi w mojej gminie?',gSesja:'Czym zajmuje się rada na sesjach?',gLiczby:'Jak wygląda budżet mojej gminy?',gUmowy:'Komu gmina płaci najwięcej?',gNabory:'Jakie są nabory do pracy w gminie?',gBO:'Jak zagłosować w budżecie obywatelskim?',gZam:'Jakie zlecenia od miasta są dla mojej firmy?',glos:'Jak mogę zabrać głos w sprawach gminy?'};
  ZMIANY().forEach((z,i)=>Q['z'+i]=i?z.q:Q.plan);aktyw().forEach((a,j)=>Q['a'+j]=a.h);Q.aWszystko='Pokaż całą moją aktywność';
  const idz=k=>k==='aWszystko'?S.aktWszystko():k[0]==='z'?S.plan(+k.slice(1)):k[0]==='a'&&k!=='a'?S.akt(+k.slice(1)):S[k]();
  det.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>{det.classList.remove('on');setTimeout(()=>startTopic(Q[b.dataset.k],()=>idz(b.dataset.k)),180)});
@@ -558,7 +593,7 @@ function gminaInit(){
  Object.assign(S,{
   async gmina(){
    await say(GM.wstep);
-   chips([{label:'Co się zmienia przy moim domu?',go:S.plan},{label:'Kto rządzi w mojej gminie?',go:S.gRada},{label:'Budżet na tle podobnych gmin',go:S.gLiczby},GM.bo?{label:'Zagłosuj w budżecie obywatelskim',go:S.gBO}:{label:'Kto dostaje pieniądze gminy?',go:S.gUmowy}]);
+   chips([{label:'Co się zmienia przy moim domu?',go:S.plan},{label:'Kto rządzi w mojej gminie?',go:S.gRada},{label:'Budżet '+(GM.wladza==='Wójt'?'gminy':'miasta'),go:S.gLiczby},GM.bo?{label:'Zagłosuj w budżecie obywatelskim',go:S.gBO}:{label:'Kto dostaje pieniądze gminy?',go:S.gUmowy}]);
   },
   async plan(i=0){
    const P=ZM[i];
@@ -703,7 +738,7 @@ function gminaInit(){
     <div class="gsek">${jeden?'Co robi Twój radny':'Co robią Twoi radni'} w tej kadencji</div>
     ${it('interp','doc','Interpelacje i zapytania',interp.length+' w tej kadencji'+(czeka?', '+czeka+' czeka na odpowiedź':''))}
     ${it('glosy','check','Głosy imienne i frekwencja','obecność: '+obH)}
-    ${it('sesja','clock','Najbliższa sesja rady',GM.sesja.kiedy)}
+    ${it('sesja','clock',SESJE[OS.id].etyk,'najbliższa '+GM.sesja.kiedy.split(',')[0]+', porządek obrad i wyniki głosowań')}
     ${it('zestaw','db','Cała rada: aktywność radnych',R.wszyscy.length+' radnych, do posortowania')}
     <div class="gsek">Kontakt i współdecydowanie</div>
     ${it('pisz','mail',jeden?'Napisz do radnego':'Napisz do radnych','odpowiedź do 14 dni, przyjdzie do skrzynki')}
@@ -804,12 +839,38 @@ function gminaInit(){
     radnyKarta(r,{rada:D.rada,okreg:D.okreg.split(' (')[0]+' (Twój okręg)'}).then(()=>chips([{label:'Napisz wiadomość',go:()=>S.pisz(GM.uchwalaRadny,{kto:r.kto,okreg:D.okreg.split(' (')[0],pyt:'Co chcesz przekazać? Możesz wybrać albo napisać własnymi słowami.'})},{label:'Wróć do radnych dzielnicy',go:S.radniDz}]))}));
    chips([{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
   },
+  /* Sesje rady: najbliższa rozwinięta na górze, poprzednie zwinięte. W nagłówku sesji tylko najważniejsze (co rada przyjęła),
+     porządek obrad z wynikami głosowań po rozwinięciu, szczegóły (protokół, nagranie) odnośnikami do BIP jak w harmonogramie sesji. */
   async gSesja(){
-   await info({icon:'clock',title:GM.sesja.tytul,source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]]});
-   await say('Rada zajmie się trzema projektami. Wybierz, a wyjaśnię prostym językiem, co zmieniają.');
-   const c=await card(`<div class="ui list glist">${hd('doc','Porządek obrad')}${GM.uchwaly.map((u,i)=>`<button class="it" data-i="${i}"><span class="gi">${svg('doc')}</span><span class="x"><b>${u.tytul}</b><small>${u.nr}</small></span>${svg('chev')}</button>`).join('')}${srcH(GM.bip+', projekty uchwał')}</div>`);
-   c.querySelectorAll('.it').forEach(b=>b.onclick=()=>act(()=>{addUser(GM.uchwaly[+b.dataset.i].tytul);S.uchwala(+b.dataset.i)}));
-   chips([{label:'Przypomnij i pokaż transmisję',go:()=>rez('bell','Przypomnienie o sesji rady',GM.sesja.kiedy,{title:'Przypomnienie ustawione',rows:[['Kiedy',GM.sesja.przyp],['Transmisja','link w powiadomieniu']]})}]);
+   const X=SESJE[OS.id],W=WLADZE[OS.id],NAZ={zwolanie:'Zwołanie',porzadek:'Porządek obrad',podsumowanie:'Podsumowanie',stenogram:'Stenogram',protokol:'Protokół',wyniki:'Wyniki głosowań',video:'Pliki video',nagranie:'Nagranie'};
+   const rok=k=>k.slice(-4),url=(z,k)=>W.bip+'/rada/sesje/'+rok(z.kiedy)+'/'+slugB(z.nr+' sesja')+'/'+slugB(NAZ[k])+(/video|nagranie/.test(k)?'':'.pdf');
+   const bipH=z=>`<div class="gsbip">${X.bip.map(k=>(z.bip||X.bip).includes(k)?`<a href="${url(z,k)}" target="_blank" rel="noopener">${NAZ[k]}</a>`:`<span>${NAZ[k]}</span>`).join('<i>|</i>')}</div>`;
+   // wynik punktu: liczby, pasek i rozstrzygnięcie; 'g<k>' liczymy z imiennych głosów całej rady
+   const wynik=w=>{if(typeof w==='string'&&/^g\d$/.test(w)){const k=+w[1],c=liczG(R.wszyscy,k);return {c,ok:c.za>c.przeciw,roz:c.za>c.przeciw?'przyjęta':'odrzucona',g:k}}
+    return Array.isArray(w)?{c:{za:w[0],przeciw:w[1],wstrz:w[2]},ok:w[0]>w[1],roz:w[3],nr:w[4]}:null};
+   const liczH=c=>c.za+' za, '+c.przeciw+' przeciw'+(c.wstrz?', '+c.wstrz+' wstrz.':'');
+   const pktH=([t,w])=>{const v=wynik(w);return `<li><b>${t}</b>${v?`${pasekG(v.c)}<small><strong class="${v.ok?'g-za':'g-przeciw'}">${v.roz}</strong> · ${liczH(v.c)}${v.nr?' · uchwała nr '+v.nr:''}</small>${v.g!=null?`<button class="gsl" data-g="${v.g}">Jak głosowali radni ${R.radni?'z mojego okręgu':''}</button>`:''}`:`<small>${w}</small>`}</li>`};
+   const krotko=z=>{const v=z.pkt.map(p=>wynik(p[1])).filter(Boolean),ok=v.filter(x=>x.ok).length,nie=v.length-ok;
+    return v.length?ok+(ok===1?' sprawa przeszła':ok>1&&ok<5?' sprawy przeszły':' spraw przeszło')+(nie?', '+nie+' nie':''):z.pkt[0][1]};
+   const dalej=[...GM.uchwaly.map((u,i)=>[u.tytul,'u'+i,u.nr]),...(X.dodatkowe||[]).map(([t,w])=>[t,w])];
+   const najbl=`<details class="gz gwo gses" open><summary class="it"><span class="gi">${svg('clock')}</span><span class="x"><b>${GM.sesja.kiedy.split(',')[0]} · ${X.nr} sesja</b><small class="gtw">najbliższa, ${GM.sesja.kiedy.split(', ')[1]||''} · ${dalej.length} punktów</small></span>${svg('chev')}</summary>
+    <div class="gzb"><div class="rows">${rowsH([['Gdzie',GM.sesja.gdzie]])}</div><div class="gsek0">Porządek obrad (projekt)</div>
+    <ul class="gpk">${dalej.map(([t,w,nr])=>w&&w[0]==='u'?`<li><button class="gsu" data-u="${w.slice(1)}"><b>${t}</b><small>${nr} · wyjaśnię, co zmienia</small></button></li>`:w==='b'?`<li><button class="gsu" data-b="1"><b>${t}</b><small>zobacz budżet i zadaj pytanie</small></button></li>`:`<li><b>${t}</b></li>`).join('')}</ul>
+    ${bipH({nr:X.nr,kiedy:GM.sesja.kiedy.split(',')[0],bip:['porzadek']})}<div class="actions"><button class="btn ghost gram" data-p="1">Przypomnij i pokaż transmisję</button></div></div></details>`;
+   const c=await card(`<div class="ui list glist gwl">${hd('clock',`${X.tyt}<small>kadencja 2024–2029</small>`)}${najbl}
+    <div class="gsek">Poprzednie sesje</div>
+    ${X.lista.map(z=>`<details class="gz gwo gses"><summary class="it"><span class="gi">${svg('doc')}</span><span class="x"><b>${z.kiedy} · ${z.nr} sesja${z.rodzaj?' '+z.rodzaj:''}</b><small class="gtw">${krotko(z)}</small></span>${svg('chev')}</summary>
+     <div class="gzb"><div class="gsek0">Porządek obrad i wyniki</div><ul class="gpk">${z.pkt.map(pktH).join('')}</ul>${bipH(z)}</div></details>`).join('')}
+    <details class="gdok gbip"><summary>${svg('db')}<span>Starsze sesje w ${GM.bip}</span>${svg('chev')}</summary><ul>
+     <li><a href="${W.bip+(W.linki.find(l=>/sesj/i.test(l[0]))||['','/rada/sesje'])[1]}" target="_blank" rel="noopener"><b>Harmonogram sesji</b><small class="u">${(W.bip+(W.linki.find(l=>/sesj/i.test(l[0]))||['','/rada/sesje'])[1]).replace(/^https:\/\//,'')}</small></a></li>
+     <li><a href="${W.bip+(W.linki.find(l=>/Uchwały/.test(l[0]))||['','/rada/uchwaly'])[1]}" target="_blank" rel="noopener"><b>Uchwały rady</b><small class="u">${(W.bip+(W.linki.find(l=>/Uchwały/.test(l[0]))||['','/rada/uchwaly'])[1]).replace(/^https:\/\//,'')}</small></a></li></ul></details>
+    <div class="note gsn">Szare pozycje jeszcze nie są w BIP: protokół i stenogram pojawiają się kilka tygodni po sesji. Odnośniki prowadzą do fikcyjnych adresów (prototyp).</div>
+    ${srcH(GM.bip+', harmonogram sesji i wyniki głosowań (dane fikcyjne)')}</div>`);
+   const przyp=()=>rez('bell','Przypomnienie o sesji rady',GM.sesja.kiedy,{title:'Przypomnienie ustawione',rows:[['Kiedy',GM.sesja.przyp],['Transmisja','link w powiadomieniu']]});
+   c.querySelectorAll('[data-u],[data-b],[data-g],[data-p]').forEach(b=>b.onclick=e=>{e.preventDefault();const d=b.dataset;
+    act(()=>{addUser(d.p?'Przypomnij o sesji':d.g!=null?(R.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny?'):b.querySelector('b').textContent);
+     return d.u!=null?S.uchwala(+d.u):d.b?S.gLiczby():d.g!=null?S.radniGlosy():przyp()})});
+   chips([{label:R.radni?'Jak głosowali radni z mojego okręgu?':'Jak głosował mój radny?',go:S.radniGlosy},{label:'Budżet '+(GM.wladza==='Wójt'?'gminy':'miasta'),go:S.gLiczby}]);
   },
   async uchwala(i){
    const u=GM.uchwaly[i];
@@ -860,13 +921,7 @@ function gminaInit(){
       await say(st.u<0?'Odpowiedź przyjdzie do Twojej skrzynki.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}});
    });
   },
-  async gLiczby(){
-   const bar=([n,v,p,w,zle])=>`<div class="gbar"><div class="gl"><span>${n}</span><b>${v}</b></div><div class="gt"><i class="${zle&&w>130?'hi':''}" style="width:${Math.min(100,w/2.5)}%"></i><u style="left:40%"></u></div><small>podobne gminy: ${p}</small></div>`;
-   await info({icon:'coin',title:GM.liczbyTyt,source:'Sprawozdania budżetowe 2025 (RIO, Ministerstwo Finansów), GUS (dane fikcyjne)',
-    body:GM.liczby.map(bar).join(''),note:GM.liczbyOpis});
-   await say(GM.liczbyWniosek);
-   chips([GM.bo?{label:'Zagłosuj w budżecie obywatelskim',go:S.gBO}:{label:'Kto dostaje pieniądze gminy?',go:S.gUmowy},{label:'Na razie wystarczy'}]);
-  },
+  // gLiczby (budżet) jest w budzet.js
   async gUmowy(){
    await info({icon:'db',title:'Najwięksi wykonawcy w 2026 r.',source:'Centralny Rejestr Umów jednostek sektora finansów publicznych (dane fikcyjne)',
     rows:GM.umowy.map(([k,v,o])=>[k+'<small class="gsm">'+o+'</small>',v])});
@@ -874,7 +929,7 @@ function gminaInit(){
    chips([{label:'Pokaż darczyńców komitetów',go:async()=>{
     await info({icon:'doc',title:'Wpłaty na komitet wójta',source:'Sprawozdanie finansowe komitetu, PKW (dane fikcyjne)',rows:[['Komitet',GM.darczyncy.komitet],['Razem',GM.darczyncy.suma],...GM.darczyncy.najwieksze],
      note:'To nie jest dowód nieprawidłowości. Pokazuję jawne dane obok siebie, ocena należy do Ciebie.'});
-   }},{label:'Budżet na tle podobnych gmin',go:S.gLiczby}]);
+   }},{label:'Budżet '+(GM.wladza==='Wójt'?'gminy':'miasta'),go:S.gLiczby}]);
   },
   async gNabory(){
    await info({icon:'bell',title:'Otwarte nabory w gminie',source:GM.bip+', spółki gminne',rows:GM.nabory.map(([s,g,t])=>[s+'<small class="gsm">'+g+'</small>',t]),flag:GM.naborStat});
