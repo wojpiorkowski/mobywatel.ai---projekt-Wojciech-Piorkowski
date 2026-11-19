@@ -1,0 +1,56 @@
+{
+ "uwaga": "Dane fikcyjne do prototypu mObywatel.ai. Gmina Lipowiec nie istnieje; układ jak w uchwale budżetowej i kwartalnej informacji o wykonaniu budżetu.",
+ "jst": "Gmina Lipowiec",
+ "nazwa": "Budżet Gminy Lipowiec",
+ "rok": 2026,
+ "uchwala": "Uchwała nr XVI/98/2025 Rady Gminy Lipowiec z dnia 29 grudnia 2025 r. w sprawie uchwały budżetowej na rok 2026, ze zmianami",
+ "stan_planu": "plan po zmianach, 31.10.2026",
+ "wykonanie_na": "30.09.2026",
+ "czesc_roku": 0.75,
+ "jednostka": "tys. zł",
+ "mieszkancy": 8940,
+ "dochody": [
+  {"nazwa": "Część oświatowa subwencji ogólnej", "krotko": "Subwencja oświatowa", "plan": 13800, "wyk": 10650, "slowa": "subwencja oswiata panstwo"},
+  {"nazwa": "Udział w podatku dochodowym od osób fizycznych (PIT)", "krotko": "PIT mieszkańców", "plan": 12400, "wyk": 8930, "slowa": "pit podatek dochodowy udzial"},
+  {"nazwa": "Podatek od nieruchomości", "krotko": "Podatek od nieruchomości", "plan": 6900, "wyk": 5520, "slowa": "podatek nieruchomosci lokalny"},
+  {"nazwa": "Środki z Unii Europejskiej i funduszy rządowych na inwestycje", "krotko": "UE i fundusze rządowe", "plan": 5600, "wyk": 1120, "slowa": "unia ue fundusze rzadowe kanalizacja dofinansowanie"},
+  {"nazwa": "Dotacje celowe (zadania zlecone, pomoc społeczna)", "krotko": "Dotacje celowe", "plan": 5300, "wyk": 3880, "slowa": "dotacje zlecone"},
+  {"nazwa": "Część wyrównawcza i rozwojowa subwencji ogólnej", "krotko": "Subwencja wyrównawcza", "plan": 4200, "wyk": 3150, "slowa": "subwencja wyrownawcza"},
+  {"nazwa": "Opłata za gospodarowanie odpadami komunalnymi", "krotko": "Opłata za odpady", "plan": 3050, "wyk": 2300, "slowa": "odpady smieci oplata"},
+  {"nazwa": "Podatek rolny i leśny", "krotko": "Podatek rolny i leśny", "plan": 1150, "wyk": 890, "slowa": "podatek rolny lesny rolnicy"},
+  {"nazwa": "Pozostałe dochody (opłaty, najem, sprzedaż działek)", "krotko": "Pozostałe", "plan": 1900, "wyk": 1410, "slowa": "oplaty najem sprzedaz dzialki"}
+ ],
+ "wydatki": [
+  {"dzial": "801, 854", "nazwa": "Oświata i wychowanie", "plan": 21400, "wyk": 15610, "majatkowe": 900, "co": "szkoła podstawowa, przedszkole, dowóz dzieci", "slowa": "oswiata szkoly szkola przedszkole dowoz dzieci edukacja nauczyciele"},
+  {"dzial": "900", "nazwa": "Gospodarka komunalna i ochrona środowiska", "plan": 11300, "wyk": 4870, "majatkowe": 7400, "co": "kanalizacja, odpady, oświetlenie ulic", "slowa": "kanalizacja scieki odpady smieci oswietlenie srodowisko"},
+  {"dzial": "600", "nazwa": "Transport i łączność", "plan": 8200, "wyk": 4020, "majatkowe": 6100, "co": "drogi gminne, chodniki, przystanki", "slowa": "drogi droga chodniki przystanki transport ulice"},
+  {"dzial": "852, 855", "nazwa": "Pomoc społeczna i rodzina", "plan": 6400, "wyk": 4690, "majatkowe": 0, "co": "GOPS, świadczenia dla rodzin, opieka nad seniorami", "slowa": "pomoc spoleczna gops rodzina seniorzy"},
+  {"dzial": "750", "nazwa": "Administracja publiczna", "plan": 5900, "wyk": 4380, "majatkowe": 150, "co": "urząd gminy, rada gminy, sołectwa", "slowa": "administracja urzad urzednicy rada"},
+  {"dzial": "921", "nazwa": "Kultura", "plan": 1850, "wyk": 1330, "majatkowe": 200, "co": "Gminny Ośrodek Kultury, biblioteka, świetlice", "slowa": "kultura gok biblioteka swietlice"},
+  {"dzial": "757", "nazwa": "Obsługa długu", "plan": 900, "wyk": 670, "majatkowe": 0, "co": "odsetki od kredytów", "slowa": "odsetki dlug kredyty"},
+  {"dzial": "926", "nazwa": "Sport i rekreacja", "plan": 900, "wyk": 610, "majatkowe": 300, "co": "boiska, orlik, klub sportowy", "slowa": "sport boisko orlik"},
+  {"dzial": "754", "nazwa": "Bezpieczeństwo publiczne", "plan": 780, "wyk": 560, "majatkowe": 250, "co": "ochotnicze straże pożarne", "slowa": "osp straz pozarna bezpieczenstwo"},
+  {"dzial": "010", "nazwa": "Rolnictwo", "plan": 450, "wyk": 300, "majatkowe": 120, "co": "melioracje, drogi dojazdowe do pól", "slowa": "rolnictwo melioracje pola"},
+  {"dzial": "750", "nazwa": "Promocja gminy (w tym biuletyn)", "plan": 420, "wyk": 330, "majatkowe": 0, "co": "biuletyn „Wieści Lipowieckie”, materiały promocyjne", "slowa": "promocja biuletyn wiesci gazeta"},
+  {"dzial": "różne", "nazwa": "Rezerwy i pozostałe", "plan": 400, "wyk": 120, "majatkowe": 0, "co": "rezerwa ogólna i kryzysowa", "slowa": "rezerwa rezerwy pozostale"}
+ ],
+ "finansowanie": {
+  "przychody": [["Kredyt w banku", 3800], ["Wolne środki z lat ubiegłych", 1400]],
+  "rozchody": [["Spłata rat kredytów", 600]]
+ },
+ "historia": [
+  {"rok": 2022, "dochody": 44100, "wydatki": 46300, "dlug": 9800, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2023, "dochody": 47600, "wydatki": 50900, "dlug": 12300, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2024, "dochody": 49800, "wydatki": 52600, "dlug": 14100, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2025, "dochody": 51200, "wydatki": 53400, "dlug": 15900, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2026, "dochody": 54300, "wydatki": 58900, "dlug": 19100, "zrodlo": "plan, dług prognozowany na koniec roku"}
+ ],
+ "inwestycje": [
+  {"nazwa": "Przebudowa drogi gminnej Lipowiec Kolonia – Wola", "dzial": "600", "plan": 3900, "wyk": 1840, "koszt": 5200, "lata": "2025–2026", "gdzie": "Lipowiec Kolonia, Wola", "blisko": 1, "stan": "wykonawca Drogbud sp. z o.o., odbiór do 12.2026", "slowa": "droga przebudowa wola"},
+  {"nazwa": "Kanalizacja w ul. Szkolnej, I etap: projekt i przyłącza", "dzial": "900", "plan": 950, "wyk": 310, "koszt": 14800, "lata": "2026–2028", "gdzie": "ul. Szkolna, przy Twoim domu", "blisko": 1, "stan": "deklaracje przyłączenia do 15.01.2027", "slowa": "kanalizacja szkolna przylacze scieki"},
+  {"nazwa": "Termomodernizacja Szkoły Podstawowej w Lipowcu", "dzial": "801", "plan": 900, "wyk": 120, "koszt": 2600, "lata": "2026–2027", "gdzie": "ul. Szkolna", "blisko": 1, "slowa": "szkola termomodernizacja ocieplenie"},
+  {"nazwa": "Wymiana pieca i ogrzewania w remizie OSP Lipowiec", "dzial": "754", "plan": 250, "wyk": 250, "koszt": 250, "lata": "2026", "gdzie": "Lipowiec", "stan": "zakończone", "slowa": "osp remiza straz"},
+  {"nazwa": "Oświetlenie ul. Szkolnej (12 lamp)", "dzial": "900", "plan": 180, "wyk": 0, "koszt": 180, "lata": "2026", "gdzie": "ul. Szkolna, przy Twoim domu", "blisko": 1, "stan": "przetarg unieważniony, ponowny w grudniu", "slowa": "oswietlenie lampy szkolna"},
+  {"nazwa": "Fundusz sołecki Lipowiec Kolonia: wiata i ławki przy świetlicy", "dzial": "900", "plan": 36, "wyk": 22, "koszt": 36, "lata": "2026", "gdzie": "Lipowiec Kolonia", "blisko": 1, "slowa": "fundusz solecki swietlica wiata"}
+ ]
+}

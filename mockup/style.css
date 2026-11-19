@@ -775,3 +775,36 @@ html:not([lang="pl"]) .quick button{flex:1 1 0;width:auto;min-width:0;font-size:
 /* karta radnego: jak głosował */
 .gjg>div{padding:9px 0;border-top:1px solid var(--hair);font-size:14px;line-height:19px}.gjg>div:first-child{border-top:0;padding-top:0}
 .gjg b{display:block;font-weight:600}.gjg span{display:block;margin-top:2px}.gjg small{display:block;font-size:12.5px;color:var(--ink2)}
+/* sesje rady: harmonogram jak w BIP, porządek obrad z wynikami */
+.gses .gsek0{margin:10px 0 4px;font-size:12.5px;font-weight:600;color:var(--ink2)}
+.gpk{list-style:none;margin:0;padding:0}.gpk li{padding:8px 0;border-top:1px solid var(--hair)}.gpk li:first-child{border-top:0}
+.gpk b{display:block;font-size:14px;line-height:19px;font-weight:600}.gpk small{display:block;font-size:12.5px;line-height:17px;color:var(--ink2)}
+.gpk small strong{font-weight:600}.gpk .gpas{margin:5px 0 3px;height:6px}
+.gpk .gsu{display:block;width:100%;text-align:left}.gpk .gsu small{color:var(--red)}
+.gpk .gsl{margin-top:4px;font-size:12.5px;font-weight:600;color:var(--red)}
+.gsbip{display:flex;flex-wrap:wrap;gap:2px 6px;margin-top:10px;padding:9px 10px;border-radius:10px;background:var(--bg);font-size:13px;line-height:19px}
+.gsbip a{color:#1d5fa8;text-decoration:none;font-weight:500}.gsbip span{color:var(--ink3)}.gsbip i{font-style:normal;color:var(--ink3)}
+.gwl .gses .gzb{padding-top:0}.gwl>.gsn{margin:10px 16px 4px}
+/* budżet: cztery liczby na wierzchu, reszta zwinięta */
+.gbst{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:2px 16px 12px}
+.gbst>div{background:var(--bg);border-radius:12px;padding:9px 10px}
+.gbst small{display:block;font-size:12px;color:var(--ink2)}.gbst b{display:block;font-size:18px;line-height:24px;font-weight:700;font-variant-numeric:tabular-nums}
+.gbst span{display:block;font-size:11.5px;line-height:15px;color:var(--ink3)}
+.gbud-b{padding:0 16px 6px}.gbud .gdok.gbud-d{margin:8px 16px 0}.gbud-d .gbud-b{padding:0 12px 8px}
+.gbud .gbar small{display:block;line-height:16px}.gbud .gbar .gl span{color:var(--ink)}
+.gbud-p{margin:8px 0 6px;font-size:12.5px;line-height:17px;color:var(--ink2)}
+.gwol{font-style:normal;font-weight:600;color:var(--red)}
+.gbud-sl{display:flex;align-items:flex-end;gap:8px;height:112px;padding:4px 0 2px;border-bottom:1px solid var(--hair)}
+.gbud-sl>div{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;gap:3px}
+.gbud-sl i{display:block;width:100%;max-width:34px;border-radius:4px 4px 0 0;background:#16805a}.gbud-sl i.plan{background:repeating-linear-gradient(135deg,#16805a 0 4px,#7fb89e 4px 7px)}
+.gbud-sl small{font-size:11px;color:var(--ink2);font-variant-numeric:tabular-nums}.gbud-sl span{font-size:11px;color:var(--ink3)}
+.gtab{width:100%;border-collapse:collapse;margin:10px 0 4px;font-size:12.5px;font-variant-numeric:tabular-nums}
+.gtab th{text-align:right;font-weight:600;color:var(--ink2);padding:4px 2px}.gtab td{text-align:right;padding:5px 2px;border-top:1px solid var(--hair)}
+.gtab th:first-child,.gtab td:first-child{text-align:left}
+.gbud-d ul{margin:0 -12px}.gblis{color:#16805a;font-weight:600}
+.gbr{margin:10px 0 2px;font-size:14px;font-weight:700;color:var(--ink)}
+.gbr+ul li:first-child{border-top:0}
+.gbq{display:flex;gap:8px;padding:0 16px}.gbq input{flex:1;min-width:0;border:1.5px solid var(--hair);border-radius:12px;padding:9px 12px;font:inherit;font-size:15px;color:var(--ink);background:#fff}
+.gbq input:focus{outline:none;border-color:var(--red)}.gbq .btn{flex:none;padding:0 14px}
+.gbqp{border-top:0;padding:8px 16px 4px}.gbud>.note{margin:6px 16px 4px}
+.gbud .gbar .gl b{white-space:nowrap}.gbud .gbar .gl{align-items:baseline}
