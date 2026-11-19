@@ -132,13 +132,20 @@ function openDoc(id){
 /* ---------- rozmowa ---------- */
 const esc=t=>t.replace(/[&<>]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
 function el(h){const t=document.createElement('template');t.innerHTML=h.trim();return t.content.firstElementChild}
-function end(){requestAnimationFrame(()=>msgs.scrollTo({top:msgs.scrollHeight,behavior:FAST?'auto':'smooth'}))}
+/* Długa karta (wyższa niż pół ekranu) nie przewija się do końca, tylko kotwiczy pytanie użytkownika u góry,
+   żeby listę czytać od początku; dalsze wiadomości i podpowiedzi czekają niżej. Kotwica znika przy następnym pytaniu. */
+let kotw=null;
+function end(){requestAnimationFrame(()=>{let top=msgs.scrollHeight;
+ if(kotw&&kotw.isConnected)top=Math.min(top,kotw.getBoundingClientRect().top-msgs.getBoundingClientRect().top+msgs.scrollTop-8);
+ msgs.scrollTo({top,behavior:FAST?'auto':'smooth'})})}
 function clearEmpty(){const e=msgs.querySelector('.empty');if(e)e.remove()}
-function addUser(t){clearEmpty();msgs.append(el(`<div class="msg user" data-t="0">${esc(t)}</div>`));end();touch('user',t)}
+function addUser(t){clearEmpty();kotw=null;msgs.append(el(`<div class="msg user" data-t="0">${esc(t)}</div>`));end();touch('user',t)}
 async function say(t){clearEmpty();const ty=el('<div class="typing"><i></i><i></i><i></i></div>');msgs.append(ty);end();await sleep(Math.min(1100,400+t.replace(/<[^>]+>/g,'').length*6));ty.remove();msgs.append(el(`<div class="msg bot">${t}</div>`));end();touch('bot',plain(t))}
 function hd(icon,title){return `<div class="hd"><div class="ic">${svg(icon)}</div><div class="tt">${title}</div></div>`}
 const srcH=s=>s?`<div class="src">${svg('db')}${s}</div>`:'';
-async function card(h){await sleep(160);const c=el(h);msgs.append(c);end();return c}
+async function card(h){await sleep(160);const c=el(h);msgs.append(c);
+ if(!kotw&&c.offsetHeight>msgs.clientHeight*.5){const p=c.previousElementSibling;kotw=p&&p.matches('.msg.user')?p:c}
+ end();return c}
 function info({icon='doc',title,source,rows=[],body='',flag='',note='',tone='',pojazd=null,tl=0}){
  return card(`<div class="ui ${tone}"${tl?' data-t="0"':''}>${hd(icon,title)}${sylBanner(pojazd)}${body?`<div class="body">${body}</div>`:''}${rows.length?`<div class="rows">${rowsH(rows)}</div>`:''}${flag?`<div class="flag">${flag}</div>`:''}${note?`<div class="note">${note}</div>`:''}${srcH(source)}</div>`);
 }
