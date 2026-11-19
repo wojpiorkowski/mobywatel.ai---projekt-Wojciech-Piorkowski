@@ -308,7 +308,8 @@ function pelnaRada(G,id){
   const p=los(2)?'m':'k',zostalo=W0-inni.length,klub=klubIle>0&&(zostalo<=klubIle||los(10)<5);if(klub)klubIle--;
   const komitet=klub?K.klub[los(Array.isArray(K.klub)&&typeof K.klub[1]==='string'?2:1)]:K.opoz[los(K.opoz.length)];
   const g=klub?['za','za',['za','wstrz','przeciw'][los(3)]]:['przeciw',['za','przeciw'][los(2)],['za','wstrz','przeciw'][los(3)]];
-  if(id==='ewa'){g[0]=g[1]=klub?'za':'przeciw';g[2]=klub?'przeciw':'za'}
+  // Lipowiec: rada odrzuciła nagrywanie komisji 8 do 7 (Moja aktywność), więc część klubu wójta głosowała za
+  if(id==='ewa'){g[0]=g[1]=klub?'za':'przeciw';g[2]=klub&&inni.filter(x=>x.glosy[2]==='za'&&!/Nasza/.test(x.komitet)).length>=5?'przeciw':'za'}
   inni.push({kto:IM[p][los(IM[p].length)]+' '+NZ[nr++%NZ.length],p,komitet,okreg:o,dyzur:los(3)?'po umówieniu przez skrzynkę rady':'pierwszy poniedziałek miesiąca, 16:00–17:00, '+(id==='ewa'?'urząd gminy':'magistrat'),glosy:g.slice(0,tyt.length)});
  }});
  R.wszyscy=[...swoi,...inni];
@@ -440,12 +441,18 @@ const MAPY={ewa:mapaPlanu,jan:mapaWielicka},mapa=()=>(MAPY[OS.id]||mapaPlanu)(),
 // radni Twojego okręgu: w gminie do 20 tys. jeden (JOW), w większym mieście kilku (okręg wielomandatowy)
 const radniPod=()=>{const R=GM.rada;return R.radni?'Twoi radni z okręgu nr '+R.okregNr+': '+R.radni.length+' osób':'Twój radny z '+R.radny.okreg.replace('okręg','okręgu')+': '+R.radny.kto};
 const GLOS={za:['za','za'],przeciw:['przeciw','przeciw'],wstrz:['wstrzymał się','wstrzymała się']},glosH=(r,g)=>(GLOS[g]||[g,g])[r.p==='k'?1:0];
+// liczenie głosów: wynik całej rady (zwykła większość: więcej za niż przeciw) i pasek za/przeciw/wstrzymał się
+const liczG=(os,k)=>{const c={za:0,przeciw:0,wstrz:0};os.forEach(r=>c[r.glosy[k]]++);return c};
+const wynikG=(R,k)=>{const c=liczG(R.wszyscy,k);return (c.za>c.przeciw?'przeszło':'nie przeszło')+', '+c.za+' za, '+c.przeciw+' przeciw'+(c.wstrz?', '+c.wstrz+' wstrz.':'')};
+const pasekG=c=>`<span class="gpas" aria-hidden="true">${['za','przeciw','wstrz'].map(g=>c[g]?`<i class="g-${g}" style="flex:${c[g]}"></i>`:'').join('')}</span>`;
+const tytG=t=>{const m=t.match(/^(.*) \((\d\d\.\d{4})[,)]/);return m?[m[1],m[2]]:[t,'']};
 const osobyH=a=>'<ul class="gos">'+a.map(r=>`<li><b>${r.kto}</b><small>${[r.komitet,'dyżur: '+r.dyzur].filter(Boolean).join(' · ')}</small></li>`).join('')+'</ul>';
 
 /* Karta radnego w układzie BIP (kontakt, lista, okręg, klub, komisje, interpelacje, oświadczenia, dyżur, załączniki),
    ale w stylu mObywatela. Interpelacje, oświadczenia i zaświadczenie otwierają się w rozmowie; pliki PDF i komisje prowadzą
    do fikcyjnych adresów BIP (nowa karta), jak linki na prawdziwej stronie radnego. */
 async function radnyKarta(r,{rada,okreg,glosy=[],note=''}){
+ // glosy: [tytuł, głos radnego, wynik całej rady]
  const k=r.p==='k',sek=t=>`<div class="gsek">${t}</div>`,it=(a,ic,t,sm)=>`<button class="it" data-a="${a}"><span class="gi">${svg(ic)}</span><span class="x"><b>${t}</b><small>${sm}</small></span>${svg('chev')}</button>`;
  const kontakt=[...(r.tel?[['tel.',`<a href="tel:${r.tel.replace(/ /g,'')}">${r.tel}</a>`]]:[]),['e-mail',`<a href="mailto:${r.email}">${r.email}</a>`]];
  const fakty=[...(r.lista?[[k?'Wybrana z listy':'Wybrany z listy','nr '+r.lista+', '+r.komitet]]:[]),['Okręg wyborczy',okreg],...(r.klub?[['Klub',r.klub]]:[])];
@@ -456,11 +463,11 @@ async function radnyKarta(r,{rada,okreg,glosy=[],note=''}){
   ${sek('Kontakt')}<div class="rows">${rowsH(kontakt)}</div>
   <div class="rows grf">${rowsH(fakty)}</div>
   ${sek(r.komisje.length>1?'Pracuje w komisjach':'Pracuje w komisji')}<ul class="grk">${r.komisje.map(x=>`<li>${kom(x)}</li>`).join('')}</ul>
+  ${glosy.length?it('glosy','check',`Jak ${k?'głosowała':'głosował'}`,glosy.length+' ważne głosowania'+(r.obec?', obecność '+procH(r.obec):'')):''}
   ${r.interp?it('interp','doc','Interpelacje i zapytania',r.interp.length+' w tej kadencji'+(ostI?', ostatnia '+ostI:'')):''}
   ${r.oswiad?it('oswiad','coin','Oświadczenia majątkowe',r.oswiad.length+' pliki PDF, ostatnie za '+r.oswiad[0][0]):''}
   ${sek('Dyżur')}<div class="rows">${rowsH([['Kiedy',r.dyzurKiedy],['Gdzie',r.dyzurGdzie]])}</div>
   ${r.zaswiad?sek('Załączniki')+it('zasw','doc','Zaświadczenie o wyborze','PDF, '+r.zaswiad[0]+', '+r.zaswiad[1]):''}
-  ${glosy.length?`<details class="gdok grad"><summary>${svg('check')}<span>Jak ${k?'głosowała':'głosował'} w ważnych sprawach</span>${svg('chev')}</summary><ul>${glosy.map(([t,g])=>`<li class="os"><b>${t}</b><small><strong>${g}</strong></small></li>`).join('')}</ul></details>`:''}
   ${note?`<div class="note">${note}</div>`:''}${srcH((r.interp?'BIP, rejestr radnych i imienne wyniki głosowań':rada)+' (dane fikcyjne)')}</div>`);
  const A={
   // rejestr jak w BIP, ale zamiast tabeli (za wąska na telefon) jeden wpis pod drugim
@@ -474,6 +481,9 @@ async function radnyKarta(r,{rada,okreg,glosy=[],note=''}){
    return info({icon:'coin',title:`Oświadczenia majątkowe<small class="gsub">${r.kto}</small>`,source:K.bip+' (dane fikcyjne)',
     rows:[['Jednostka',rada],...r.oswiad.map(([rok,rodzaj,ile],i)=>['Za rok '+rok+'<small class="gsub">'+rodzaj+'</small>',lnk(www+'/oswiadczenie-majatkowe/'+slugB(r.kto)+'-'+rok+'-'+(i+1)+'.pdf','PDF ('+kb(ile)+')')])],
     note:(k?'Radna składa':'Radny składa')+' oświadczenie co roku do 30 kwietnia. Oświadczenia są jawne, poza adresem i położeniem nieruchomości.'})},
+  glosy:()=>info({icon:'check',title:`Jak ${k?'głosowała':'głosował'}<small class="gsub">${r.kto}</small>`,source:'Imienne wyniki głosowań, '+(K.bip||rada)+' (dane fikcyjne)',
+   body:`<div class="gjg">${glosy.map(([t,g,w])=>{const [tt,d]=tytG(t);return `<div><small>${d}</small><b>${tt}</b><span>${k?'Głosowała':'Głosował'}: <strong class="g-${Object.keys(GLOS).find(x=>glosH(r,x)===g)||''}">${g}</strong></span><small>Rada: ${w}</small></div>`}).join('')}</div>`,
+   rows:r.obec?[['Obecność na sesjach',r.obec[0]+' z '+r.obec[1]+' ('+procH(r.obec)+')']]:[]}),
   zasw:()=>info({icon:'doc',title:'Zaświadczenie o wyborze',source:r.zaswiad[0]+' (dane fikcyjne)',rows:[['Wydał',r.zaswiad[0]],['Data',r.zaswiad[1]],['Dla',r.kto],['Mandat',(k?'radna ':'radny ')+rada.replace(/^Rada/,'Rady')+', okręg '+okreg.replace(' (Twój okręg)','')],['Wybory','7 kwietnia 2024 r.']]})};
  c.querySelectorAll('[data-a]').forEach(b=>b.onclick=()=>act(()=>{addUser(b.querySelector('b').textContent);A[b.dataset.a]()}));
  return c;
@@ -683,7 +693,7 @@ function gminaInit(){
    const organ=(o,i)=>{const wiecej=o.rada?[['Skład',R.wszyscy.length+' radnych: '+skladH(R)],...o.wiecej]:o.wiecej;
     return `<details class="gz gwo"><summary class="it"><span class="gi">${svg(o.rada||o.dz?'id':'dom')}</span><span class="x"><b>${o.kto?o.rola+': '+o.kto:o.rola}</b>${twoi(o)?`<small class="gtw">${twoi(o)}</small>`:''}</span>${svg('chev')}</summary>
      <div class="gzb"><div class="rows">${rowsH(wiecej)}</div>${o.uwaga?`<div class="note">${o.uwaga}</div>`:''}
-     ${o.rada||o.dz?`<div class="actions"><button class="btn ghost" data-a="${o.rada?'lista':'dz'}">${o.rada?(jeden?'Zobacz swojego radnego':'Zobacz swoich radnych'):'Zobacz radnych dzielnicy'}</button></div>`:''}
+     ${o.rada||o.dz?`<div class="actions"><button class="btn ghost gram" data-a="${o.rada?'lista':'dz'}">${o.rada?(jeden?'Zobacz swojego radnego':'Zobacz swoich radnych'):'Zobacz radnych dzielnicy'}</button></div>`:''}
      <div class="gdok"><ul><li>${lnk(W.bip+o.bip[1],o.bip[0],'BIP')}</li></ul></div></div></details>`};
    const interp=swoi.flatMap(r=>r.interp||[]),czeka=interp.filter(x=>!x[3]).length,ob=swoi.map(r=>r.obec[0]/r.obec[1]);
    const obH=jeden?swoi[0].obec[0]+' z '+swoi[0].obec[1]+' sesji ('+procH(swoi[0].obec)+')':'od '+Math.round(100*Math.min(...ob))+'% do '+Math.round(100*Math.max(...ob))+'% sesji';
@@ -692,7 +702,7 @@ function gminaInit(){
     <div class="gsek">Kto rządzi</div>${W.organy.map(organ).join('')}
     <div class="gsek">${jeden?'Co robi Twój radny':'Co robią Twoi radni'} w tej kadencji</div>
     ${it('interp','doc','Interpelacje i zapytania',interp.length+' w tej kadencji'+(czeka?', '+czeka+' czeka na odpowiedź':''))}
-    ${it('glosy','check','Głosowania i obecność','obecność: '+obH)}
+    ${it('glosy','check','Głosy imienne i frekwencja','obecność: '+obH)}
     ${it('sesja','clock','Najbliższa sesja rady',GM.sesja.kiedy)}
     ${it('zestaw','db','Cała rada: aktywność radnych',R.wszyscy.length+' radnych, do posortowania')}
     <div class="gsek">Kontakt i współdecydowanie</div>
@@ -754,17 +764,36 @@ function gminaInit(){
   },
   async radny(j){
    const r=R.wszyscy[j],twoj=r.okreg===+R.okregNr;
-   await radnyKarta(r,{rada:R.nazwa,okreg:'nr '+r.okreg+(twoj?' (Twój okręg)':''),glosy:R.glosyTyt.map((t,k)=>[t,glosH(r,r.glosy[k])]),
+   await radnyKarta(r,{rada:R.nazwa,okreg:'nr '+r.okreg+(twoj?' (Twój okręg)':''),glosy:R.glosyTyt.map((t,k)=>[t,glosH(r,r.glosy[k]),wynikG(R,k)]),
     note:twoj?'':(r.p==='k'?'To radna z innego okręgu. Możesz do niej napisać, ale reprezentuje':'To radny z innego okręgu. Możesz do niego napisać, ale reprezentuje')+' przede wszystkim mieszkańców swojego okręgu.'});
    chips([{label:'Napisz wiadomość',go:()=>S.pisz(GM.uchwalaRadny,{kto:r.kto,okreg:'okręg nr '+r.okreg,pyt:'Co chcesz przekazać przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.'})},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
   },
-  async radniGlosy(){
-   const swoi=R.wszyscy.filter(r=>r.okreg===+R.okregNr);
-   const ile=k=>{if(swoi.length===1)return glosH(swoi[0],swoi[0].glosy[k]);const c={};swoi.forEach(r=>c[r.glosy[k]]=(c[r.glosy[k]]||0)+1);return ['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>(g==='wstrz'?'wstrz.':g)+' '+c[g]).join(' · ')};
-   await info({icon:'doc',title:swoi.length===1?'Jak głosował '+swoi[0].kto:'Jak głosowali radni z Twojego okręgu',source:'Imienne wyniki głosowań, '+GM.bip,
-    rows:[...R.glosyTyt.map((t,k)=>['<i class="gw">'+t+'</i>',ile(k)]),...swoi.map(r=>['Obecność: '+r.kto,r.obec[0]+' z '+r.obec[1]+' sesji ('+procH(r.obec)+')'])],
-    note:swoi.length>1?`<details class="gdok"><summary>${svg('id')}<span>Głosy imiennie</span>${svg('chev')}</summary><ul>${swoi.map(r=>`<li class="os"><b>${r.kto}</b><small>${r.glosy.map((g,k)=>R.glosyTyt[k].split(' (')[0].split(':')[0]+': <strong>'+glosH(r,g)+'</strong>').join('<br>')}</small></li>`).join('')}</ul></details>`:''});
-   chips([{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
+  /* Głosy imienne i frekwencja. Przy kilkudziesięciu radnych lista „radny po radnym” jest nieczytelna, więc odwracamy ją:
+     każde głosowanie to wynik i pasek, a nazwiska (pogrupowane: za, przeciw, wstrzymali się) dopiero po rozwinięciu.
+     Przełącznik zawęża liczby do Twojego okręgu albo pokazuje całą radę; Twoi radni są zawsze wyróżnieni i na początku. */
+  async radniGlosy(zakres){
+   const moj=+R.okregNr,swoi=R.wszyscy.filter(r=>r.okreg===moj),jeden=swoi.length===1,W=WLADZE[OS.id],ug=W.bip+(W.linki.find(l=>/Głosowania/.test(l[0]))||['','/rada/glosowania'])[1];
+   zakres=zakres||(jeden?'rada':'okreg');
+   const NAZ={za:'Za',przeciw:'Przeciw',wstrz:'Wstrzymali się'},nzw=r=>r.kto.split(' ').pop();
+   const kol=a=>[...a].sort((x,y)=>(y.okreg===moj)-(x.okreg===moj)||nzw(x).localeCompare(nzw(y),'pl'));
+   const imie=r=>`<button class="gnm${r.okreg===moj?' twoj':''}" data-r="${R.wszyscy.indexOf(r)}">${r.kto}</button>`;
+   const tresc=z=>{const os=z==='rada'?R.wszyscy:swoi,ob=os.map(r=>r.obec[0]/r.obec[1]),pr=x=>Math.round(100*x)+'%';
+    const glos=(t,k)=>{const c=liczG(os,k),[tt,d]=tytG(t),ty=os.length===1?(jeden?'Twój radny':os[0].kto)+': <b>'+glosH(os[0],os[0].glosy[k])+'</b>':['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>`<span class="g-${g}">${g==='wstrz'?'wstrz.':g} <b>${c[g]}</b></span>`).join(' ');
+     return `<details class="gdok ggl"><summary><span><small>${d} · rada: ${wynikG(R,k)}</small><b>${tt}</b>${os.length>1?pasekG(c):''}<small class="gli">${z==='okreg'&&!jeden?'Twoi radni: ':''}${ty}</small></span>${svg('chev')}</summary>
+      ${['za','przeciw','wstrz'].filter(g=>c[g]).map(g=>`<div class="ggr"><div class="gl">${NAZ[g]} · ${c[g]}</div><div class="gnms">${kol(os.filter(r=>r.glosy[k]===g)).map(imie).join('')}</div></div>`).join('')}</details>`};
+    return `<div class="gsek">Ważne głosowania</div>${R.glosyTyt.map(glos).join('')}
+     <div class="gsek">Frekwencja na sesjach</div>
+     <details class="gdok ggl"${z==='okreg'?' open':''}><summary><span><b>${os.length===1?procH(os[0].obec)+' sesji':'średnio '+pr(ob.reduce((a,b)=>a+b,0)/ob.length)+', od '+pr(Math.min(...ob))+' do '+pr(Math.max(...ob))}</b><small class="gli">${os.length===1?os[0].obec[0]+' z '+os[0].obec[1]+' sesji w tej kadencji':os.length+' radnych, '+os[0].obec[1]+' sesji w tej kadencji'}</small></span>${svg('chev')}</summary>
+      <div class="gfr">${kol(os).map(r=>`<button class="gfw${r.okreg===moj?' twoj':''}" data-r="${R.wszyscy.indexOf(r)}"><span>${r.kto}</span><span class="gpas"><i class="g-za" style="flex:${r.obec[0]}"></i><i style="flex:${r.obec[1]-r.obec[0]}"></i></span><b>${procH(r.obec)}</b></button>`).join('')}</div></details>`};
+   const c=await card(`<div class="ui list glist gglos">${hd('check',`Głosy imienne i frekwencja<small>${R.nazwa}</small>`)}
+    <div class="gsort" role="group" aria-label="Pokaż">${[['okreg',jeden?'Twój radny':'Twój okręg ('+swoi.length+')'],['rada','Cała rada ('+R.wszyscy.length+')']].map(([k,t])=>`<button data-z="${k}"${k===zakres?' class="on"':''}>${t}</button>`).join('')}</div>
+    <div class="gglt">${tresc(zakres)}</div>
+    <div class="note">Rozwiń głosowanie, żeby zobaczyć nazwiska. ${jeden?'Twój radny jest wyróżniony':'Twoi radni są wyróżnieni'} i na początku listy. Dotknij nazwiska, żeby otworzyć kartę radnego.</div>
+    <details class="gdok gbip"><summary>${svg('db')}<span>Wszystkie głosowania w ${GM.bip}</span>${svg('chev')}</summary><ul><li><a href="${ug}" target="_blank" rel="noopener"><b>Imienne wyniki głosowań</b><small class="u">${ug.replace(/^https:\/\//,'')}</small></a></li></ul></details>
+    ${srcH('Imienne wyniki głosowań i listy obecności, '+GM.bip+' (dane fikcyjne)')}</div>`);
+   const pod=()=>c.querySelectorAll('.gglt [data-r]').forEach(b=>b.onclick=e=>{e.preventDefault();act(()=>{addUser(R.wszyscy[+b.dataset.r].kto);S.radny(+b.dataset.r)})});pod();
+   c.querySelectorAll('[data-z]').forEach(b=>b.onclick=()=>{c.querySelectorAll('[data-z]').forEach(x=>x.classList.toggle('on',x===b));c.querySelector('.gglt').innerHTML=tresc(b.dataset.z);pod()});
+   chips([{label:'Cała rada: aktywność radnych',go:()=>S.radaZestaw()},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
   },
   async radniDz(){
    const D=R.dzielnica;
