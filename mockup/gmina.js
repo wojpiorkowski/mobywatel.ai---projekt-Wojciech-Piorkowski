@@ -367,22 +367,22 @@ const WLADZE={
  ewa:{bip:'https://bip.lipowiec.pl',
   organy:[
    {rola:'Wójt',kto:'Zbigniew Kordas',
-    wiecej:[['Kadencja','5. kadencja (od 2006), obecna do 2029'],['Wybory 2024','jedyny kandydat, 68% głosów „tak”'],['Zastępca wójta','Ryszard Pawlak: inwestycje i drogi gminne'],['Sekretarz i skarbnik','Iwona Kubik, Teresa Wrzos'],['Raport o stanie gminy','co roku do 31 maja, potem wotum zaufania']],
+    wiecej:[['Kadencja','5. kadencja (od 2006), obecna do 2029'],['Wybory 2024','jedyny kandydat, 68% głosów „tak”'],['Zastępca wójta','Ryszard Pawlak: inwestycje i drogi gminne'],['Sekretarz i skarbnik','Iwona Kubik, Teresa Wrzos']],
     uwaga:'Obecna kadencja jest ostatnią (limit dwóch kadencji liczonych od 2018 r.).',bip:['Wójt, zastępca, sekretarz, skarbnik','/wojt']},
    {rola:'Rada Gminy Lipowiec',rada:1,
-    wiecej:[['Kadencja','IX, 2024–2029'],['Przewodniczący rady','Leszek Górny'],['Wybory 2024','w 9 z 15 okręgów był tylko jeden kandydat, frekwencja 49%']],bip:['Rada Gminy: radni, komisje, sesje','/rada']},
+    wiecej:[['Kadencja','IX, 2024–2029'],['Przewodniczący rady','Leszek Górny']],bip:['Rada Gminy: radni, komisje, sesje','/rada']},
    {rola:'Sołectwo Lipowiec Kolonia',kto:'sołtys Halina Mazur',
     wiecej:[['Fundusz sołecki 2027','38 tys. zł'],['Rada sołecka','5 osób, wybrana na zebraniu wiejskim w 2024 r.'],['Zebranie wiejskie','marzec 2027, głos ma każdy pełnoletni mieszkaniec']],bip:['Sołectwa i fundusz sołecki','/solectwa']}],
   linki:[['Lista radnych i dyżury','/rada/radni'],['Interpelacje i zapytania','/rada/interpelacje'],['Głosowania radnych','/rada/glosowania'],['Uchwały','/rada/uchwaly'],['Komisje rady','/rada/komisje'],['Oświadczenia majątkowe','/oswiadczenia-majatkowe']]},
  jan:{bip:'https://www.bip.krakow.pl',
   organy:[
    {rola:'Prezydent Miasta Krakowa',kto:'Marek Zawada',
-    wiecej:[['Kadencja','1. kadencja, 2024–2029'],['Wybory 2024','II tura, 51,2% głosów, frekwencja 41%'],['Zastępcy','Beata Szostak: rozwój i inwestycje<br>Michał Leśniak: komunikacja i drogi<br>Karolina Jurek: edukacja i sprawy społeczne'],['Raport o stanie miasta','co roku do 31 maja, potem wotum zaufania']],
+    wiecej:[['Kadencja','1. kadencja, 2024–2029'],['Wybory 2024','II tura, 51,2% głosów, frekwencja 41%'],['Zastępcy','Beata Szostak: rozwój i inwestycje<br>Michał Leśniak: komunikacja i drogi<br>Karolina Jurek: edukacja i sprawy społeczne']],
     bip:['Prezydent, Zastępcy, Pełnomocnicy','/?bip_id=1&mmi=35305']},
    {rola:'Rada Miasta Krakowa',rada:1,
-    wiecej:[['Kadencja','IX, 2024–2029'],['Przewodnicząca rady','Jolanta Wierzba'],['Wybory 2024','frekwencja 47%']],bip:['Rada Miasta Krakowa','/?bip_id=1&mmi=26458']},
+    wiecej:[['Kadencja','IX, 2024–2029'],['Przewodnicząca rady','Jolanta Wierzba']],bip:['Rada Miasta Krakowa','/?bip_id=1&mmi=26458']},
    {rola:'Rada Dzielnicy XIII Podgórze',dz:1,
-    wiecej:[['Skład','21 radnych'],['Przewodniczący zarządu','Wiesław Nowina'],['Budżet dzielnicy 2027','4,1 mln zł, m.in. chodniki i zieleń']],bip:['Dzielnice Krakowa','/?bip_id=1&mmi=453']}],
+    wiecej:[['Skład','21 radnych'],['Przewodniczący zarządu','Wiesław Nowina']],bip:['Dzielnice Krakowa','/?bip_id=1&mmi=453']}],
   linki:[['Lista radnych','/?bip_id=1&mmi=26464'],['Dyżury radnych','/?bip_id=1&mmi=26476'],['Interpelacje','/?bip_id=1&mmi=26479'],['Głosowania radnych','/?bip_id=1&mmi=26527'],['Uchwały','/?bip_id=1&mmi=26530'],['Harmonogram sesji','/?bip_id=1&mmi=26509']]}};
 const PKW='https://wybory.gov.pl/samorzad2024/';
 const procH=([o,n])=>Math.round(100*o/n)+'%';
@@ -722,7 +722,8 @@ function gminaInit(){
   async dyzury(){
    const swoi=R.wszyscy.filter(r=>r.okreg===+R.okregNr);
    await info({icon:'clock',title:swoi.length===1?'Dyżur radnego':'Dyżury Twoich radnych',source:GM.bip+', dyżury radnych (dane fikcyjne)',
-    rows:swoi.map(r=>[r.kto,r.dyzurKiedy+'<small class="gsub">'+r.dyzurGdzie+'</small>']),
+    // osoba nad terminem, miejsce pod spodem: przy 8 radnych w dwóch kolumnach długie terminy łamały się w pół godziny
+    body:`<div class="gdyz">${swoi.map(r=>`<div><b>${r.kto}</b><span>${r.dyzurKiedy}</span><small>${r.dyzurGdzie}</small></div>`).join('')}</div>`,
     note:'Na dyżur nie trzeba się zapisywać. Jeśli wolisz porozmawiać o konkretnej godzinie, napisz do radnego.'});
    chips([{label:swoi.length===1?'Napisz do radnego':'Napisz do radnych',go:()=>S.doRadnego(0)},{label:'Wróć do władz',go:S.gRada}]);
   },
@@ -772,7 +773,7 @@ function gminaInit(){
     <div class="note">${D.note}</div>${srcH(D.rada+' (dane fikcyjne)')}</div>`);
    c.querySelectorAll('[data-k]').forEach(b=>b.onclick=()=>act(()=>{const r=D.osoby[+b.dataset.k];addUser(r.kto);
     radnyKarta(r,{rada:D.rada,okreg:D.okreg.split(' (')[0]+' (Twój okręg)'}).then(()=>chips([{label:'Napisz wiadomość',go:()=>S.pisz(GM.uchwalaRadny,{kto:r.kto,okreg:D.okreg.split(' (')[0],pyt:'Co chcesz przekazać? Możesz wybrać albo napisać własnymi słowami.'})},{label:'Wróć do radnych dzielnicy',go:S.radniDz}]))}));
-   chips([{label:'Napisz do radnych dzielnicy',go:()=>S.pisz(GM.uchwalaRadny,{kto:'radni '+D.rada.replace('Rada','Rady')+', '+D.okreg.split(' (')[0],okreg:D.okreg.split(' (')[0],pyt:'Co chcesz przekazać? Możesz wybrać albo napisać własnymi słowami.',wielu:1})},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
+   chips([{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}]);
   },
   async gSesja(){
    await info({icon:'clock',title:GM.sesja.tytul,source:GM.bip,rows:[['Kiedy',GM.sesja.kiedy],['Gdzie',GM.sesja.gdzie]]});
@@ -793,17 +794,17 @@ function gminaInit(){
    const RR=GM.rada;
    if(!RR.radni)return S.pisz(i,{kto:RR.radny.kto,okreg:RR.radny.okreg,pyt:`Co chcesz przekazać radnemu ${RR.radny.kto.split(' ')[0]}owi przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.`});
    const ok='okręg nr '+RR.okregNr,D=RR.dzielnica,pyt='Co chcesz przekazać przed głosowaniem? Możesz wybrać albo napisać własnymi słowami.';
-   await say(`Z okręgu nr ${RR.okregNr} do Rady Miasta jest ${RR.radni.length} radnych. Napiszesz do wszystkich naraz czy do jednej osoby?`);
-   chips([{label:'Wszyscy radni z okręgu ('+RR.radni.length+')',go:()=>S.pisz(i,{kto:'radni z okręgu nr '+RR.okregNr+' ('+RR.radni.length+' osób)',okreg:ok,pyt,wielu:1})},
-    ...RR.radni.map(r=>({label:r.kto+' · '+r.komitet.replace('KWW ',''),go:()=>S.pisz(i,{kto:r.kto,okreg:ok,pyt})})),
-    ...(D?[{label:'Radni dzielnicy ('+D.osoby.length+')',go:()=>S.pisz(i,{kto:'radni '+D.rada.replace('Rada','Rady')+', '+D.okreg.split(' (')[0],okreg:D.okreg.split(' (')[0],pyt,wielu:1})}]:[])]);
+   // tylko wiadomości do jednej osoby: list zbiorowy działa jak szablon i łatwo go zignorować
+   await say(`Z okręgu nr ${RR.okregNr} do Rady Miasta jest ${RR.radni.length} radnych. Do kogo chcesz napisać?`);
+   chips([...RR.radni.map(r=>({label:r.kto+' · '+r.komitet.replace('KWW ',''),go:()=>S.pisz(i,{kto:r.kto,okreg:ok,pyt})})),
+    ...(D?[{label:'Radni mojej dzielnicy',go:S.radniDz}]:[])]);
   },
   // Wiadomość do radnych jak uwaga: własne słowa, podpowiedzi tylko pomocnicze, podgląd przed wysłaniem.
   async pisz(i,R,szkic){
    const U=GM.uchwaly,st=szkic||{t:'',u:i!=null?i:GM.uchwalaRadny};
    await say(szkic?'Popraw, co chcesz. Nic jeszcze nie zostało wysłane.':'Napisz własnymi słowami, co chcesz przekazać. Wiadomość od mieszkańca z konkretnym przykładem działa lepiej niż szablon. Podpowiedzi są pod polem.');
    const pod=k=>{const t=U[k].tytul;return [['Proszę głosować przeciw','Proszę o głosowanie przeciw projektowi „'+t+'” w obecnym kształcie.'],['Proszę o wyjaśnienie na sesji','Proszę o zadanie na sesji pytania o uzasadnienie projektu „'+t+'” i przekazanie mi odpowiedzi.'],['Popieram projekt','Popieram projekt „'+t+'” i proszę o głosowanie za.']]};
-   const c=await card(`<div class="ui guw">${hd('mail',R.wielu?'Wiadomość do radnych':'Wiadomość do radnego')}<div class="body">
+   const c=await card(`<div class="ui guw">${hd('mail','Wiadomość do radnego')}<div class="body">
     <div class="gdo">Do: <b>${R.kto}</b></div>
     <label class="gl" for="rdS">Sprawa</label><select id="rdS" class="gsel">${U.map((x,k)=>`<option value="${k}"${k===st.u?' selected':''}>${x.tytul}</option>`).join('')}<option value="-1"${st.u===-1?' selected':''}>Inna sprawa</option></select>
     <label class="gl" for="rdT">Twoja wiadomość</label><textarea id="rdT" rows="5" placeholder="Np. mieszkam w Pana okręgu i chciałbym zwrócić uwagę na…">${esc(st.t)}</textarea><div class="gcnt"></div>
@@ -821,13 +822,13 @@ function gminaInit(){
     chips([{label:'Wróć do pisania',go:()=>S.pisz(i,R,st)},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}])});
    ok.onclick=()=>act(async()=>{zamknij();const sprawa=st.u<0?'inna sprawa':U[st.u].tytul;
     await say('Tak będzie wyglądać wiadomość. Sprawdź ją przed wysłaniem.');
-    await confirmCard({icon:'mail',title:'Podgląd wiadomości',source:'Do: '+R.kto+(R.wielu?'':', '+R.okreg)+', przez skrzynkę rady',
+    await confirmCard({icon:'mail',title:'Podgląd wiadomości',source:'Do: '+R.kto+', '+R.okreg+', przez skrzynkę rady',
      body:`<div class="gpismo"><small>${today()} · do: ${R.kto}</small><b>${sprawa}</b><p>${esc(st.t).replace(/\n/g,'<br>')}</p><small>${OS.imie} ${OS.nazwisko}, ${rodz('mieszkanka','mieszkaniec')} ${R.okreg.replace('okręg','okręgu')}</small></div>`,
      rows:[['Sprawa',sprawa],['Odpowiedź','do Twojej skrzynki']],label:'Wyślij',
      onCancel:async()=>{await say('Nic nie zostało wysłane.');chips([{label:'Popraw wiadomość',go:()=>S.pisz(i,R,st)},{label:'Napisz od nowa',go:()=>S.pisz(i,R)},{label:'Wróć do listy radnych',go:()=>S.radniLista(1)}])},
      then:async()=>{await rez('mail','Wiadomość: '+sprawa,'do: '+R.kto,{title:'Wiadomość wysłana',rows:[['Do',R.kto],['Sprawa',sprawa],['Przypomnienie','jeśli nie odpowie w 14 dni']]},
-      {typ:R.wielu?'Wiadomość do radnych':'Wiadomość do radnego',status:'wysłana, czeka na odpowiedź',do:R.kto,tresc:['Twoja wiadomość: '+sprawa,esc(st.t)],przebieg:[['Wysłana',now()+', '+today(),'done'],['Doręczona do skrzynki rady','ten sam dzień','done'],['Odpowiedź','do 14 dni, przyjdzie do skrzynki','now'],...(st.u<0?[]:[['Sesja rady',GM.sesja.kiedy]])],dalej:[['Lista radnych',()=>S.radniLista(1)]]});
-      await say(st.u<0?'Odpowiedź przyjdzie do Twojej skrzynki.':R.wielu?'Po sesji pokażę Ci, jak głosował każdy z nich w tej sprawie.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}});
+      {typ:'Wiadomość do radnego',status:'wysłana, czeka na odpowiedź',do:R.kto,tresc:['Twoja wiadomość: '+sprawa,esc(st.t)],przebieg:[['Wysłana',now()+', '+today(),'done'],['Doręczona do skrzynki rady','ten sam dzień','done'],['Odpowiedź','do 14 dni, przyjdzie do skrzynki','now'],...(st.u<0?[]:[['Sesja rady',GM.sesja.kiedy]])],dalej:[['Lista radnych',()=>S.radniLista(1)]]});
+      await say(st.u<0?'Odpowiedź przyjdzie do Twojej skrzynki.':'Po sesji pokażę Ci, jak głosował radny w tej sprawie.')}});
    });
   },
   async gLiczby(){
