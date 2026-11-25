@@ -1,0 +1,13 @@
+# Worker panelu „Poprawki do portalu” (zob. worker/poprawki.js). Wdraża go .github/workflows/worker.yml.
+# Adres po wdrożeniu: https://mobywatel-poprawki.<twoja-subdomena>.workers.dev
+name = "mobywatel-poprawki"
+main = "poprawki.js"
+compatibility_date = "2025-09-01"
+workers_dev = true
+
+[vars]
+REPO = "wojpiorkowski/mobywatel.ai---projekt-wojciech-piorkowski"
+ETYKIETA = "z-portalu"
+MODEL = "claude-opus-5-5"
+# skąd wolno wołać Workera: podgląd na GitHub Pages i serwer lokalny
+ORIGINY = "https://wojpiorkowski.github.io,http://127.0.0.1:8790,http://localhost:8790"

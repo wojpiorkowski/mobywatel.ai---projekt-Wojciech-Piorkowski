@@ -101,10 +101,17 @@ Tymczasowe narzędzie do pracy nad prototypem, nie część zgłoszenia. Przycis
 opisujesz zmianę, celownikiem wskazujesz element na ekranie (powstaje zrzut z zaznaczeniem), spinaczem dodajesz obrazek.
 Claude dopytuje i zbiera poprawki w koszyku; „Wyślij” zakłada z każdej issue na GitHubie z etykietą `z-portalu`
 (zrzuty trafiają na gałąź `zgloszenia-zalaczniki`). Zakładka „Historia zgłoszeń” pokazuje wysłane issues.
+Instrukcja i narzędzia dla Claude są w `serwer/poprawki.json` (wspólne dla obu wariantów poniżej).
 
-Włączenie w `.env`: `POPRAWKI=1`, `ANTHROPIC_API_KEY` i `GITHUB_TOKEN` (token fine-grained tylko do tego repozytorium,
-uprawnienia Issues: read and write oraz Contents: read and write). Bez `POPRAWKI=1` panelu nie ma. Na podglądzie online
-(bez serwera) panel pojawia się tylko z `?poprawki=1` i mówi, że działa lokalnie; `?poprawki=0` chowa przycisk w danej przeglądarce.
+**Na podglądzie online (GitHub Pages)** czat działa przez Workera Cloudflare (`worker/`), który trzyma klucze.
+Wdraża go workflow „Worker poprawek” przy zmianie `worker/` albo ręcznie (Actions → Worker poprawek → Run workflow).
+Sekrety repozytorium (Settings → Secrets and variables → Actions): `CLOUDFLARE_API_TOKEN`, `CLOUDFLARE_ACCOUNT_ID`,
+`ANTHROPIC_API_KEY`, `GH_TOKEN_POPRAWKI` (token fine-grained tylko do tego repozytorium: Issues i Contents, read and write)
+i `KOD_DOSTEPU` (dowolne hasło do panelu). Worker przyjmuje tylko zapytania z `https://wojpiorkowski.github.io` (i serwera lokalnego)
+z poprawnym kodem. Przycisk pokazuje się po wejściu na podgląd z `?poprawki=1` (przeglądarka to zapamiętuje, `?poprawki=0` chowa);
+przy pierwszym otwarciu panel prosi o adres Workera i kod dostępu.
+
+**Lokalnie** w `.env`: `POPRAWKI=1`, `ANTHROPIC_API_KEY` i `GITHUB_TOKEN`; wtedy panel rozmawia z serwerem prototypu.
 
 ## Polskie modele (Bielik, PLLuM i inne)
 
