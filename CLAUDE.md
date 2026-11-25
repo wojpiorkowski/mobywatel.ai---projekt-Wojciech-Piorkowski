@@ -27,6 +27,7 @@ Rozmawiamy, piszemy komentarze, nazwy i commity **po polsku**, tak jak w kodzie 
   `osoba` i `jezyk`; dostaje nowe `messages`, `stan`, `events` (do narysowania) i `czeka` (`potwierdzenie`, `odpowiedz`, `qr`, `koniec`).
 - `POST /api/stt`, `/api/tts`: mowa (ElevenLabs, a bez klucza lub po błędzie OpenAI), `/api/znak/*`: przekazywanie danych „znakiem mObywatela”
   między urządzeniami (pamięć procesu), `/api/i18n/brak`: rejestr brakujących tłumaczeń.
+- `/api/poprawki*` (`poprawki.py`, front `mockup/poprawki.js`): panel autora „Poprawki do portalu”, czat z Claude zakładający issues `z-portalu`; tylko przy `POPRAWKI=1`. Serwer sam wczytuje `.env` (`BEZ_ENV=1` to wyłącza).
 - Plik `serwer/BLOKADA` wyłącza klucze (awaryjny wyłącznik dla pokazu).
 
 `agent.py`: pętla agenta i system prompt (`SYSTEM`). `llm()` wybiera dostawcę: `claude()` (Anthropic Messages), `openai()` (Responses API),

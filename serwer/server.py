@@ -6,7 +6,19 @@ from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
 from urllib.parse import urlparse
 HERE = os.path.dirname(os.path.abspath(__file__))
 sys.path.insert(0, HERE)
-import agent, tlumacz
+
+def wczytaj_env(plik):
+    """Plik .env z katalogu repozytorium (KLUCZ=wartość); zmienne ustawione w powłoce mają pierwszeństwo."""
+    if os.environ.get('BEZ_ENV'): return   # test dymny: bez kluczy z .env
+    try:
+        for w in open(plik, encoding='utf-8'):
+            w = w.strip()
+            if w and not w.startswith('#') and '=' in w:
+                k_, v = w.split('=', 1); v = v.strip().strip('"').strip("'")
+                if v: os.environ.setdefault(k_.strip().removeprefix('export '), v)
+    except OSError: pass
+wczytaj_env(os.path.join(os.path.dirname(HERE), '.env'))   # przed importem agenta, który czyta ustawienia przy starcie
+import agent, tlumacz, poprawki
 
 ROOT = os.environ.get('MOCKUP') or os.path.join(os.path.dirname(HERE), 'mockup')
 LOG = os.environ.get('AGENT_LOG') or os.path.join(HERE, 'agent.log')
@@ -159,6 +171,13 @@ class H(SimpleHTTPRequestHandler):
             log(dict(t='znak_kto', ok=bool(d), kind=v and v['kind'], cel=v and v.get('cel')))
             if not d: return self.js(dict(dev=None))
             return self.js(dict(dev=d, kind=v['kind'], kto=v.get('kto'), cel=v.get('cel'), zakres=v.get('zakres')))
+        if p == '/api/poprawki':
+            if not poprawki.wlaczone(): return self.js(dict(wlaczone=False))
+            st = poprawki.stan()
+            if st['github']:
+                try: st['historia'] = poprawki.historia()
+                except Exception as e: st['blad_historii'] = str(e)[:200]
+            return self.js(st)
         if p == '/v2' or p.startswith('/v2/'):
             self.send_response(301); self.send_header('Location', '/'); self.end_headers(); return
         if p == '/komputer':
@@ -183,6 +202,18 @@ class H(SimpleHTTPRequestHandler):
                 msgs, stan, events, czeka = agent.run(req.get('messages', []), req.get('stan'), req.get('confirm'), {'anthropic': k('anthropic') if agent.PROVIDER == 'anthropic' else None, 'openai': k('openai'), 'zgodny': k('zgodny') if agent.PROVIDER == 'zgodny' else None}, lambda x: log(dict(x, conv=req.get('conv'))), osoba=req.get('osoba'), jezyk=req.get('lang') or 'pl')
                 log(dict(t='resp', conv=req.get('conv'), ms=int((time.time() - t0) * 1000), events=[e.get('t') for e in events], czeka=czeka))
                 return self.js(dict(messages=msgs, stan=stan, events=events, czeka=czeka))
+            if p.startswith('/api/poprawki/'):
+                if not poprawki.wlaczone(): return self.js(dict(error='panel poprawek wyłączony (POPRAWKI=1 w .env)'), 404)
+                raw = self.body()
+                if len(raw) > 25_000_000: return self.js(dict(error='za duże załączniki'), 413)
+                req = json.loads(raw or b'{}')
+                if p == '/api/poprawki/czat':
+                    if not poprawki.klucz_claude(): return self.js(dict(error='brak ANTHROPIC_API_KEY w .env'), 503)
+                    msgs, koszyk, tekst = poprawki.czat(req.get('messages') or [], req.get('koszyk'), log)
+                    return self.js(dict(messages=msgs, koszyk=koszyk, tekst=tekst))
+                if p == '/api/poprawki/wyslij':
+                    if not poprawki.klucz_github(): return self.js(dict(error='brak GITHUB_TOKEN w .env'), 503)
+                    return self.js(dict(wyniki=poprawki.wyslij(req.get('koszyk') or [], req.get('zalaczniki') or {}, req.get('kontekst') or {}, log)))
             if p == '/api/i18n/brak':
                 raw = self.body()
                 if len(raw) > 60000: return self.js(dict(error='za duzo'), 413)

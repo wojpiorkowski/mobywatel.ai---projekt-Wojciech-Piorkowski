@@ -54,7 +54,7 @@ python3 serwer/server.py             # albo: python3 serwer/server.py 8080
 
 Otwórz http://127.0.0.1:8790/aplikacja (adres `/` też pokazuje aplikację, `/komputer` to ekran „komputera” do przekazywania danych znakiem).
 
-Możesz też trzymać ustawienia w pliku: `cp .env.example .env`, uzupełnij i uruchom `set -a; . ./.env; set +a; python3 serwer/server.py`.
+Możesz też trzymać ustawienia w pliku: `cp .env.example .env` i uzupełnij. Serwer sam wczytuje `.env` z katalogu repozytorium (zmienne ustawione w powłoce mają pierwszeństwo).
 
 ## Podgląd online (GitHub Pages)
 
@@ -90,8 +90,21 @@ Aplikacja będzie pod http://127.0.0.1:8790/aplikacja. Bez Compose:
 | `EL_VOICE`, `EL_TTS_MODEL`, `EL_STT_MODEL` | głos z biblioteki ElevenLabs, `eleven_flash_v2_5`, `scribe_v2` | mowa przez ElevenLabs; wybrany głos może wymagać płatnego planu, wtedy ustaw własny `EL_VOICE` |
 | `HOST`, `PORT` | `127.0.0.1`, `8790` | adres i port serwera (w Dockerze `HOST=0.0.0.0`) |
 | `AGENT_LOG` | `serwer/agent.log` | plik dziennika |
+| `POPRAWKI` | wyłączone | `1` włącza panel „Poprawki do portalu” (narzędzie autora, opis niżej) |
+| `GITHUB_TOKEN`, `POPRAWKI_REPO`, `POPRAWKI_ETYKIETA`, `POPRAWKI_MODEL` | , repozytorium prototypu, `z-portalu`, `claude-opus-5-5` | panel poprawek: token GitHuba, gdzie i z jaką etykietą zakładać zgłoszenia, model rozmowy (wymaga `ANTHROPIC_API_KEY`) |
 
 Nazwy modeli mogą się zmieniać u dostawców: jeśli domyślny model nie jest dostępny na Twoim koncie, ustaw własny.
+
+## Panel „Poprawki do portalu” (tylko dla autora)
+
+Tymczasowe narzędzie do pracy nad prototypem, nie część zgłoszenia. Przycisk „Poprawki” w rogu otwiera czat z Claude:
+opisujesz zmianę, celownikiem wskazujesz element na ekranie (powstaje zrzut z zaznaczeniem), spinaczem dodajesz obrazek.
+Claude dopytuje i zbiera poprawki w koszyku; „Wyślij” zakłada z każdej issue na GitHubie z etykietą `z-portalu`
+(zrzuty trafiają na gałąź `zgloszenia-zalaczniki`). Zakładka „Historia zgłoszeń” pokazuje wysłane issues.
+
+Włączenie w `.env`: `POPRAWKI=1`, `ANTHROPIC_API_KEY` i `GITHUB_TOKEN` (token fine-grained tylko do tego repozytorium,
+uprawnienia Issues: read and write oraz Contents: read and write). Bez `POPRAWKI=1` panelu nie ma. Na podglądzie online
+(bez serwera) panel pojawia się tylko z `?poprawki=1` i mówi, że działa lokalnie; `?poprawki=0` chowa przycisk w danej przeglądarce.
 
 ## Polskie modele (Bielik, PLLuM i inne)
 
