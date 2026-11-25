@@ -123,6 +123,15 @@ function renderMenu(){
  m.querySelector('.ml').innerHTML=LAYOUTS.map(([k,t,s])=>`<button data-k="${k}" class="${k===VARIANT?'on':''}"><span class="mi mi-${k}"><i></i><i></i><i></i><i></i></span><span class="mt"><b>${t}</b><small>${s}</small></span>${k===VARIANT?svg('check'):''}</button>`).join('');
  m.querySelectorAll('.ml button').forEach(b=>b.onclick=()=>setVariant(b.dataset.k));
 }
+/* panel „Osoba w pokazie” obok telefonu: to samo przełączanie co w menu, ale widoczne od razu */
+function panelOsob(){
+ const a=document.createElement('aside');a.className='osoby';a.setAttribute('aria-label','Osoba w pokazie');
+ a.innerHTML='<div class="mh">Osoba w pokazie</div><div class="ol">'+Object.values(OSOBY).map(o=>{const k=o.opis.split(',').slice(0,2).join(',');
+  return `<button data-o="${o.id}" class="${o.id===OS.id?'on':''}" aria-pressed="${o.id===OS.id}" aria-label="${o.imie} ${o.nazwisko}, ${o.opis}"><span class="oav" style="background-image:url(assets/foto-${o.id}.jpg)"></span><span class="tx"><b>${o.imie}</b><small>${k}</small></span></button>`}).join('')+'</div>';
+ a.querySelectorAll('button').forEach(b=>b.onclick=()=>zmienOsobe(b.dataset.o));
+ document.body.append(a);
+}
+panelOsob();
 function openMenu(){if(app.classList.contains('chatting'))return;closeHist();renderMenu();app.classList.add('menu');$('#title').setAttribute('aria-expanded','true')}
 function closeMenu(){app.classList.remove('menu');$('#title').setAttribute('aria-expanded','false')}
 $('#title').onclick=()=>app.classList.contains('menu')?closeMenu():openMenu();
