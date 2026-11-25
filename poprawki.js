@@ -7,7 +7,7 @@
 const Q=new URLSearchParams(location.search),K='poprawki:';
 const wez=(k,d)=>{try{const v=localStorage.getItem(K+k);return v==null?d:JSON.parse(v)}catch(e){return d}};
 const daj=(k,v)=>{try{localStorage.setItem(K+k,JSON.stringify(v));return true}catch(e){return false}};
-const ADRES_WORKERA='';   // domyślny adres Workera (https://mobywatel-poprawki.….workers.dev); można go też wpisać w panelu
+const ADRES_WORKERA='https://mobywatel-poprawki.wojpiorkowski.workers.dev';   // domyślny adres Workera; inny można wpisać w panelu (zębatka)
 let LOK=false,BLAD='',UST=false;   // LOK: jest serwer lokalny; BLAD: czemu Worker nie odpowiada; UST: pokaż ustawienia
 const adres=()=>String(wez('adres','')||ADRES_WORKERA).trim().replace(/\/+$/,'');
 const baza=()=>LOK?'/api/poprawki':adres()+'/api/poprawki';
@@ -79,7 +79,7 @@ const css=`
 #pp .hi .st{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:99px;background:#e9f5ea;color:#2e7d32;margin-right:6px}
 #pp .hi .st.z{background:#ecebe8;color:#6b6d75}
 #pp [hidden]{display:none!important}
-#pp .ust{display:flex;flex-direction:column;gap:12px;font-size:14px}#pp .ust p{margin:0}
+#pp .ust{display:flex;flex-direction:column;align-items:stretch;gap:12px;font-size:14px}#pp .ust p{margin:0}
 #pp .ust label{display:flex;flex-direction:column;gap:4px;font-weight:600}
 #pp .ust input{font:inherit;font-weight:400;border:1px solid #d9d6d0;border-radius:10px;padding:9px 11px;background:#fff}
 #pp .ust .wy{align-self:flex-start}
@@ -223,8 +223,9 @@ function rysuj(){
    `<ul class="hi">${h.map(x=>`<li><a href="${H(x.url)}" target="_blank" rel="noopener">#${x.nr} ${H(x.tytul)}</a><small><span class="st${x.stan==='open'?'':' z'}">${x.stan==='open'?'otwarte':'zamknięte'}</span>${H(x.data.split('-').reverse().join('.'))}</small></li>`).join('')}</ul>`;
   return}
  if(!LOK&&(UST||!adres()||!wez('kod','')||(BLAD&&!SRV))){dol.hidden=true;kosz.hidden=true;
-  w.innerHTML=`<form class="ust" id="pp-ust"><p>Na podglądzie online czat działa przez Workera Cloudflare. Podaj jego adres i kod dostępu (zostaną w tej przeglądarce).</p>
-   ${BLAD?`<p class="b blad">${H(BLAD)}</p>`:''}<label>Adres Workera<input name="a" type="url" required placeholder="https://mobywatel-poprawki.….workers.dev" value="${H(adres())}"></label>
+  const zAdresem=UST||!ADRES_WORKERA;   // gdy adres jest wpisany w kod, pytamy tylko o kod (adres zmienia zębatka)
+  w.innerHTML=`<form class="ust" id="pp-ust"><p>${zAdresem?'Na podglądzie online czat działa przez Workera Cloudflare. Podaj jego adres i kod dostępu (zostaną w tej przeglądarce).':'Podaj kod dostępu do panelu (zostanie w tej przeglądarce).'}</p>
+   ${BLAD?`<p class="b blad">${H(BLAD)}</p>`:''}<label${zAdresem?'':' hidden'}>Adres Workera<input name="a" type="url" required placeholder="https://mobywatel-poprawki.….workers.dev" value="${H(adres())}"></label>
    <label>Kod dostępu<input name="k" type="password" required autocomplete="current-password" value="${H(wez('kod',''))}"></label><button class="wy" type="submit">Połącz</button></form>`;
   w.querySelector('form').onsubmit=e=>{e.preventDefault();const f=e.target;daj('adres',f.a.value.trim());daj('kod',f.k.value.trim());UST=false;BLAD='';SRV=null;w.innerHTML='<p class="pusto">Łączę…</p>';odswiez()};
   return}
