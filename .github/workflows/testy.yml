@@ -22,7 +22,7 @@ jobs:
         run: pip install ruff && ruff check .
       - name: Składnia JS (node --check)
         run: |
-          for f in mockup/*.js; do
+          for f in mockup/*.js worker/*.js; do
             echo "sprawdzam $f"
             node --check "$f"
           done

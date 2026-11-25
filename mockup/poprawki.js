@@ -1,17 +1,24 @@
 /* Panel „Poprawki do portalu”: narzędzie autora do zbierania uwag o prototypie, nie część aplikacji.
    Rozmowa z Claude (serwer/poprawki.py) zbiera poprawki w koszyku, „Wyślij” zakłada z nich issues na GitHubie.
-   Pojawia się tylko, gdy serwer ma POPRAWKI=1; na stronie bez serwera (GitHub Pages) po dodaniu ?poprawki=1 mówi,
-   że działa tylko lokalnie. ?poprawki=0 chowa przycisk w tej przeglądarce. */
+   Lokalnie rozmawia z serwerem (POPRAWKI=1), na GitHub Pages z Workerem Cloudflare (worker/), który trzyma klucze.
+   Na Pages przycisk pojawia się dopiero po wejściu z ?poprawki=1 (przeglądarka to zapamiętuje), ?poprawki=0 go chowa.
+   Adres Workera i kod dostępu podaje się raz w panelu (zostają w tej przeglądarce). */
 (()=>{
 const Q=new URLSearchParams(location.search),K='poprawki:';
 const wez=(k,d)=>{try{const v=localStorage.getItem(K+k);return v==null?d:JSON.parse(v)}catch(e){return d}};
 const daj=(k,v)=>{try{localStorage.setItem(K+k,JSON.stringify(v));return true}catch(e){return false}};
+const ADRES_WORKERA='';   // domyślny adres Workera (https://mobywatel-poprawki.….workers.dev); można go też wpisać w panelu
+let LOK=false,BLAD='',UST=false;   // LOK: jest serwer lokalny; BLAD: czemu Worker nie odpowiada; UST: pokaż ustawienia
+const adres=()=>String(wez('adres','')||ADRES_WORKERA).trim().replace(/\/+$/,'');
+const baza=()=>LOK?'/api/poprawki':adres()+'/api/poprawki';
+function api(sc,dane){return fetch(baza()+sc,{method:dane?'POST':'GET',cache:'no-store',headers:Object.assign(dane?{'Content-Type':'application/json'}:{},LOK?{}:{'X-Kod':wez('kod','')}),body:dane?JSON.stringify(dane):undefined})
+ .then(async r=>{let j={};try{j=await r.json()}catch(e){}if(!r.ok||j.error){const e=new Error(j.error||'błąd '+r.status);e.kod=!!j.kod;throw e}return j})}
 if(Q.has('poprawki'))daj('pokaz',Q.get('poprawki')!=='0');
 const H=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const MD=t=>H(t).replace(/\*\*(.+?)\*\*/g,'<b>$1</b>').replace(/`([^`]+)`/g,'<code>$1</code>').replace(/\n/g,'<br>');
 const ICO={x:'<path d="M6.5 6.5l11 11M17.5 6.5l-11 11"/>',cel:'<circle cx="12" cy="12" r="7"/><circle cx="12" cy="12" r="2.2"/><path d="M12 2.5v3M12 18.5v3M2.5 12h3M18.5 12h3"/>',
  spinacz:'<path d="m20 11.5-7.8 7.8a5 5 0 0 1-7.1-7.1l8.3-8.3a3.3 3.3 0 0 1 4.7 4.7l-8.3 8.3a1.7 1.7 0 0 1-2.4-2.4l7.6-7.6"/>',
- wyslij:'<path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/>',olowek:'<path d="M4 20h4L19.5 8.5a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>'};
+ wyslij:'<path d="M21 3 10 14M21 3l-7 18-4-7-7-4z"/>',tryb:'<circle cx="12" cy="12" r="3"/><path d="M12 2.5v3M12 18.5v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2.5 12h3M18.5 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/>',olowek:'<path d="M4 20h4L19.5 8.5a2.8 2.8 0 0 0-4-4L4 16z"/><path d="m13.5 6.5 4 4"/>'};
 const ico=n=>`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${ICO[n]}</svg>`;
 const POWITANIE='Cześć! Opisz, co chcesz poprawić w prototypie, na tym albo innym ekranie. **Celownikiem** wskażesz element, **spinaczem** dodasz zrzut. Dopytam o szczegóły, zapiszę poprawkę w koszyku, a gdy skończysz, wyślesz wszystkie naraz.';
 
@@ -71,6 +78,11 @@ const css=`
 #pp .hi a{color:#16171a;font-weight:600;text-decoration:none}#pp .hi small{display:block;color:#6b6d75;font-size:12.5px;margin-top:2px}
 #pp .hi .st{display:inline-block;font-size:11.5px;font-weight:600;padding:1px 7px;border-radius:99px;background:#e9f5ea;color:#2e7d32;margin-right:6px}
 #pp .hi .st.z{background:#ecebe8;color:#6b6d75}
+#pp [hidden]{display:none!important}
+#pp .ust{display:flex;flex-direction:column;gap:12px;font-size:14px}#pp .ust p{margin:0}
+#pp .ust label{display:flex;flex-direction:column;gap:4px;font-weight:600}
+#pp .ust input{font:inherit;font-weight:400;border:1px solid #d9d6d0;border-radius:10px;padding:9px 11px;background:#fff}
+#pp .ust .wy{align-self:flex-start}
 #pp .pusto{color:#6b6d75;text-align:center;margin-top:30px;font-size:14px}
 body.pp-celuje #pp{display:none}body.pp-celuje,body.pp-celuje *{cursor:crosshair!important}
 #pp-ramka{position:fixed;z-index:9002;pointer-events:none;border:2px solid var(--red,#dc143c);background:rgba(220,20,60,.08);border-radius:4px;display:none}
@@ -82,7 +94,7 @@ function start(){
  const b=document.createElement('button');b.id='pp-btn';b.type='button';b.innerHTML=`${ico('olowek')}<span>Poprawki</span><i></i>`;b.setAttribute('aria-label','Poprawki do portalu');
  b.onclick=otworz;document.body.append(b);
  const p=document.createElement('section');p.id='pp';p.setAttribute('aria-label','Poprawki do portalu');
- p.innerHTML=`<div class="gl"><div><b>Poprawki do portalu</b><small id="pp-ekran"></small></div><button type="button" id="pp-zamknij" aria-label="Zamknij">${ico('x')}</button></div>
+ p.innerHTML=`<div class="gl"><div><b>Poprawki do portalu</b><small id="pp-ekran"></small></div><button type="button" id="pp-ustb" aria-label="Ustawienia połączenia" title="Ustawienia połączenia" hidden>${ico('tryb')}</button><button type="button" id="pp-zamknij" aria-label="Zamknij">${ico('x')}</button></div>
  <nav><button type="button" data-k="rozmowa" class="on">Rozmowa</button><button type="button" data-k="historia">Historia zgłoszeń</button></nav>
  <div class="wid" id="pp-wid" aria-live="polite"></div>
  <div class="kosz" id="pp-kosz" hidden><div class="w"><button type="button" class="l" id="pp-kl"></button><button type="button" class="wy" id="pp-wyslij">Wyślij</button></div><ol id="pp-lista" hidden></ol></div>
@@ -96,7 +108,7 @@ function start(){
  const r=document.createElement('div');r.id='pp-ramka';const t=document.createElement('div');t.id='pp-tip';t.textContent='Kliknij element, który chcesz poprawić. Esc anuluje.';
  document.body.append(r,t);
  const $=s=>p.querySelector(s),txt=$('#pp-txt');
- $('#pp-zamknij').onclick=zamknij;
+ $('#pp-zamknij').onclick=zamknij;$('#pp-ustb').hidden=LOK;$('#pp-ustb').onclick=()=>{UST=!UST;karta='rozmowa';rysuj()};
  p.querySelectorAll('nav button').forEach(x=>x.onclick=()=>{karta=x.dataset.k;p.querySelectorAll('nav button').forEach(y=>y.classList.toggle('on',y===x));rysuj();if(karta==='historia')odswiez()});
  $('#pp-form').onsubmit=e=>{e.preventDefault();wyslijWiad()};
  txt.onkeydown=e=>{if(e.key==='Enter'&&!e.shiftKey&&!e.isComposing){e.preventDefault();wyslijWiad()}};
@@ -206,9 +218,15 @@ function rysuj(){
  if(!w)return;
  if(karta==='historia'){dol.hidden=true;kosz.hidden=true;
   const h=SRV&&SRV.historia;
-  w.innerHTML=!SRV||!SRV.wlaczone?`<p class="pusto">${H(blokada())}</p>`:SRV.blad_historii?`<p class="pusto">Nie udało się pobrać zgłoszeń z GitHuba: ${H(SRV.blad_historii)}</p>`:!SRV.github?'<p class="pusto">Brak GITHUB_TOKEN w .env, więc nie widzę zgłoszeń.</p>':
+  w.innerHTML=!SRV||!SRV.wlaczone?`<p class="pusto">${H(blokada())}</p>`:SRV.blad_historii?`<p class="pusto">Nie udało się pobrać zgłoszeń z GitHuba: ${H(SRV.blad_historii)}</p>`:!SRV.github?'<p class="pusto">Brak tokenu GitHuba (GITHUB_TOKEN w .env albo GH_TOKEN_POPRAWKI dla Workera), więc nie widzę zgłoszeń.</p>':
    !h?'<p class="pusto">Wczytuję…</p>':!h.length?'<p class="pusto">Nie ma jeszcze zgłoszeń.</p>':
    `<ul class="hi">${h.map(x=>`<li><a href="${H(x.url)}" target="_blank" rel="noopener">#${x.nr} ${H(x.tytul)}</a><small><span class="st${x.stan==='open'?'':' z'}">${x.stan==='open'?'otwarte':'zamknięte'}</span>${H(x.data.split('-').reverse().join('.'))}</small></li>`).join('')}</ul>`;
+  return}
+ if(!LOK&&(UST||!adres()||!wez('kod','')||(BLAD&&!SRV))){dol.hidden=true;kosz.hidden=true;
+  w.innerHTML=`<form class="ust" id="pp-ust"><p>Na podglądzie online czat działa przez Workera Cloudflare. Podaj jego adres i kod dostępu (zostaną w tej przeglądarce).</p>
+   ${BLAD?`<p class="b blad">${H(BLAD)}</p>`:''}<label>Adres Workera<input name="a" type="url" required placeholder="https://mobywatel-poprawki.….workers.dev" value="${H(adres())}"></label>
+   <label>Kod dostępu<input name="k" type="password" required autocomplete="current-password" value="${H(wez('kod',''))}"></label><button class="wy" type="submit">Połącz</button></form>`;
+  w.querySelector('form').onsubmit=e=>{e.preventDefault();const f=e.target;daj('adres',f.a.value.trim());daj('kod',f.k.value.trim());UST=false;BLAD='';SRV=null;w.innerHTML='<p class="pusto">Łączę…</p>';odswiez()};
   return}
  dol.hidden=false;
  const bl=blokada();
@@ -220,7 +238,7 @@ function rysuj(){
  const n=S.koszyk.length;kosz.hidden=!n;
  document.getElementById('pp-kl').textContent=`Koszyk: ${n} ${n===1?'poprawka':n%10>=2&&n%10<=4&&(n%100<10||n%100>=20)?'poprawki':'poprawek'} ▾`;
  document.getElementById('pp-wyslij').disabled=zajety||!SRV||!SRV.github;
- document.getElementById('pp-wyslij').title=SRV&&!SRV.github?'Brak GITHUB_TOKEN w .env':'';
+ document.getElementById('pp-wyslij').title=SRV&&!SRV.github?'Brak tokenu GitHuba':'';
  const l=document.getElementById('pp-lista');
  l.innerHTML=S.koszyk.map((p,i)=>`<li><b>${H(p.tytul||'Poprawka')}</b><button type="button" data-i="${i}">usuń</button>${p.ekran?`<small>${H(p.ekran)}</small>`:''}</li>`).join('');
  l.querySelectorAll('button').forEach(b=>b.onclick=()=>{const i=+b.dataset.i,p=S.koszyk[i];S.koszyk.splice(i,1);
@@ -229,9 +247,9 @@ function rysuj(){
  licznik();
 }
 function blokada(){
- if(!SRV)return 'Czat poprawek działa tylko lokalnie, z uruchomionym serwerem prototypu (python3 serwer/server.py, w .env: POPRAWKI=1, ANTHROPIC_API_KEY i GITHUB_TOKEN). Na podglądzie online nie ma serwera.';
+ if(!SRV)return BLAD||'Łączę…';
  if(!SRV.wlaczone)return 'Panel poprawek jest wyłączony. Dodaj POPRAWKI=1 do .env i uruchom serwer ponownie.';
- if(!SRV.claude)return 'Brak ANTHROPIC_API_KEY w .env. Dodaj klucz i uruchom serwer ponownie.';
+ if(!SRV.claude)return LOK?'Brak ANTHROPIC_API_KEY w .env. Dodaj klucz i uruchom serwer ponownie.':'Worker nie ma klucza Claude (sekret ANTHROPIC_API_KEY).';
  return '';
 }
 async function wyslijWiad(){
@@ -240,12 +258,11 @@ async function wyslijWiad(){
  const zal=czeka.map(z=>z.id),el=celEl&&celEl.krotko;
  const tresc=[{type:'text',text:kontekst()+(S.notka?'\n'+S.notka.trim():'')+'\n\n'+(t||'(bez opisu, zobacz załącznik)')}];
  zal.forEach(id=>{const m=/^data:(image\/[a-z]+);base64,(.*)$/.exec(S.zal[id]||'');if(m)tresc.push({type:'text',text:'Załącznik '+id+':'},{type:'image',source:{type:'base64',media_type:m[1],data:m[2]}})});
- const api=S.api.concat([{role:'user',content:tresc}]);
+ const hist=S.api.concat([{role:'user',content:tresc}]);
  S.widok.push({kto:'ja',t:t||'(załącznik)',zal,el});S.notka='';czeka=[];celEl=null;txt.value='';txt.style.height='auto';rysujZal();
  zajety=true;rysuj();
  try{
-  const r=await fetch('/api/poprawki/czat',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({messages:api,koszyk:S.koszyk})});
-  const j=await r.json();if(!r.ok||j.error)throw new Error(j.error||r.status);
+  const j=await api('/czat',{messages:hist,koszyk:S.koszyk});
   S.api=j.messages;S.koszyk=j.koszyk||[];S.widok.push({kto:'bot',t:j.tekst||'Zapisane.'});
  }catch(e){S.widok.push({kto:'blad',t:'Nie udało się: '+e.message+'. Wiadomość nie trafiła do rozmowy, możesz ją wysłać jeszcze raz.'})}
  zajety=false;zapisz();rysuj();
@@ -254,8 +271,9 @@ async function wyslijKoszyk(){
  if(zajety||!S.koszyk.length)return;zajety=true;rysuj();
  const uzyte={};S.koszyk.forEach(p=>(p.zalaczniki||[]).forEach(z=>{if(S.zal[z])uzyte[z]=S.zal[z]}));
  try{
-  const r=await fetch('/api/poprawki/wyslij',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({koszyk:S.koszyk,zalaczniki:uzyte})});
-  const j=await r.json();if(!r.ok||j.error)throw new Error(j.error||r.status);
+  const j={wyniki:[]};   // porcjami po 5: Worker na darmowym planie ma limit zapytań na jedno wywołanie
+  for(let i=0;i<S.koszyk.length;i+=5){const cz=S.koszyk.slice(i,i+5),zal={};cz.forEach(p=>(p.zalaczniki||[]).forEach(z=>{if(uzyte[z])zal[z]=uzyte[z]}));
+   j.wyniki.push(...(await api('/wyslij',{koszyk:cz,zalaczniki:zal})).wyniki)}
   const ok=j.wyniki.filter(w=>w.url),zle=j.wyniki.filter(w=>!w.url);
   const html=(ok.length?`Wysłane na GitHub (${ok.length}):<br>`+ok.map(w=>`<a href="${H(w.url)}" target="_blank" rel="noopener">#${w.nr}</a> ${H(w.tytul)}`).join('<br>'):'')+
    (zle.length?`${ok.length?'<br><br>':''}Nie udało się (zostają w koszyku):<br>`+zle.map(w=>`${H(w.tytul||'Poprawka')}: ${H(w.blad)}`).join('<br>'):'');
@@ -266,11 +284,15 @@ async function wyslijKoszyk(){
  }catch(e){S.widok.push({kto:'blad',t:'Wysyłka nie powiodła się: '+e.message})}
  zajety=false;zapisz();rysuj();
 }
-async function odswiez(){try{const r=await fetch('/api/poprawki',{cache:'no-store'});SRV=await r.json()}catch(e){}rysuj()}
+async function odswiez(){
+ if(!LOK&&(!adres()||!wez('kod','')))return rysuj();
+ try{SRV=await api('');BLAD=''}catch(e){SRV=null;BLAD=e.kod?'Zły kod dostępu.':'Nie mogę połączyć się z Workerem ('+e.message+'). Sprawdź adres.'}
+ rysuj();
+}
 
 /* start: przycisk tylko, gdy serwer ma włączony panel albo ktoś wymusił go parametrem (wtedy z informacją, że działa lokalnie) */
 fetch('/api/poprawki',{cache:'no-store'}).then(r=>r.ok?r.json():null).catch(()=>null).then(j=>{
- SRV=j&&typeof j.wlaczone==='boolean'?j:null;
- if((SRV&&SRV.wlaczone&&wez('pokaz',true))||wez('pokaz',false))start();
+ LOK=!!j&&typeof j.wlaczone==='boolean';SRV=LOK?j:null;
+ if(LOK?(SRV.wlaczone&&wez('pokaz',true))||wez('pokaz',false):wez('pokaz',false)){start();if(!LOK)odswiez()}
 });
 })();

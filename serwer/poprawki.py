@@ -13,33 +13,10 @@ GALAZ_ZRZUTOW = 'zgloszenia-zalaczniki'   # zrzuty ekranu trafiają tu, bo API i
 def klucz_claude(): return os.environ.get('ANTHROPIC_API_KEY') or None
 def klucz_github(): return os.environ.get('GITHUB_TOKEN') or os.environ.get('GH_TOKEN') or None
 
-SYSTEM = """Jesteś asystentem autora prototypu mObywatel.ai (Wojtka). Prototyp to klikalna aplikacja mObywatel na telefonie z asystentem AI, \
-fikcyjnymi osobami (Jan w Krakowie, Ewa w gminie Lipowiec), modułami „Moja gmina” (władze, radni, sesje, budżet, uwagi do planu, inicjatywy) \
-i „Moja praca”. Wojtek opisuje tu, co chce zmienić w prototypie. Zbierasz te poprawki tak, żeby programista (Claude Code) mógł je wdrożyć bez dopytywania.
-
-Zasady:
-- Pisz po polsku, krótko i zwyczajnie, bez myślników jako przecinków.
-- Każda wiadomość Wojtka zaczyna się od bloku [Kontekst], który mówi, na jakim ekranie był i jaki element wskazał celownikiem. Korzystaj z tego, nie pytaj o to, co już wiesz.
-- Gdy poprawka jest niejasna, zadaj jedno konkretne pytanie naraz (co dokładnie, gdzie, jaki ma być efekt). Nie dopytuj o drobiazgi, które programista rozstrzygnie sam.
-- Gdy wiesz, co zrobić, od razu dodaj poprawkę narzędziem dodaj_poprawke i potwierdź jednym zdaniem. Jedna sprawa = jedna poprawka; kilka niezależnych zmian rozdziel.
-- Gdy Wojtek doprecyzuje albo zmieni zdanie, popraw istniejącą pozycję (zmien_poprawke) zamiast dodawać nową. Gdy rezygnuje, usuń ją.
-- Opis poprawki pisz jako zlecenie: co jest teraz, co ma być, gdzie (ekran, element), po czym poznać, że zrobione. Cytuj teksty z ekranu dosłownie.
-- Nie wysyłasz zgłoszeń sam. Gdy Wojtek skończy, przypomnij, że wysyła je przyciskiem „Wyślij” pod rozmową.
-- Załączniki (zrzuty) mają identyfikatory, np. z1. Dołącz je do poprawki, której dotyczą."""
-
-_POLA = {'tytul': {'type': 'string', 'description': 'Krótki tytuł w trybie rozkazującym, np. „Dodaj filtr po dacie w sesjach rady”.'},
-         'opis': {'type': 'string', 'description': 'Zlecenie dla programisty: stan obecny, oczekiwany, gdzie, kryterium odbioru. Markdown.'},
-         'ekran': {'type': 'string', 'description': 'Ekran prototypu, którego dotyczy poprawka.'},
-         'element': {'type': 'string', 'description': 'Wskazany element (z kontekstu), jeśli dotyczy.'},
-         'zalaczniki': {'type': 'array', 'items': {'type': 'string'}, 'description': 'Identyfikatory załączników, np. ["z1"].'}}
-NARZEDZIA = [
-    {'name': 'dodaj_poprawke', 'description': 'Dodaje poprawkę do koszyka Wojtka.',
-     'input_schema': {'type': 'object', 'properties': _POLA, 'required': ['tytul', 'opis']}},
-    {'name': 'zmien_poprawke', 'description': 'Zmienia poprawkę w koszyku (podaj tylko zmieniane pola).',
-     'input_schema': {'type': 'object', 'properties': dict(nr={'type': 'integer', 'description': 'Numer pozycji w koszyku.'}, **_POLA), 'required': ['nr']}},
-    {'name': 'usun_poprawke', 'description': 'Usuwa poprawkę z koszyka.',
-     'input_schema': {'type': 'object', 'properties': {'nr': {'type': 'integer'}}, 'required': ['nr']}},
-]
+# instrukcja i narzędzia są wspólne z Workerem Cloudflare (worker/poprawki.js), stąd osobny plik
+_P = json.load(open(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'poprawki.json'), encoding='utf-8'))
+SYSTEM, NARZEDZIA = _P['system'], _P['narzedzia']
+_POLA = NARZEDZIA[0]['input_schema']['properties']
 
 def stan():
     return dict(wlaczone=wlaczone(), claude=bool(klucz_claude()), github=bool(klucz_github()), repo=REPO, etykieta=ETYKIETA, model=MODEL)
