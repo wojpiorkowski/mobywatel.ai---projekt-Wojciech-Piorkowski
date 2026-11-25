@@ -97,7 +97,6 @@ window.addEventListener('resize',layout);
 
 /* ---------- przypomnienia ---------- */
 const TILES=OS.tiles;
-{const t=TILES[0],n=TILES.length-1;const b=document.createElement('button');b.className='rsum';b.setAttribute('aria-label','Do załatwienia: '+TILES.length+' sprawy');b.innerHTML=`<span class="rdot">${TILES.length}</span><span class="tx"><b>${t.h}</b><small><em>${t.d}</em> · i ${n} inne sprawy</small></span>${svg('chev')}`;b.onclick=openTodo;$('#tiles').append(b)}
 
 /* ---------- szczegóły dokumentu ---------- */
 function qrSVG(seed=7){
