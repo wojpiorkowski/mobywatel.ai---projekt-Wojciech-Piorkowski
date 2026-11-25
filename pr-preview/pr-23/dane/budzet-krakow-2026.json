@@ -1,0 +1,58 @@
+{
+ "uwaga": "Dane fikcyjne do prototypu mObywatel.ai. Układ jak w uchwale budżetowej i kwartalnej informacji o wykonaniu budżetu; kwoty wymyślone.",
+ "jst": "Gmina Miejska Kraków",
+ "nazwa": "Budżet Miasta Krakowa",
+ "rok": 2026,
+ "uchwala": "Uchwała nr CXLII/3874/25 Rady Miasta Krakowa z dnia 17 grudnia 2025 r. w sprawie budżetu Miasta Krakowa na rok 2026, ze zmianami",
+ "stan_planu": "plan po zmianach, 31.10.2026",
+ "wykonanie_na": "30.09.2026",
+ "czesc_roku": 0.75,
+ "jednostka": "mln zł",
+ "mieszkancy": 806000,
+ "dochody": [
+  {"nazwa": "Udział w podatku dochodowym od osób fizycznych (PIT)", "krotko": "PIT mieszkańców", "plan": 3210.0, "wyk": 2297.4, "slowa": "pit podatek dochodowy udzial"},
+  {"nazwa": "Część oświatowa subwencji ogólnej", "krotko": "Subwencja oświatowa", "plan": 1410.0, "wyk": 1090.5, "slowa": "subwencja oswiata panstwo"},
+  {"nazwa": "Dotacje celowe i środki z Unii Europejskiej", "krotko": "Dotacje i UE", "plan": 1240.0, "wyk": 612.7, "slowa": "dotacje unia ue fundusze europejskie"},
+  {"nazwa": "Podatek od nieruchomości", "krotko": "Podatek od nieruchomości", "plan": 820.0, "wyk": 655.3, "slowa": "podatek nieruchomosci lokalny"},
+  {"nazwa": "Udział w podatku dochodowym od osób prawnych (CIT)", "krotko": "CIT firm", "plan": 520.0, "wyk": 401.2, "slowa": "cit firmy podatek"},
+  {"nazwa": "Wpływy ze sprzedaży biletów komunikacji miejskiej", "krotko": "Bilety MPK", "plan": 480.0, "wyk": 352.1, "slowa": "bilety komunikacja mpk tramwaje autobusy"},
+  {"nazwa": "Opłata za gospodarowanie odpadami komunalnymi", "krotko": "Opłata za odpady", "plan": 395.0, "wyk": 297.8, "slowa": "odpady smieci oplata"},
+  {"nazwa": "Sprzedaż majątku (działki, lokale)", "krotko": "Sprzedaż majątku", "plan": 260.0, "wyk": 88.4, "slowa": "sprzedaz majatek dzialki lokale"},
+  {"nazwa": "Pozostałe dochody (opłaty, najem, mandaty, odsetki)", "krotko": "Pozostałe", "plan": 785.0, "wyk": 571.6, "slowa": "oplaty najem mandaty parkowanie strefa"}
+ ],
+ "wydatki": [
+  {"dzial": "801, 854", "nazwa": "Oświata i wychowanie", "plan": 3020.0, "wyk": 2190.4, "majatkowe": 180.0, "co": "szkoły, przedszkola, żłobki szkolne, stypendia", "slowa": "oswiata szkoly szkola przedszkola edukacja nauczyciele"},
+  {"dzial": "600", "nazwa": "Transport i łączność", "plan": 2640.0, "wyk": 1610.2, "majatkowe": 690.0, "co": "komunikacja miejska, drogi, mosty, tramwaje", "slowa": "transport drogi komunikacja tramwaj autobus mpk ulice chodniki"},
+  {"dzial": "900", "nazwa": "Gospodarka komunalna i ochrona środowiska", "plan": 1060.0, "wyk": 702.8, "majatkowe": 140.0, "co": "odpady, zieleń, oświetlenie ulic, ochrona powietrza", "slowa": "odpady smieci zielen parki drzewa oswietlenie powietrze srodowisko"},
+  {"dzial": "852, 853, 855", "nazwa": "Pomoc społeczna i rodzina", "plan": 980.0, "wyk": 701.6, "majatkowe": 25.0, "co": "MOPS, domy pomocy społecznej, świadczenia dla rodzin", "slowa": "pomoc spoleczna mops rodzina seniorzy dps swiadczenia"},
+  {"dzial": "700, 710", "nazwa": "Gospodarka mieszkaniowa", "plan": 610.0, "wyk": 371.5, "majatkowe": 160.0, "co": "mieszkania komunalne, remonty budynków miasta", "slowa": "mieszkania mieszkaniowa komunalne lokale"},
+  {"dzial": "750", "nazwa": "Administracja publiczna", "plan": 590.0, "wyk": 432.9, "majatkowe": 30.0, "co": "urząd miasta, rady dzielnic, promocja", "slowa": "administracja urzad urzednicy promocja rady dzielnic"},
+  {"dzial": "921", "nazwa": "Kultura i ochrona dziedzictwa", "plan": 420.0, "wyk": 298.3, "majatkowe": 55.0, "co": "teatry, biblioteki, domy kultury, zabytki", "slowa": "kultura teatry biblioteki zabytki dom kultury"},
+  {"dzial": "926", "nazwa": "Sport i rekreacja", "plan": 300.0, "wyk": 176.1, "majatkowe": 95.0, "co": "baseny, boiska, stadiony, imprezy sportowe", "slowa": "sport basen boiska stadion rekreacja"},
+  {"dzial": "754", "nazwa": "Bezpieczeństwo publiczne", "plan": 260.0, "wyk": 189.0, "majatkowe": 15.0, "co": "straż miejska, straż pożarna, monitoring", "slowa": "bezpieczenstwo straz miejska pozarna monitoring"},
+  {"dzial": "757", "nazwa": "Obsługa długu", "plan": 230.0, "wyk": 168.2, "majatkowe": 0.0, "co": "odsetki od kredytów i obligacji", "slowa": "odsetki dlug kredyty obligacje"},
+  {"dzial": "851", "nazwa": "Ochrona zdrowia", "plan": 170.0, "wyk": 110.4, "majatkowe": 20.0, "co": "programy zdrowotne, szczepienia, przeciwdziałanie uzależnieniom", "slowa": "zdrowie szczepienia uzaleznienia szpital"},
+  {"dzial": "różne", "nazwa": "Rezerwy i pozostałe", "plan": 360.0, "wyk": 196.0, "majatkowe": 47.0, "co": "rezerwa ogólna i celowe, w tym kryzysowa", "slowa": "rezerwa rezerwy pozostale"}
+ ],
+ "finansowanie": {
+  "przychody": [["Kredyty i obligacje", 1380.0], ["Wolne środki z lat ubiegłych", 410.0]],
+  "rozchody": [["Spłata rat kredytów i wykup obligacji", 270.0]]
+ },
+ "historia": [
+  {"rok": 2022, "dochody": 7120.0, "wydatki": 7540.0, "dlug": 4510.0, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2023, "dochody": 7780.0, "wydatki": 8210.0, "dlug": 4890.0, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2024, "dochody": 8360.0, "wydatki": 8790.0, "dlug": 5240.0, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2025, "dochody": 8818.0, "wydatki": 9300.0, "dlug": 5690.0, "zrodlo": "sprawozdanie z wykonania"},
+  {"rok": 2026, "dochody": 9120.0, "wydatki": 10640.0, "dlug": 6800.0, "zrodlo": "plan, dług prognozowany na koniec roku"}
+ ],
+ "inwestycje": [
+  {"nazwa": "Tramwaj do Mistrzejowic, II etap", "dzial": "600", "plan": 310.0, "wyk": 148.6, "koszt": 1120.0, "lata": "2023–2028", "gdzie": "Dzielnice XIV, XV", "slowa": "tramwaj mistrzejowice"},
+  {"nazwa": "Zakup 40 autobusów elektrycznych", "dzial": "600", "plan": 148.0, "wyk": 0.0, "koszt": 148.0, "lata": "2026", "gdzie": "całe miasto", "stan": "dostawa w grudniu, zapłata po odbiorze", "slowa": "autobusy elektryczne mpk zakup"},
+  {"nazwa": "Mieszkania komunalne przy ul. Półłanki (180 mieszkań)", "dzial": "700", "plan": 38.0, "wyk": 21.4, "koszt": 96.0, "lata": "2025–2027", "gdzie": "Dzielnica XIII Podgórze", "blisko": 1, "slowa": "mieszkania komunalne pollanki"},
+  {"nazwa": "Budżet obywatelski 2026: projekty w realizacji", "dzial": "różne", "plan": 40.0, "wyk": 17.9, "koszt": 40.0, "lata": "2026", "gdzie": "całe miasto, w tym 2,1 mln zł w Dzielnicy XIII", "slowa": "budzet obywatelski bo projekty"},
+  {"nazwa": "Przebudowa ul. Wielickiej: dokumentacja i konsultacje", "dzial": "600", "plan": 4.2, "wyk": 1.1, "koszt": 168.0, "lata": "2025–2031", "gdzie": "Dzielnica XIII Podgórze, pod Twoim blokiem", "blisko": 1, "stan": "budowa od 2029 r., pieniądze na nią są tylko w wieloletniej prognozie finansowej", "slowa": "wielicka przebudowa buspas droga rowerowa"},
+  {"nazwa": "Remonty chodników w Dzielnicy XIII (środki dzielnicy)", "dzial": "600", "plan": 1.6, "wyk": 0.9, "koszt": 1.6, "lata": "2026", "gdzie": "Dzielnica XIII Podgórze", "blisko": 1, "stan": "łatanie ubytków przy ul. Wielickiej 24–30 do 15.12.2026", "slowa": "chodnik chodniki remont wielicka"},
+  {"nazwa": "Modernizacja instalacji c.o. w SP nr 34", "dzial": "801", "plan": 0.75, "wyk": 0.0, "koszt": 0.75, "lata": "2026–2027", "gdzie": "ul. Wielicka 40, 600 m od Ciebie", "blisko": 1, "stan": "przetarg ogłoszony, oferty do 23.12.2026", "slowa": "sp 34 szkola ogrzewanie instalacja co"},
+  {"nazwa": "Zielone podwórko przy Wielickiej (budżet obywatelski)", "dzial": "900", "plan": 0.38, "wyk": 0.22, "koszt": 0.38, "lata": "2026", "gdzie": "Dzielnica XIII Podgórze", "blisko": 1, "stan": "w budowie, odbiór 12.2026", "slowa": "zielone podworko zielen wielicka"}
+ ]
+}
